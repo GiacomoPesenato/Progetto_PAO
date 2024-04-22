@@ -10,7 +10,6 @@ CONFIG += c++17
 
 SOURCES += \
     src/main.cpp \
-    src/schermata.cpp \
     src/sensore.cpp \
     src/sensorearia.cpp \
     src/sensoreelettricita.cpp \
@@ -23,7 +22,6 @@ SOURCES += \
 
 HEADERS += \
     headers/main.h \
-    headers/schermata.h \
     headers/sensore.h \
     headers/sensorearia.h \
     headers/sensoreelettricita.h \

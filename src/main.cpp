@@ -71,7 +71,7 @@ private:
     }
 };
 
-int main(int argc, char *argv[])
+int qmain(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 

@@ -49,7 +49,7 @@ Valore SensoreAria::getRandom(const QDateTime &dataOra)  {
     uniform_real_distribution<double> distributionBias(0.0, 1.0);
     double bias = distributionBias(gen);
 
-    if (bias < 0.15) { // 60% di probabilità
+    if (bias < 0.40) { // 60% di probabilità
         // Rendi più probabili i valori tra 40 e 60
         uniform_real_distribution<double> distributionBiased(50.0, 75.0);
         double biasedNumber = distributionBiased(gen);
@@ -168,7 +168,7 @@ QChartView* createBarChart(const vector<Valore>& vect) {
 
 
 
-int qmain(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     QDateTime data = QDateTime::currentDateTime();
     data.setTime(QTime(0,0,0));
