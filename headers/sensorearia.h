@@ -9,6 +9,7 @@ class SensoreAria: public Sensore
 {
 private:
     double sogliaMassima;
+    QVector<QString>mese;
 
 public:
     SensoreAria();
@@ -19,7 +20,10 @@ public:
                        double valore);
     Valore getRandom(const QDateTime &dataOra) override;
     void modificaData(QDateTime &data, int hours);
-    QChartView* createBarChart(const vector<Valore> &vectValori);
+    QChartView* createLineChart(const vector<Valore> &vectValori);
+    void displayPopupForMarkerClick(QString nomeMese, double media);
 };
+
+
 
 #endif // SENSOREARIA_H

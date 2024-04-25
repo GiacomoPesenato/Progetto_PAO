@@ -89,7 +89,8 @@ void SensoreAria::modificaData(QDateTime &data, int hours){
         }
     }
 }
-
+/*
+ *
 QChartView* createBarChart(const vector<Valore>& vect) {
     QBarSeries *series = new QBarSeries();
     const QVector<QColor> colors = {
@@ -164,9 +165,94 @@ QChartView* createBarChart(const vector<Valore>& vect) {
 
     return chartView;
 }
+*/
 
+void displayPopupForMarkerClick(QString nomeMese, double media)
+{
+    QString out = QString("Mese: %1\nMedia: %2").arg(nomeMese).arg(media);
 
+    QMessageBox::information(nullptr, "Info Mese", out);
+}
 
+QChartView* createLineChart (const vector<Valore>& valori){
+    QLineSeries *series = new QLineSeries;
+    QChart *chart = new QChart();
+    QChartView *chartView = new QChartView(chart);
+    QCategoryAxis *axisX = new QCategoryAxis();
+    QValueAxis *axisY = new QValueAxis();
+    QScatterSeries *markerSeries = new QScatterSeries;
+    const QVector<QColor> colors = {
+        QColor(0, 0, 255), QColor(0, 255, 255), QColor(0, 255, 0), QColor(255, 255, 0),
+        QColor(255, 153, 51), QColor(255, 0, 0), QColor(153, 0, 153)
+    };
+    QVector<QString> mese = {
+        "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+    };
+    int currentMonth = valori[0].getDataOra().date().month();
+    int sommaQualita = 0, mediaQualita = 0, count = 0, pos = 1, max = -1, min = -1;
+
+    QObject::connect(markerSeries, &QScatterSeries::clicked, [mese, currentMonth](const QPointF &point) {
+        int id_mese = (int)point.x();
+        QString nomeMese = mese[(id_mese - 2+currentMonth)%12]; // -2 perchè 1 è per l'indice dell'array che parte da 0, l'altro è che l'id del mese va da 1 a 12 e quindi devo sottrarre ancora
+        double mediaClick = point.y();
+        displayPopupForMarkerClick(nomeMese, mediaClick);
+    });
+
+    for (const auto& value : valori) {
+        if (value.getDataOra().date().month() == currentMonth) {
+            sommaQualita += value.getValore();
+            ++count;
+        } else {
+            // calcolo qualità media mensile
+            mediaQualita = (count > 0) ? sommaQualita / count : 0;
+            //cout << "Per il mese di " << currentMonth << " la qualità è di: " << mediaQualita << endl;
+            QPointF point(pos, mediaQualita);
+            series->append(point);
+            markerSeries->append(point);
+            cout<<"Current month: "<<mese[currentMonth-1].toStdString()<<" Media: "<<mediaQualita<<endl;
+
+            if (mediaQualita > max || max == -1){
+                max = mediaQualita;
+            }
+            if (mediaQualita < min || min == -1){
+                min = mediaQualita;
+            }
+
+            // Reset for the next month
+            pos++;
+            currentMonth = value.getDataOra().date().month();
+            sommaQualita = value.getValore();
+            count = 1;
+        }
+    }
+    axisX ->setRange(0,12);
+    for(int i=0; i<12; i++){
+        //cout<<"Mese: "<<mese[(i+currentMonth-1)%12].toStdString()<<"Index"<<i+1<<endl;
+        axisX->append(mese[(i+currentMonth-1)%12], i+1);
+    }
+
+    axisY->setRange(min, max);
+
+    series->attachAxis(axisY);
+    series->attachAxis(axisX);
+
+    markerSeries->setMarkerSize(10);
+    markerSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+    markerSeries->setColor(Qt::red);
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    chart->addSeries(series);
+    chart->addSeries(markerSeries);
+
+    chart->legend()->hide();
+    chart->setTitle("Media per mese");
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    return chartView;
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -182,14 +268,15 @@ int main(int argc, char *argv[])
         Valore val = s.getRandom(data);
         s.setValore(val.getValore());
         s.modificaData(data,hours);
-        cout<<data.toString(Qt::ISODate).toStdString()<<". Qualità dell'aria: "<<val.getValore()<<endl;
+        //cout<<data.toString(Qt::ISODate).toStdString()<<". Qualità dell'aria: "<<val.getValore()<<endl;
         //vectValori.push_back(val);
         s.addValore(val);
     }
     QApplication a(argc, argv);
     QMainWindow window;
     //window.setCentralWidget(createBarChart(vectValori)); // Aggiungi il grafico alla finestra principale
-    window.setCentralWidget(createBarChart(s.getValori()));
+    //window.setCentralWidget(createBarChart(s.getValori()));
+    window.setCentralWidget(createLineChart(s.getValori()));
     window.resize(1000,1000);
     window.show();
     return a.exec();
