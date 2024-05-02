@@ -2,23 +2,27 @@
 #include "../headers/valore.h"
 
 #include <QDateTime>
-#include <vector>
+#include <QVector>>
 
 using namespace std;
 
-Sensore::Sensore(const QString &nome, const QString &unitaMisura, const QString &icona, double valore)
-    : nome(nome)
+Sensore::Sensore(const unsigned int &id, const QString &nome, const QString &unitaMisura, const QString &icona, const QString &gruppo,  double &valore)
+    : id(id)
+    , nome(nome)
     , unitaMisura(unitaMisura)
     , valori()
     , icona(icona)
+    , gruppo(gruppo)
     , valore(valore)
 {}
 
 Sensore::Sensore()
-    : nome("sensore")
+    : id(-1)
+    , nome("sensore")
     , unitaMisura("um")
     , valori()
     , icona("resources/icon.png")
+    , gruppo("")
     , valore(10)
 {}
 
@@ -38,12 +42,12 @@ Valore Sensore::getRandom(const QDateTime &dataOra)
     return valore;
 }
 
-vector<Valore> Sensore::getValori() const{
+QVector<Valore> Sensore::getValori() const{
     return this->valori;
 }
 double Sensore::getValore() const{
     return valore;
 }
-void Sensore::setValore(double valore){
+void Sensore::setValore(const double &valore){
     this->valore = valore;
 }

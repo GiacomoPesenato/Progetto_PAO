@@ -9,12 +9,14 @@ SensoreUmidita::SensoreUmidita()
     , valoreTarget(80)
 {}
 
-SensoreUmidita::SensoreUmidita(const QString &nome,
+SensoreUmidita::SensoreUmidita(const unsigned int id,
+                               const QString &nome,
                                const QString &unitaMisura,
                                const QString &icona,
+                               const QString gruppo,
                                double valoreTarget,
                                double valore)
-    : Sensore(nome, unitaMisura, icona, valore)
+    : Sensore(id, nome, unitaMisura, icona, gruppo, valore)
     , valoreTarget(valoreTarget)
 {}
 

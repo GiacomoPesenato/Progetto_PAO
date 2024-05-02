@@ -11,11 +11,13 @@ private:
 
 public:
     SensoreElettricita();
-    SensoreElettricita(const QString &nome,
-                   const QString &unitaMisura,
-                   const QString &icona,
-                   double potenzaMax,
-                   double valore);
+    SensoreElettricita(const unsigned int id,
+                       const QString &name,
+                       const QString &unitaMisura,
+                       const QString &icona,
+                       const QString gruppo,
+                       double potenzaMax,
+                       double valore);
 };
 
 #endif // SENSOREELETTRICITA_H

@@ -14,3 +14,8 @@ const QDateTime &Valore::getDataOra() const
 {
     return dataOra;
 }
+
+void Valore::setValore(const double &valore)
+{
+    this->valore = valore;
+}

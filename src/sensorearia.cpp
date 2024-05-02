@@ -1,282 +1,91 @@
 #include "../headers/sensorearia.h"
 #include "../headers/sensore.h"
+#include "../headers/chart.h"
 
 #include <QDateTime>
 #include <QtCharts>
-#include <QChartView>
-#include <QBarSet>
-#include <QBarSeries>
-#include <QBarCategoryAxis>
-#include <QChart>
-#include <iostream>
-#include <vector>
 
 using namespace std;
 
 SensoreAria::SensoreAria():Sensore(), sogliaMassima(180){}
 
-SensoreAria::SensoreAria(const QString &nome,
-                                       const QString &unitaMisura,
-                                       const QString &icona,
-                                       double sogliaMassima,
-                                       double valore
-                                       )
-    : Sensore(nome, unitaMisura, icona, valore)
+SensoreAria::SensoreAria(const unsigned int id,
+                         const QString &nome,
+                         const QString &unitaMisura,
+                         const QString &icona,
+                         const QString gruppo,
+                         int sogliaMassima,
+                         double valore
+                         )
+    : Sensore(id, nome, unitaMisura, icona, gruppo, valore)
     , sogliaMassima(sogliaMassima){}
 
 Valore SensoreAria::getRandom(const QDateTime &dataOra)  {
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
-    random_device rd;
-    mt19937 gen(rd());
     double maxVariation = 5.0;
+    double min = std::max(30.0, this->getValore() - maxVariation);
+    double max = std::min(180.0, this->getValore() + maxVariation);
 
-    double min = (this->getValore() - maxVariation)>0 ? this->getValore() - maxVariation : 0;
-    double max = ((this->getValore() + maxVariation)< 180) ? this->getValore() + maxVariation : 180;
-    uniform_real_distribution<double> distribution(min, max);
+    //distribuzione tra min e max della variazione es getValore = 50 min = 45 max= 55
+    std::uniform_real_distribution<double> distribution(min, max);
     double randomNumber = distribution(gen);
-    // Calcola l'intervallo massimo rispetto al valore precedente
+
+    //calcolo la variazione rispetto al valore precedente
     double variationFromPrev = randomNumber - this->getValore();
-    double adjustedRandom = randomNumber;
-    uniform_real_distribution<double> re_distribution(0, maxVariation);
-    if(variationFromPrev >maxVariation){
-        adjustedRandom = this->getValore()+re_distribution(gen);
-    }else if(variationFromPrev < -maxVariation){
-        adjustedRandom = this->getValore()-re_distribution(gen);
+    if (variationFromPrev > maxVariation || variationFromPrev < -maxVariation) {
+        randomNumber = this->getValore() + std::uniform_real_distribution<double>(-maxVariation, maxVariation)(gen); // se è troppo distante dal valore precedente, lo rendo più vicino
     }
-    adjustedRandom = std::max(10.0, std::min(180.0, adjustedRandom));
 
-    // Aggiungi una maggiore probabilità per i numeri tra 50 e 75
-    uniform_real_distribution<double> distributionBias(0.0, 1.0);
-    double bias = distributionBias(gen);
+    //sistemo il numero compreso tra 30 e 180
+    randomNumber = std::max(30.0, std::min(180.0, randomNumber));
 
-    if (bias < 0.40) { // 60% di probabilità
-        // Rendi più probabili i valori tra 40 e 60
-        uniform_real_distribution<double> distributionBiased(50.0, 75.0);
-        double biasedNumber = distributionBiased(gen);
-
-    // Aggiorna il valore finale solo se il valore biasato è significativamente diverso
-        if ((biasedNumber >= this->getValore() - maxVariation) && (biasedNumber <= this->getValore() + maxVariation)) {
-            adjustedRandom = biasedNumber;
-        }
-    }
-    Valore valore = Valore(adjustedRandom, dataOra);
-    return valore;
-}
-
-
-void SensoreAria::modificaData(QDateTime &data, int hours){
-    // Aggiorna la data aggiungendo un'ora
-    data = data.addSecs(3600); // Aggiunge 3600 secondi (1 ora)
-
-    hours++;
-
-    // Ogni 24 ore (24 iterazioni)
-    if (hours == 24) {
-        data = data.addDays(1); // Aumenta il giorno di 1
-        hours = 0; // Resetta il conteggio delle ore
-
-        // Verifica se è necessario aumentare il mese
-        int currentMonth = data.date().month();
-        if (data.date().daysInMonth() < data.date().day()) {
-            // Se il giorno supera i giorni totali del mese, aumenta il mese
-            data = data.addMonths(1);
-            // Se era l'ultimo giorno di dicembre, aumenta anche l'anno
-            if (currentMonth == 12) {
-                data = data.addYears(1);
-            }
-            // Imposta il giorno a 1 per il nuovo mese
-            data.setDate(QDate(data.date().year(), data.date().month(), 1));
-        }
-    }
-}
-/*
- *
-QChartView* createBarChart(const vector<Valore>& vect) {
-    QBarSeries *series = new QBarSeries();
-    const QVector<QColor> colors = {
-        QColor(0, 0, 255), QColor(0, 255, 255), QColor(0, 255, 0), QColor(255, 255, 0),
-        QColor(255, 153, 51), QColor(255, 0, 0), QColor(153, 0, 153)
-    };
-    QVector<QString> mese = {
-        "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
-        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
-    };
-
-    int currentMonth = vect[0].getDataOra().date().month();
-    int sommaQualita = 0, mediaQualita = 0, count = 0;
-
-    for (const auto& value : vect) {
-        if (value.getDataOra().date().month() == currentMonth) {
-            sommaQualita += value.getValore();
-            ++count;
-        } else {
-            // Calculate average quality for the current month
-            mediaQualita = (count > 0) ? sommaQualita / count : 0;
-            cout << "Per il mese di " << currentMonth << " la qualità è di: " << mediaQualita << endl;
-
-            QBarSet *set0 = new QBarSet(mese[currentMonth - 1]);
-            *set0 << mediaQualita; // Append average quality value to the QBarSet
-
-            // Set color based on quality range
-            if (mediaQualita <= 50) {
-                set0->setColor(colors[0]);
-            } else if (mediaQualita <= 75) {
-                set0->setColor(colors[1]);
-            } else if (mediaQualita <= 100) {
-                set0->setColor(colors[2]);
-            } else if (mediaQualita <= 125) {
-                set0->setColor(colors[3]);
-            } else if (mediaQualita <= 150) {
-                set0->setColor(colors[4]);
-            } else if (mediaQualita <= 175) {
-                set0->setColor(colors[5]);
-            } else {
-                set0->setColor(colors[6]);
-            }
-
-            series->append(set0); // Append the QBarSet to the QBarSeries
-
-            // Reset for the next month
-            currentMonth = value.getDataOra().date().month();
-            sommaQualita = value.getValore();
-            count = 1;
+    //aggiungo la probabilistica variazione del 20% tra 50 e 75
+    if (std::uniform_real_distribution<double>(0.0, 1.0)(gen) < 0.20) {
+        double biasedNumber = std::uniform_real_distribution<double>(50.0, 75.0)(gen);
+        if (biasedNumber >= this->getValore() - maxVariation && biasedNumber <= this->getValore() + maxVariation) {
+            randomNumber = biasedNumber;
         }
     }
 
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Grafico a Barre");
-
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    for (int i = 0; i < 12; ++i) {
-        axisX->append(mese[i]);
-    }
-    chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
-
-    QValueAxis *axisY = new QValueAxis();
-    axisY->setRange(10, 180);
-    axisY->setTickCount(18);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    series->attachAxis(axisY);
-
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-    return chartView;
-}
-*/
-
-void displayPopupForMarkerClick(QString nomeMese, double media)
-{
-    QString out = QString("Mese: %1\nMedia: %2").arg(nomeMese).arg(media);
-
-    QMessageBox::information(nullptr, "Info Mese", out);
+    return Valore(randomNumber, dataOra);
 }
 
-QChartView* createLineChart (const vector<Valore>& valori){
-    QLineSeries *series = new QLineSeries;
-    QChart *chart = new QChart();
-    QChartView *chartView = new QChartView(chart);
-    QCategoryAxis *axisX = new QCategoryAxis();
-    QValueAxis *axisY = new QValueAxis();
-    QScatterSeries *markerSeries = new QScatterSeries;
-    const QVector<QColor> colors = {
-        QColor(0, 0, 255), QColor(0, 255, 255), QColor(0, 255, 0), QColor(255, 255, 0),
-        QColor(255, 153, 51), QColor(255, 0, 0), QColor(153, 0, 153)
-    };
-    QVector<QString> mese = {
-        "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
-        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
-    };
-    int currentMonth = valori[0].getDataOra().date().month();
-    int sommaQualita = 0, mediaQualita = 0, count = 0, pos = 1, max = -1, min = -1;
-
-    QObject::connect(markerSeries, &QScatterSeries::clicked, [mese, currentMonth](const QPointF &point) {
-        int id_mese = (int)point.x();
-        QString nomeMese = mese[(id_mese - 2+currentMonth)%12]; // -2 perchè 1 è per l'indice dell'array che parte da 0, l'altro è che l'id del mese va da 1 a 12 e quindi devo sottrarre ancora
-        double mediaClick = point.y();
-        displayPopupForMarkerClick(nomeMese, mediaClick);
-    });
-
-    for (const auto& value : valori) {
-        if (value.getDataOra().date().month() == currentMonth) {
-            sommaQualita += value.getValore();
-            ++count;
-        } else {
-            // calcolo qualità media mensile
-            mediaQualita = (count > 0) ? sommaQualita / count : 0;
-            //cout << "Per il mese di " << currentMonth << " la qualità è di: " << mediaQualita << endl;
-            QPointF point(pos, mediaQualita);
-            series->append(point);
-            markerSeries->append(point);
-            cout<<"Current month: "<<mese[currentMonth-1].toStdString()<<" Media: "<<mediaQualita<<endl;
-
-            if (mediaQualita > max || max == -1){
-                max = mediaQualita;
-            }
-            if (mediaQualita < min || min == -1){
-                min = mediaQualita;
-            }
-
-            // Reset for the next month
-            pos++;
-            currentMonth = value.getDataOra().date().month();
-            sommaQualita = value.getValore();
-            count = 1;
+void SensoreAria::modificaData(QDateTime &data){
+    data = data.addDays(1);
+    int currentMonth = data.date().month();
+    if (data.date().daysInMonth() < data.date().day()) {
+        // Se il giorno supera i giorni totali del mese, aumenta il mese
+        data = data.addMonths(1);
+        // Se era l'ultimo giorno di dicembre, aumenta anche l'anno
+        if (currentMonth == 12) {
+            data = data.addYears(1);
         }
+        // Imposta il giorno a 1 per il nuovo mese
+        data.setDate(QDate(data.date().year(), data.date().month(), 1));
     }
-    axisX ->setRange(0,12);
-    for(int i=0; i<12; i++){
-        //cout<<"Mese: "<<mese[(i+currentMonth-1)%12].toStdString()<<"Index"<<i+1<<endl;
-        axisX->append(mese[(i+currentMonth-1)%12], i+1);
-    }
-
-    axisY->setRange(min, max);
-
-    series->attachAxis(axisY);
-    series->attachAxis(axisX);
-
-    markerSeries->setMarkerSize(10);
-    markerSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-    markerSeries->setColor(Qt::red);
-
-    chart->addAxis(axisX, Qt::AlignBottom);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    chart->addSeries(series);
-    chart->addSeries(markerSeries);
-
-    chart->legend()->hide();
-    chart->setTitle("Media per mese");
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-    return chartView;
-
 }
+
+Sensore *SensoreAria::clone() const {
+    return new SensoreAria(*this);
+}
+
 
 int main(int argc, char *argv[])
 {
     QDateTime data = QDateTime::currentDateTime();
-    data.setTime(QTime(0,0,0));
-    int hours = 0;
-    SensoreAria s = SensoreAria("Sensore1", "IQA", "prova",180,50);
-    Valore valore = s.getRandom(data);
-    s.modificaData(data,hours);
-    vector<Valore> vectValori;
-    vectValori.push_back(valore);
-    for (int i = 1; i < 366 * 24; ++i) {
+    SensoreAria s = SensoreAria(0,"Sensore1", "IQA", "prova","cucina",180,50);
+    for (int i = 0; i < 366; ++i) {
         Valore val = s.getRandom(data);
         s.setValore(val.getValore());
-        s.modificaData(data,hours);
-        //cout<<data.toString(Qt::ISODate).toStdString()<<". Qualità dell'aria: "<<val.getValore()<<endl;
-        //vectValori.push_back(val);
+        s.modificaData(data);
         s.addValore(val);
     }
     QApplication a(argc, argv);
     QMainWindow window;
-    //window.setCentralWidget(createBarChart(vectValori)); // Aggiungi il grafico alla finestra principale
-    //window.setCentralWidget(createBarChart(s.getValori()));
-    window.setCentralWidget(createLineChart(s.getValori()));
+    QString abc = "mese";
+    window.setCentralWidget(Chart::getChart(s.getValori(), abc));
     window.resize(1000,1000);
     window.show();
     return a.exec();

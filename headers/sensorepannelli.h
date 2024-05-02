@@ -11,13 +11,15 @@ private:
 
 public:
     SensorePannelli();
-    SensorePannelli(const QString &nome,
-                     const QString &unitaMisura,
-                     const QString &icona,
-                     int nPannelli,
-                     double potenzaPannello,
-                     double potenzaMax,
-                     double valore);
+    SensorePannelli(const unsigned int id,
+                    const QString &name,
+                    const QString &unitaMisura,
+                    const QString &icona,
+                    const QString gruppo,
+                    int nPannelli,
+                    double potenzaPannello,
+                    double potenzaMax,
+                    double valore);
 };
 
 #endif // SENSOREPANNELLI_H

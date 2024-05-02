@@ -5,12 +5,13 @@
 
 SensoreLampadina::SensoreLampadina():SensoreElettricita(), dimm(false) {}
 
-SensoreLampadina::SensoreLampadina(const QString &nome,
-                                       const QString &unitaMisura,
-                                       const QString &icona,
+SensoreLampadina::SensoreLampadina(const unsigned int id,
+                                   const QString &nome,
+                                   const QString &unitaMisura,
+                                   const QString &icona,
+                                   const QString gruppo,
                                        bool dimm,
                                        double potenzaMax,
                                        double valore
                                        )
-    : SensoreElettricita(nome, unitaMisura, icona, potenzaMax,valore)
-    , dimm(dimm){}
+    : SensoreElettricita(id, nome, unitaMisura, icona, gruppo, potenzaMax,valore), dimm(dimm){}

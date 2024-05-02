@@ -11,13 +11,15 @@ private:
 
 public:
     SensoreTemperatura();
-    SensoreTemperatura(const QString &nome,
-                   const QString &unitaMisura,
-                   const QString &icona,
-                   double valoreTarget,
-                   double tempMin,
-                   double tempMax,
-                   double valore);
+    SensoreTemperatura(const unsigned int id,
+                       const QString &name,
+                       const QString &unitaMisura,
+                       const QString &icona,
+                       const QString gruppo,
+                       double valoreTarget,
+                       double tempMin,
+                       double tempMax,
+                       double valore);
     double getValoreTarget() const;
 };
 

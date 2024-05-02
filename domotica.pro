@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/chart.cpp \
     src/main.cpp \
     src/sensore.cpp \
     src/sensorearia.cpp \
@@ -30,7 +31,8 @@ HEADERS += \
     headers/sensorepannelli.h \
     headers/sensoretemperatura.h \
     headers/sensoreumidita.h \
-    headers/valore.h
+    headers/valore.h \
+    headers/chart.h
 
 TRANSLATIONS += \
     domotica_it_IT.ts

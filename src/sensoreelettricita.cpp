@@ -3,10 +3,12 @@
 
 SensoreElettricita::SensoreElettricita():Sensore(), potenzaMax(0){}
 
-SensoreElettricita::SensoreElettricita(const QString &nome,
+SensoreElettricita::SensoreElettricita(const unsigned int id,
+                                       const QString &nome,
                                        const QString &unitaMisura,
                                        const QString &icona,
+                                       const QString gruppo,
                                        double potenzaMax,
                                        double valore)
-    : Sensore(nome, unitaMisura, icona, valore)
+    : Sensore(id, nome, unitaMisura, icona, gruppo, valore)
     , potenzaMax(potenzaMax){}

@@ -11,12 +11,14 @@ private:
 
 public:
     SensoreLampadina();
-    SensoreLampadina(const QString &nome,
-                const QString &unitaMisura,
-                const QString &icona,
-                bool dimm,
-                double potenzaMax,
-                double valore);
+    SensoreLampadina(const unsigned int id,
+                     const QString &name,
+                     const QString &unitaMisura,
+                     const QString &icona,
+                     const QString gruppo,
+                     bool dimm,
+                     double potenzaMax,
+                     double valore);
 };
 
 #endif // SENSORELAMPADINA_H

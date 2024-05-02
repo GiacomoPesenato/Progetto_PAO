@@ -13,6 +13,7 @@ public:
     Valore(double valore, const QDateTime &dataOra);
 
     double getValore() const;
+    void setValore(const double &valore);
 
     const QDateTime &getDataOra() const;
 };

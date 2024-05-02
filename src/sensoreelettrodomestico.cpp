@@ -5,12 +5,13 @@
 
 SensoreElettrodomestico::SensoreElettrodomestico():SensoreElettricita(), classeEnergetica("0") {}
 
-SensoreElettrodomestico::SensoreElettrodomestico(const QString &nome,
-                                   const QString &unitaMisura,
-                                   const QString &icona,
-                                   QString classeEnergetica,
-                                   double potenzaMax,
-                                   double valore
-                                   )
-    : SensoreElettricita(nome, unitaMisura, icona, potenzaMax, valore)
-    , classeEnergetica(classeEnergetica){}
+SensoreElettrodomestico::SensoreElettrodomestico(const unsigned int id,
+                                                 const QString &nome,
+                                                 const QString &unitaMisura,
+                                                 const QString &icona,
+                                                 const QString gruppo,
+                                                 QString classeEnergetica,
+                                                 double potenzaMax,
+                                                 double valore
+                                                 )
+    : SensoreElettricita(id, nome, unitaMisura, icona, gruppo, potenzaMax, valore), classeEnergetica(classeEnergetica){}

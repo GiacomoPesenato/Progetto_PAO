@@ -8,20 +8,24 @@
 class SensoreAria: public Sensore
 {
 private:
-    double sogliaMassima;
-    QVector<QString>mese;
+    int sogliaMassima;
+
+public slots:
+    void onButton1Clicked();
+    void onButton2Clicked();
 
 public:
     SensoreAria();
-    SensoreAria(const QString &nome,
-                       const QString &unitaMisura,
-                       const QString &icona,
-                       double sogliaMassima,
-                       double valore);
+    SensoreAria(const unsigned int id,
+                const QString &name,
+                const QString &unitaMisura,
+                const QString &icona,
+                const QString gruppo,
+                int sogliaMassima,
+                double valore);
     Valore getRandom(const QDateTime &dataOra) override;
-    void modificaData(QDateTime &data, int hours);
-    QChartView* createLineChart(const vector<Valore> &vectValori);
-    void displayPopupForMarkerClick(QString nomeMese, double media);
+    static void modificaData(QDateTime &data);
+    virtual Sensore *clone() const override;
 };
 
 

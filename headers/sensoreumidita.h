@@ -11,9 +11,11 @@ private:
 
 public:
     SensoreUmidita();
-    SensoreUmidita(const QString &nome,
+    SensoreUmidita(const unsigned int id,
+                   const QString &name,
                    const QString &unitaMisura,
                    const QString &icona,
+                   const QString gruppo,
                    double valoreTarget,
                    double valore);
     double getValoreTarget() const;
