@@ -42,12 +42,40 @@ Valore Sensore::getRandom(const QDateTime &dataOra)
     return valore;
 }
 
-QVector<Valore> Sensore::getValori() const{
-    return this->valori;
-}
+
+
 double Sensore::getValore() const{
     return valore;
 }
+
 void Sensore::setValore(const double &valore){
     this->valore = valore;
+}
+
+QString Sensore::getNome() const{
+    return nome;
+}
+void Sensore::setNome(QString &nome){
+    this->nome = nome;
+}
+
+QString Sensore::getUnitaMisura() const{
+    return unitaMisura;
+}
+void Sensore::setUnitaMisura(QString &unitaMisura){
+    this->unitaMisura = unitaMisura;
+}
+
+QString Sensore::getIcona() const{
+    return icona;
+}
+void Sensore::setIcona(QString &icona){
+    this->icona = icona;
+}
+
+QVector<Valore> Sensore::getValori() const{
+    return this->valori;
+}
+void Sensore::setValori(QVector<Valore> &valori){
+    this->valori = valori;
 }

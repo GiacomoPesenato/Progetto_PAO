@@ -31,8 +31,12 @@ QChartView* Chart::getChart(const QVector<Valore>& valori, QString &tipo) {
         axisY->setRange(min, max);
         axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "settimana"){
-        //chartSettimana(valori, series, markerSeries, axisX, max, min);
+        chartSettimana(valori, series, markerSeries, axisX, max, min);
         axisY->setRange(min, max);
+        axisY->setTickCount(int((max - min) / 2) + 1);
+    } else if (tipo == "giorno"){
+        chartGiorno(valori, series, markerSeries, axisX, max, min);
+        axisY->setRange(min,max);
         axisY->setTickCount(int((max - min) / 2) + 1);
     }
 
@@ -113,6 +117,58 @@ void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatt
         }
         if (value.getValore() < min || min == -1){
             min = value.getValore();
+        }
+        axisX->append(QString::number(i),i);
+
+    }
+}
+
+void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min){
+    axisX->setRange(0,7);
+    int dayOne = valori[0].getDataOra().date().day();
+    int dayTwo = valori[1].getDataOra().date().day();
+    bool lampadina = false;
+    int counter = 0;
+    Valore value = valori[0];
+    //controllo che ad un valore corrisponda un giorno, se non è così sono nel sensore lampadina e chiamo una funzione per gestirmi i 24 dati di ogni giorno
+    if (dayOne == dayTwo){
+        lampadina = true;
+    }
+    cout << lampadina << endl;
+    for (int i = 1; i <= 7; i++) {
+        if (lampadina){
+            value = mediaLampadina(valori, counter);
+            counter = 24*i;
+            //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
+            //cout<<counter<<endl;
+        }else{
+            value = valori[counter+i-1];
+        }
+        QPointF point(i, value.getValore());
+        series->append(point);
+        markerSeries->append(point);
+        if (value.getValore() > max || max == -1){
+            max = value.getValore();
+        }
+        if (value.getValore() < min || min == -1){
+            min = value.getValore();
+        }
+        axisX->append(QString::number(i),i);
+
+    }
+}
+
+void Chart::chartGiorno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min){
+    axisX->setRange(0,24);
+    for (int i = 0; i < 24; i++) {
+        QPointF point(i, valori[i].getValore());
+        series->append(point);
+        markerSeries->append(point);
+        if (valori[i].getValore() > max || max == -1){
+            max = valori[i].getValore();
+        }
+        if (valori[i].getValore() < min || min == -1){
+            min = valori[i].getValore();
         }
         axisX->append(QString::number(i),i);
 

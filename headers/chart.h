@@ -13,6 +13,8 @@ public:
     static void chartAnno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, QVector<QString> mesi, int currentMonth, int &maxMedia, int &minMedia);
     static void chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese);
     static Valore mediaLampadina(const QVector<Valore> &valori, int &counter);
+    static void chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min);
+    static void chartGiorno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min);
     ~Chart();
 };
 
