@@ -9,7 +9,7 @@ using namespace std;
 Chart::Chart() {}
 
 QChartView* Chart::getChart(const Sensore &s, QString tipo) {
-    QLineSeries *   series = new QLineSeries;
+    QLineSeries *series = new QLineSeries;
     QScatterSeries *markerSeries = new QScatterSeries;
     QChart *chart = new QChart();
     QChartView *chartView = new QChartView(chart);
@@ -18,15 +18,16 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     QVector<Valore> valori = s.getValori();
     int currentMonth = valori[0].getDataOra().date().month();
     int max = -1, min = -1;
-    bool lampadina = false;
+    bool lampadina = false, dimmer = false;
     QVector<QString> mesi = {
         "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
         "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
     };
 
-    if (dynamic_cast<const SensoreLampadina*>(&s)) {
+    if (const SensoreLampadina *lamp = dynamic_cast<const SensoreLampadina*>(&s)) {
         // L'oggetto è di tipo SensoreLampadina
         lampadina = true;
+        dimmer = lamp->getDimmer();
     } else {
         // L'oggetto non è di tipo SensoreLampadina
         lampadina = false;
@@ -38,11 +39,11 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
         axisY->setTickCount(int((max - min) / 10) + 1);
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
-        chartMese(valori, series, markerSeries, axisX, max, min, giorniMese, lampadina);
+        chartMese(valori, series, markerSeries, axisX, max, min, giorniMese, lampadina, dimmer);
         axisY->setRange(min, max);
         axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "settimana"){
-        chartSettimana(valori, series, markerSeries, axisX, max, min, lampadina);
+        chartSettimana(valori, series, markerSeries, axisX, max, min, lampadina, dimmer);
         axisY->setRange(min, max);
         axisY->setTickCount(int((max - min) / 2) + 1);
     } else if (tipo == "giorno"){
@@ -99,7 +100,7 @@ void Chart::chartAnno(const QVector<Valore> &valori, QLineSeries *series, QScatt
     }
 }
 
-void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese, bool lampadina){
+void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese, bool lampadina, bool dimmer){
     axisX->setRange(0,31);
     int counter = 0;
     Valore value = valori[0];
@@ -107,7 +108,7 @@ void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatt
     cout << lampadina << endl;
     for (int i = 1; i <= giorniMese; i++) {
         if (lampadina){
-            value = mediaLampadina(valori, counter);
+            value = mediaLampadina(valori, counter, dimmer);
             counter = 24*i;
             //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
             //cout<<counter<<endl;
@@ -128,7 +129,7 @@ void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatt
     }
 }
 
-void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, bool lampadina){
+void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, bool lampadina, bool dimmer){
     axisX->setRange(0,7);
 
     int counter = 0;
@@ -136,7 +137,7 @@ void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, Q
 
     for (int i = 1; i <= 7; i++) {
         if (lampadina){
-            value = mediaLampadina(valori, counter);
+            value = mediaLampadina(valori, counter, dimmer);
             counter = 24*i;
             //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
             //cout<<counter<<endl;
@@ -174,13 +175,45 @@ void Chart::chartGiorno(const QVector<Valore> &valori, QLineSeries *series, QSca
     }
 }
 
-Valore Chart::mediaLampadina(const QVector<Valore> &valori, int &counter){
-    int somma = 0;
-    for (int i = 0; i < 24; i++){
-        //cout<<valori[counter+i].getValore()<<" "<<valori[counter+i].getDataOra().toString("dd/MM/yyyy HH:ss:mm").toStdString()<<endl;
-        somma += valori[counter+i].getValore();
-    }
+Valore Chart::mediaLampadina(const QVector<Valore> &valori, int &counter, bool dimmer){
+    int somma = 0, maxVal = -1;
     Valore value = valori[counter];
-    value.setValore(somma/24);
+    for (int i = 0; i < 24; i++){
+        if (dimmer){ //se è dimmerabile sommo tutti i valori
+            somma += valori[counter+i].getValore();
+        }else{
+            if (valori[counter+i].getValore() == 0){//se non è dimmerabile controllo se è spenta (se !dimmer gli unici val che può assumere sono 0 o max)
+                somma += 1;//somma tutte le volte che è spenta
+            }
+            if (valori[counter+i].getValore() > maxVal){
+                maxVal = valori[counter+i].getValore();//prendo il max val
+            }
+        }
+    }
+    if (dimmer){
+        value.setValore(somma/24);
+    }else{
+        if (somma >= 12){//se più della metà delle volte è spenta allora gli assegno 0
+            value.setValore(0);
+        }else{
+            value.setValore(maxVal);//altrimenti il max valore
+        }
+    }
     return value;
 }
+/*Questo discorso di assegnare 0 o max è per far capire che non è dimmerabile. Se facessi per lampadina dimmerabile o meno la media quest'ultima falserebbe il valore della non dimmerabile es:
+Lampadina NON dimmerabile min 0 max 20
+
+1: 0              13: 0         somma = 80
+2: 20             14: 0         media = 80/24 = 3
+3: 0              15: 0         se applicassi lo stesso metodo che applico per la dimmerabile dovrei mettere il valore 3 nel grafico
+4: 0              16: 0         ma non essendo dimmerabile la lampadina può assumere solo 0 o 20 ed essendoci su 24 valori ben 20 valori 0 e 4 valori 20
+5: 0              17: 0         nel grafico metterò 0
+6: 0              18: 0
+7: 0              19: 0
+8: 0              20: 0
+9: 0              21: 0
+10: 20            22: 0
+11: 20            23: 0
+12: 20            24: 0
+*/
