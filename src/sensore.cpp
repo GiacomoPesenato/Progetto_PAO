@@ -2,7 +2,7 @@
 #include "../headers/valore.h"
 
 #include <QDateTime>
-#include <QVector>>
+#include <QVector>
 
 using namespace std;
 

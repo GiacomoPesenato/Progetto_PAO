@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QMainWindow window;
     QString abc = "mese";
-    window.setCentralWidget(Chart::getChart(s.getValori(), abc));
+    window.setCentralWidget(Chart::getChart(s, abc));
     window.resize(1000,1000);
     window.show();
     return a.exec();

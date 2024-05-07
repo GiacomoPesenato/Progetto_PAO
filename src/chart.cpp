@@ -2,24 +2,35 @@
 #include <QVector>
 #include <iostream>
 #include "../headers/chart.h"
+#include "../headers/sensorelampadina.h"
 
 using namespace std;
 
 Chart::Chart() {}
 
-QChartView* Chart::getChart(const QVector<Valore>& valori, QString &tipo) {
-    QLineSeries *series = new QLineSeries;
+QChartView* Chart::getChart(const Sensore &s, QString tipo) {
+    QLineSeries *   series = new QLineSeries;
     QScatterSeries *markerSeries = new QScatterSeries;
     QChart *chart = new QChart();
     QChartView *chartView = new QChartView(chart);
     QCategoryAxis *axisX = new QCategoryAxis();
     QValueAxis *axisY = new QValueAxis();
+    QVector<Valore> valori = s.getValori();
     int currentMonth = valori[0].getDataOra().date().month();
     int max = -1, min = -1;
+    bool lampadina = false;
     QVector<QString> mesi = {
         "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
         "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
     };
+
+    if (dynamic_cast<const SensoreLampadina*>(&s)) {
+        // L'oggetto è di tipo SensoreLampadina
+        lampadina = true;
+    } else {
+        // L'oggetto non è di tipo SensoreLampadina
+        lampadina = false;
+    }
 
     if(tipo == "anno"){
         chartAnno(valori, series, markerSeries, axisX, mesi, currentMonth, max, min);
@@ -27,11 +38,11 @@ QChartView* Chart::getChart(const QVector<Valore>& valori, QString &tipo) {
         axisY->setTickCount(int((max - min) / 10) + 1);
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
-        chartMese(valori, series, markerSeries, axisX, max, min, giorniMese);
+        chartMese(valori, series, markerSeries, axisX, max, min, giorniMese, lampadina);
         axisY->setRange(min, max);
         axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "settimana"){
-        chartSettimana(valori, series, markerSeries, axisX, max, min);
+        chartSettimana(valori, series, markerSeries, axisX, max, min, lampadina);
         axisY->setRange(min, max);
         axisY->setTickCount(int((max - min) / 2) + 1);
     } else if (tipo == "giorno"){
@@ -88,17 +99,11 @@ void Chart::chartAnno(const QVector<Valore> &valori, QLineSeries *series, QScatt
     }
 }
 
-void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese){
+void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese, bool lampadina){
     axisX->setRange(0,31);
-    int dayOne = valori[0].getDataOra().date().day();
-    int dayTwo = valori[1].getDataOra().date().day();
-    bool lampadina = false;
     int counter = 0;
     Valore value = valori[0];
-    //controllo che ad un valore corrisponda un giorno, se non è così sono nel sensore lampadina e chiamo una funzione per gestirmi i 24 dati di ogni giorno
-    if (dayOne == dayTwo){
-        lampadina = true;
-    }
+
     cout << lampadina << endl;
     for (int i = 1; i <= giorniMese; i++) {
         if (lampadina){
@@ -123,18 +128,12 @@ void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatt
     }
 }
 
-void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min){
+void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, bool lampadina){
     axisX->setRange(0,7);
-    int dayOne = valori[0].getDataOra().date().day();
-    int dayTwo = valori[1].getDataOra().date().day();
-    bool lampadina = false;
+
     int counter = 0;
     Valore value = valori[0];
-    //controllo che ad un valore corrisponda un giorno, se non è così sono nel sensore lampadina e chiamo una funzione per gestirmi i 24 dati di ogni giorno
-    if (dayOne == dayTwo){
-        lampadina = true;
-    }
-    cout << lampadina << endl;
+
     for (int i = 1; i <= 7; i++) {
         if (lampadina){
             value = mediaLampadina(valori, counter);
