@@ -7,7 +7,7 @@
 class SensoreElettricita: public Sensore
 {
 private:
-    double potenzaMax;
+    const double potenzaMax;
 
 public:
     SensoreElettricita();
@@ -18,6 +18,7 @@ public:
                        const QString gruppo,
                        double potenzaMax,
                        double valore);
+    double getPotenzaMax() const;
 };
 
 #endif // SENSOREELETTRICITA_H

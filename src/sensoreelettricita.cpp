@@ -12,3 +12,7 @@ SensoreElettricita::SensoreElettricita(const unsigned int id,
                                        double valore)
     : Sensore(id, nome, unitaMisura, icona, gruppo, valore)
     , potenzaMax(potenzaMax){}
+
+double SensoreElettricita::getPotenzaMax() const {
+    return potenzaMax;
+}

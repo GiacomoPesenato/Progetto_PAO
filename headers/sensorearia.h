@@ -24,8 +24,10 @@ public:
                 int sogliaMassima,
                 double valore);
     Valore getRandom(const QDateTime &dataOra) override;
-    static void modificaData(QDateTime &data);
+    void modificaData(QDateTime &data);
     virtual Sensore *clone() const override;
+    void simula(SensoreAria &s, QDateTime &data);
+    int getSogliaMassima() const;
 };
 
 

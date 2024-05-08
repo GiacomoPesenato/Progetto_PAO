@@ -27,7 +27,9 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     if (const SensoreLampadina *lamp = dynamic_cast<const SensoreLampadina*>(&s)) {
         // L'oggetto è di tipo SensoreLampadina
         lampadina = true;
-        dimmer = lamp->getDimmer();
+        //dimmer = lamp->getDimmer();
+        dimmer = false;
+
     } else {
         // L'oggetto non è di tipo SensoreLampadina
         lampadina = false;

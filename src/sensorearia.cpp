@@ -71,20 +71,27 @@ Sensore *SensoreAria::clone() const {
     return new SensoreAria(*this);
 }
 
+int SensoreAria::getSogliaMassima() const {
+    return sogliaMassima;
+}
 
-int main(int argc, char *argv[])
-{
-    QDateTime data = QDateTime::currentDateTime();
-    SensoreAria s = SensoreAria(0,"Sensore1", "IQA", "prova","cucina",180,50);
+void SensoreAria::simula(SensoreAria &s, QDateTime &data){
     for (int i = 0; i < 366; ++i) {
         Valore val = s.getRandom(data);
         s.setValore(val.getValore());
         s.modificaData(data);
         s.addValore(val);
     }
+}
+
+int main(int argc, char *argv[])
+{
+    QDateTime data = QDateTime::currentDateTime();
+    SensoreAria s = SensoreAria(0,"Sensore1", "IQA", "prova","cucina",180,50);
+    s.simula(s, data);
+    QString abc = "mese";
     QApplication a(argc, argv);
     QMainWindow window;
-    QString abc = "mese";
     window.setCentralWidget(Chart::getChart(s, abc));
     window.resize(1000,1000);
     window.show();

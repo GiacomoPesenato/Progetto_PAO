@@ -7,7 +7,7 @@
 class SensoreLampadina: public SensoreElettricita
 {
 private:
-    bool dimm;
+    bool dimmer;
 
 public:
     SensoreLampadina();
@@ -16,9 +16,17 @@ public:
                      const QString &unitaMisura,
                      const QString &icona,
                      const QString gruppo,
-                     bool dimm,
+                     bool dimmer,
                      double potenzaMax,
                      double valore);
+
+    Valore getRandom(const QDateTime &dataOra) override;
+    void modificaData(QDateTime &data);
+
+    bool getDimmer() const;
+    void setDimmer(bool value);
+
+    virtual Sensore *clone() const override;
 };
 
 #endif // SENSORELAMPADINA_H
