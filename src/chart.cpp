@@ -1,21 +1,23 @@
 #include <QtCharts>
 #include <QVector>
+#include <QObject>
 #include <iostream>
 #include "../headers/chart.h"
 #include "../headers/sensorelampadina.h"
 
+#define OFFSET 0.5
 using namespace std;
 
-Chart::Chart() {}
+Chart::Chart()  {}
 
 QChartView* Chart::getChart(const Sensore &s, QString tipo) {
-    QLineSeries *series = new QLineSeries;
-    QScatterSeries *markerSeries = new QScatterSeries;
-    QChart *chart = new QChart();
-    QChartView *chartView = new QChartView(chart);
-    QCategoryAxis *axisX = new QCategoryAxis();
-    QValueAxis *axisY = new QValueAxis();
-    QVector<Valore> valori = s.getValori();
+    markerSeries = new QScatterSeries;
+    chart = new QChart();
+    chartView = new QChartView(chart);
+    series = new QLineSeries;
+    axisX = new QCategoryAxis();
+    axisY = new QValueAxis();
+    valori = s.getValori();
     int currentMonth = valori[0].getDataOra().date().month();
     int max = -1, min = -1;
     bool lampadina = false, dimmer = false;
@@ -25,61 +27,63 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     };
 
     if (const SensoreLampadina *lamp = dynamic_cast<const SensoreLampadina*>(&s)) {
-        // L'oggetto è di tipo SensoreLampadina
         lampadina = true;
-        //dimmer = lamp->getDimmer();
-        dimmer = false;
-
-    } else {
-        // L'oggetto non è di tipo SensoreLampadina
-        lampadina = false;
+        dimmer = lamp->getDimmer();
     }
-
     if(tipo == "anno"){
-        chartAnno(valori, series, markerSeries, axisX, mesi, currentMonth, max, min);
-        axisY->setRange(min, max);
+        chartAnno(currentMonth, max, min, mesi);
+        axisY->setRange(min - 10, max + 10);
         axisY->setTickCount(int((max - min) / 10) + 1);
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
-        chartMese(valori, series, markerSeries, axisX, max, min, giorniMese, lampadina, dimmer);
-        axisY->setRange(min, max);
+        chartMese(max, min, giorniMese, lampadina, dimmer);
+        axisY->setRange(min - 10, max + 10);
         axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "settimana"){
-        chartSettimana(valori, series, markerSeries, axisX, max, min, lampadina, dimmer);
-        axisY->setRange(min, max);
-        axisY->setTickCount(int((max - min) / 2) + 1);
+        chartSettimana(max, min, lampadina, dimmer);
+        axisY->setRange(min - 10, max + 10);
+        axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "giorno"){
-        chartGiorno(valori, series, markerSeries, axisX, max, min);
-        axisY->setRange(min,max);
-        axisY->setTickCount(int((max - min) / 2) + 1);
+        chartGiorno(max, min);
+        axisY->setRange(min - 10, max + 20);
+        axisY->setTickCount(int((max - min) / 5) + 1);
     }
+
+    axisY->setLabelFormat("%d");
 
     markerSeries->setMarkerSize(10);
     markerSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
     markerSeries->setColor(Qt::red);
 
+    chart->addSeries(series);
+    chart->addSeries(markerSeries);
+
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisX);
     series->attachAxis(axisY);
-    chart->addSeries(series);
-    chart->addSeries(markerSeries);
+    markerSeries->attachAxis(axisX);
+    markerSeries->attachAxis(axisY);
+
     chart->legend()->hide();
     chart->setTitle("Media per mese");
     chartView->setRenderHint(QPainter::Antialiasing);
 
+    connect(markerSeries, &QScatterSeries::clicked, this, &Chart::onClick);
+
     return chartView;
 }
 
-void Chart::chartAnno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries,QCategoryAxis *axisX, QVector<QString> mesi,int currentMonth, int &maxMedia, int &minMedia){
-    int somma = 0, media = 0, count = 0, pos = 1;
+
+void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia, const QVector<QString> mesi){
+    int somma = 0, media = 0, count = 0, pos = 0;
     for (const Valore &value : valori) {
         if (value.getDataOra().date().month() == currentMonth) {
             somma += value.getValore();
             ++count;
         } else {
             media = (count > 0) ? somma / count : 0;
-            QPointF point(pos, media);
+            QPointF point(pos+OFFSET, media);
             series->append(point);
             markerSeries->append(point);
 
@@ -102,22 +106,23 @@ void Chart::chartAnno(const QVector<Valore> &valori, QLineSeries *series, QScatt
     }
 }
 
-void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese, bool lampadina, bool dimmer){
-    axisX->setRange(0,31);
+void Chart::chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer){
+    axisX->setRange(0,giorniMese);
     int counter = 0;
     Valore value = valori[0];
 
-    cout << lampadina << endl;
-    for (int i = 1; i <= giorniMese; i++) {
-        if (lampadina){
-            value = mediaLampadina(valori, counter, dimmer);
+    cout << dimmer << endl;
+    for (int i = 0; i < giorniMese; i++) {
+        if (lampadina != 0){
+            value = mediaLampadina(counter, dimmer);
             counter = 24*i;
-            //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
-            //cout<<counter<<endl;
+            // cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
+            // cout<<counter<<endl;
         }else{
-            value = valori[counter+i-1];
+            value = valori[counter+i];
+            cout << value.getValore() <<" "<<value.getDataOra().date().day()<< endl;
         }
-        QPointF point(i, value.getValore());
+        QPointF point(i+OFFSET, value.getValore());
         series->append(point);
         markerSeries->append(point);
         if (value.getValore() > max || max == -1){
@@ -126,27 +131,27 @@ void Chart::chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatt
         if (value.getValore() < min || min == -1){
             min = value.getValore();
         }
-        axisX->append(QString::number(i),i);
-
+        axisX->append(QString::number(i+1),i+1);
     }
+    //cout <<"ORA ESCO"<< endl;
 }
 
-void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, bool lampadina, bool dimmer){
+void Chart::chartSettimana(int &max, int &min, bool lampadina, bool dimmer){
     axisX->setRange(0,7);
 
     int counter = 0;
     Valore value = valori[0];
 
-    for (int i = 1; i <= 7; i++) {
-        if (lampadina){
-            value = mediaLampadina(valori, counter, dimmer);
+    for (int i = 0; i < 7; i++) {
+        if (lampadina != 0){
+            value = mediaLampadina(counter, dimmer);
             counter = 24*i;
             //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
             //cout<<counter<<endl;
         }else{
             value = valori[counter+i-1];
         }
-        QPointF point(i, value.getValore());
+        QPointF point(i+OFFSET, value.getValore());
         series->append(point);
         markerSeries->append(point);
         if (value.getValore() > max || max == -1){
@@ -155,15 +160,15 @@ void Chart::chartSettimana(const QVector<Valore> &valori, QLineSeries *series, Q
         if (value.getValore() < min || min == -1){
             min = value.getValore();
         }
-        axisX->append(QString::number(i),i);
+        axisX->append(QString::number(i+1),i+1);
 
     }
 }
 
-void Chart::chartGiorno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min){
+void Chart::chartGiorno(int &max, int &min){
     axisX->setRange(0,24);
     for (int i = 0; i < 24; i++) {
-        QPointF point(i, valori[i].getValore());
+        QPointF point(i+OFFSET, valori[i].getValore());
         series->append(point);
         markerSeries->append(point);
         if (valori[i].getValore() > max || max == -1){
@@ -172,17 +177,19 @@ void Chart::chartGiorno(const QVector<Valore> &valori, QLineSeries *series, QSca
         if (valori[i].getValore() < min || min == -1){
             min = valori[i].getValore();
         }
-        axisX->append(QString::number(i),i);
+        axisX->append(QString::number(i+1),i+1);
 
     }
 }
 
-Valore Chart::mediaLampadina(const QVector<Valore> &valori, int &counter, bool dimmer){
+
+Valore Chart::mediaLampadina(int &counter, bool dimmer){
     int somma = 0, maxVal = -1;
     Valore value = valori[counter];
     for (int i = 0; i < 24; i++){
-        if (dimmer){ //se è dimmerabile sommo tutti i valori
+        if (dimmer != 0){ //se è dimmerabile sommo tutti i valori
             somma += valori[counter+i].getValore();
+            //cout << valori[counter+i].getValore() << endl;
         }else{
             if (valori[counter+i].getValore() == 0){//se non è dimmerabile controllo se è spenta (se !dimmer gli unici val che può assumere sono 0 o max)
                 somma += 1;//somma tutte le volte che è spenta
@@ -192,7 +199,8 @@ Valore Chart::mediaLampadina(const QVector<Valore> &valori, int &counter, bool d
             }
         }
     }
-    if (dimmer){
+    if (dimmer != 0){
+        cout << "media: " << somma/24<< endl;
         value.setValore(somma/24);
     }else{
         if (somma >= 12){//se più della metà delle volte è spenta allora gli assegno 0
@@ -219,3 +227,10 @@ Lampadina NON dimmerabile min 0 max 20
 11: 20            23: 0
 12: 20            24: 0
 */
+
+void Chart::onClick(const QPointF &point) {
+    QMessageBox msgBox;
+    msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()+1-OFFSET).arg(point.y()));
+    msgBox.exec();
+}
+

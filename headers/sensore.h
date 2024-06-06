@@ -26,6 +26,9 @@ public:
     double getValore() const;
     void setValore(const double &valore);
 
+    unsigned int getId() const;
+    void setId(const unsigned int &id);
+
     QString getNome() const;
     void setNome(QString &nome);
 
@@ -38,7 +41,8 @@ public:
     QVector<Valore> getValori() const;
     void setValori(QVector<Valore> &valori);
 
-    virtual ~Sensore() {}
+    virtual void modificaData(QDateTime &data);
+    virtual ~Sensore() = default;
     virtual Sensore *clone() const = 0;
     virtual Valore getRandom(const QDateTime &dataOra);
 };

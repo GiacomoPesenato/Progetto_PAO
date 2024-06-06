@@ -16,3 +16,7 @@ SensoreElettricita::SensoreElettricita(const unsigned int id,
 double SensoreElettricita::getPotenzaMax() const {
     return potenzaMax;
 }
+
+Sensore *SensoreElettricita::clone() const {
+    return new SensoreElettricita(*this);
+}

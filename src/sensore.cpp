@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QVector>
+#include <iostream>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ Sensore::Sensore(const unsigned int &id, const QString &nome, const QString &uni
 Sensore::Sensore()
     : id(-1)
     , nome("sensore")
-    , unitaMisura("um")
+    , unitaMisura("N/A")
     , valori()
     , icona("resources/icon.png")
     , gruppo("")
@@ -42,7 +43,25 @@ Valore Sensore::getRandom(const QDateTime &dataOra)
     return valore;
 }
 
+void Sensore::modificaData(QDateTime &data)
+{
+    //cout << "Sensore::modificaData" << endl;
+    data = data.addDays(1);
+    int currentMonth = data.date().month();
+    if (data.date().daysInMonth() < data.date().day()) {
+        data = data.addMonths(1);
+        data.setDate(QDate(data.date().year(), currentMonth, data.date().day()));
+    }
+    //cout << "Data modificata: " << data.toString().toStdString() << endl;
+}
 
+unsigned int Sensore::getId() const{
+    return id;
+}
+
+void Sensore::setId(const unsigned int &id){
+    this->id = id;
+}
 
 double Sensore::getValore() const{
     return valore;

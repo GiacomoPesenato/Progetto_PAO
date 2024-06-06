@@ -1,22 +1,35 @@
 #ifndef CHART_H
 #define CHART_H
 
-#include <QVector>
 #include <QtCharts>
-#include "valore.h"
-#include "sensore.h"
+#include <QVector>
+#include "../headers/sensore.h"
 
-class Chart
-{
+class Chart : public QObject {
+    Q_OBJECT
+
+private:
+    QScatterSeries *markerSeries;
+    QChart *chart;
+    QChartView *chartView;
+    QLineSeries *series;
+    QCategoryAxis *axisX;
+    QValueAxis *axisY;
+    QVector<Valore> valori;
+
+    void chartAnno(int currentMonth, int &max, int &min, QVector<QString> mesi);
+    void chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer);
+    void chartSettimana(int &max, int &min, bool lampadina, bool dimmer);
+    void chartGiorno(int &max, int &min);
+
+    Valore mediaLampadina(int &counter, bool dimmer);
+
 public:
     Chart();
-    static QChartView *getChart(const Sensore &s, QString tipo);
-    static void chartAnno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, QVector<QString> mesi, int currentMonth, int &maxMedia, int &minMedia);
-    static void chartMese(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, int giorniMese, bool lampadina, bool dimmer);
-    static void chartSettimana(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min, bool lampadina, bool dimmer);
-    static void chartGiorno(const QVector<Valore> &valori, QLineSeries *series, QScatterSeries *markerSeries, QCategoryAxis *axisX, int &max, int &min);
-    static Valore mediaLampadina(const QVector<Valore> &valori, int &counter, bool dimmer);
-    ~Chart();
+    QChartView* getChart(const Sensore &s, QString tipo);
+
+private slots:
+    void onClick(const QPointF &point);
 };
 
 #endif // CHART_H

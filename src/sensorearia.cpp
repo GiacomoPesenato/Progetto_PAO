@@ -52,21 +52,6 @@ Valore SensoreAria::getRandom(const QDateTime &dataOra)  {
     return Valore(randomNumber, dataOra);
 }
 
-void SensoreAria::modificaData(QDateTime &data){
-    data = data.addDays(1);
-    int currentMonth = data.date().month();
-    if (data.date().daysInMonth() < data.date().day()) {
-        // Se il giorno supera i giorni totali del mese, aumenta il mese
-        data = data.addMonths(1);
-        // Se era l'ultimo giorno di dicembre, aumenta anche l'anno
-        if (currentMonth == 12) {
-            data = data.addYears(1);
-        }
-        // Imposta il giorno a 1 per il nuovo mese
-        data.setDate(QDate(data.date().year(), data.date().month(), 1));
-    }
-}
-
 Sensore *SensoreAria::clone() const {
     return new SensoreAria(*this);
 }
@@ -75,24 +60,28 @@ int SensoreAria::getSogliaMassima() const {
     return sogliaMassima;
 }
 
-void SensoreAria::simula(SensoreAria &s, QDateTime &data){
+void SensoreAria::generaDati() {
+    QDate dataCorrente = QDate::currentDate();
+    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
+    QTime startTime(0, 0, 0);
+    QDateTime data(primoDelMese, startTime);
     for (int i = 0; i < 366; ++i) {
-        Valore val = s.getRandom(data);
-        s.setValore(val.getValore());
-        s.modificaData(data);
-        s.addValore(val);
+        Valore val = this->getRandom(data);
+        this->setValore(val.getValore());
+        this->modificaData(data);
+        this->addValore(val);
     }
 }
 
 int main(int argc, char *argv[])
 {
-    QDateTime data = QDateTime::currentDateTime();
     SensoreAria s = SensoreAria(0,"Sensore1", "IQA", "prova","cucina",180,50);
-    s.simula(s, data);
-    QString abc = "mese";
+    s.generaDati();
+    QString abc = "anno";
     QApplication a(argc, argv);
     QMainWindow window;
-    window.setCentralWidget(Chart::getChart(s, abc));
+    Chart palle;
+    window.setCentralWidget(palle.getChart(s, abc));
     window.resize(1000,1000);
     window.show();
     return a.exec();

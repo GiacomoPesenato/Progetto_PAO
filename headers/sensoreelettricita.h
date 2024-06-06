@@ -12,13 +12,17 @@ private:
 public:
     SensoreElettricita();
     SensoreElettricita(const unsigned int id,
-                       const QString &name,
+                       const QString &nome,
                        const QString &unitaMisura,
                        const QString &icona,
                        const QString gruppo,
                        double potenzaMax,
                        double valore);
+
     double getPotenzaMax() const;
+
+    virtual Sensore *clone() const override;
+    ~SensoreElettricita() = default;
 };
 
 #endif // SENSOREELETTRICITA_H

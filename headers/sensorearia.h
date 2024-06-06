@@ -2,17 +2,12 @@
 #define SENSOREARIA_H
 
 #include <QtWidgets>
-#include <QtCharts>
 #include "sensore.h"
 
 class SensoreAria: public Sensore
 {
 private:
     int sogliaMassima;
-
-public slots:
-    void onButton1Clicked();
-    void onButton2Clicked();
 
 public:
     SensoreAria();
@@ -23,10 +18,10 @@ public:
                 const QString gruppo,
                 int sogliaMassima,
                 double valore);
+    ~SensoreAria() = default;
     Valore getRandom(const QDateTime &dataOra) override;
-    void modificaData(QDateTime &data);
     virtual Sensore *clone() const override;
-    void simula(SensoreAria &s, QDateTime &data);
+    void generaDati();
     int getSogliaMassima() const;
 };
 

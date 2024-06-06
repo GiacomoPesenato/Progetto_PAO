@@ -1,7 +1,8 @@
 #include "../headers/sensorelampadina.h"
 #include "../headers/sensoreelettricita.h"
+#include "../headers/chart.h"
 #include <QtWidgets>
-
+#include <iostream>
 
 SensoreLampadina::SensoreLampadina():SensoreElettricita(), dimmer(false) {}
 
@@ -46,7 +47,50 @@ Valore SensoreLampadina::getRandom(const QDateTime &dataOra){
     else {
         randVal = distribution(gen);
     }
+    //cout << "Valore random: " << randVal <<" data e ora: " <<dataOra.toString().toStdString() << endl;
     return Valore(randVal, dataOra);
 }
 
 
+void SensoreLampadina::generaDati() {
+    QDate dataCorrente = QDate::currentDate();
+    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
+    QTime startTime(0, 0, 0);
+    QDateTime data(primoDelMese, startTime);
+    // int somma = 0;
+    // int counter = 0;
+    for (int i = 0; i < 366*24; ++i) {
+        Valore val = this->getRandom(data);
+        this->setValore(val.getValore());
+        // if(data.date().day() <= 7 && data.date().month() == dataCorrente.month()){
+        //     if (counter < 24){
+        //         somma += val.getValore();
+        //         counter ++;
+        //     }
+        //     if (counter == 24){
+        //         cout << "Media del giorno: " << somma/counter << endl;
+        //         counter = 0;
+        //         somma = 0;
+        //     }
+        // }
+
+        data = data.addSecs(3600);
+        this->addValore(val);
+    }
+}
+
+
+int emain(int argc, char *argv[]) {
+    SensoreLampadina lampadina = SensoreLampadina(1, "lampadina", "W", "resources/lampadina.png", "casa", false, 100, 50);
+    lampadina.generaDati();
+    QString abc = "settimana";
+
+    QApplication a(argc, argv);
+    QMainWindow window;
+    Chart palle;
+    window.setCentralWidget(palle.getChart(lampadina, abc));
+    window.resize(1000,1000);
+    window.show();
+    return a.exec();
+    return 0;
+}
