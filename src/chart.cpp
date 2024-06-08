@@ -6,6 +6,8 @@
 #include "../headers/sensorelampadina.h"
 
 #define OFFSET 0.5
+#define MARGIN_TOP 1.1
+#define MARGIN_BOTTOM 0.9
 using namespace std;
 
 Chart::Chart()  {}
@@ -18,34 +20,37 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     axisX = new QCategoryAxis();
     axisY = new QValueAxis();
     valori = s.getValori();
+    this->tipo = tipo;
     int currentMonth = valori[0].getDataOra().date().month();
     int max = -1, min = -1;
     bool lampadina = false, dimmer = false;
-    QVector<QString> mesi = {
+    mesi = {
         "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
         "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
     };
+
+    cout << "Tipo: " << tipo.toStdString() << endl;
 
     if (const SensoreLampadina *lamp = dynamic_cast<const SensoreLampadina*>(&s)) {
         lampadina = true;
         dimmer = lamp->getDimmer();
     }
     if(tipo == "anno"){
-        chartAnno(currentMonth, max, min, mesi);
-        axisY->setRange(min - 10, max + 10);
+        chartAnno(currentMonth, max, min);
+        axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
         axisY->setTickCount(int((max - min) / 10) + 1);
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
         chartMese(max, min, giorniMese, lampadina, dimmer);
-        axisY->setRange(min - 10, max + 10);
+        axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
         axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "settimana"){
         chartSettimana(max, min, lampadina, dimmer);
-        axisY->setRange(min - 10, max + 10);
+        axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
         axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "giorno"){
         chartGiorno(max, min);
-        axisY->setRange(min - 10, max + 20);
+        axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
         axisY->setTickCount(int((max - min) / 5) + 1);
     }
 
@@ -75,36 +80,56 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
 }
 
 
-void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia, const QVector<QString> mesi){
-    int somma = 0, media = 0, count = 0, pos = 0;
-    for (const Valore &value : valori) {
-        if (value.getDataOra().date().month() == currentMonth) {
+void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia){
+    double somma = 0.0,media = 0.0;
+    int count = 0, pos = 0;
+
+    for (int i = 0; i < valori.size(); ++i){
+        Valore value = valori[i];
+        int mese = value.getDataOra().date().month();
+
+        if (mese == currentMonth) {
             somma += value.getValore();
             ++count;
         } else {
-            media = (count > 0) ? somma / count : 0;
-            QPointF point(pos+OFFSET, media);
+            media = (count > 0) ? somma / count : 0.0;
+            QPointF point(pos + OFFSET, media);
             series->append(point);
             markerSeries->append(point);
 
-            if (media > maxMedia || maxMedia == -1){
+            if (media > maxMedia || maxMedia == -1) {
                 maxMedia = media;
             }
-            if (media < minMedia || minMedia == -1){
+            if (media < minMedia || minMedia == -1) {
                 minMedia = media;
             }
 
             pos++;
-            currentMonth = value.getDataOra().date().month();
+            currentMonth = mese;
             somma = value.getValore();
             count = 1;
         }
     }
+
+    // aggiunta dell'ultimo mese
+    media = (count > 0) ? somma / count : 0.0;
+    QPointF point(pos + OFFSET, media);
+    series->append(point);
+    markerSeries->append(point);
+
+    if (media > maxMedia || maxMedia == -1) {
+        maxMedia = media;
+    }
+    if (media < minMedia || minMedia == -1) {
+        minMedia = media;
+    }
+
     axisX->setRange(0, 12);
-    for (int i = 0; i < 12; i++) {
-        axisX->append(mesi[(i + currentMonth - 1) % 12], i + 1);
+    for (int i = 0; i < 12; ++i) {
+        axisX->append(mesi[(i + currentMonth) % 12], i + 1);
     }
 }
+
 
 void Chart::chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer){
     axisX->setRange(0,giorniMese);
@@ -230,7 +255,17 @@ Lampadina NON dimmerabile min 0 max 20
 
 void Chart::onClick(const QPointF &point) {
     QMessageBox msgBox;
-    msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()+1-OFFSET).arg(point.y()));
-    msgBox.exec();
+    cout << "PALLE"<<endl;
+    cout << "Er typo èèèèèè:  "<<tipo.toStdString() <<endl;
+    if (tipo == "anno"){
+        int nMese = point.x()-OFFSET;
+        int currentMonth = QDateTime::currentDateTime().date().month();
+        cout << "Punto cliccato: " << " " << point.y() << endl;
+        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(mesi[((nMese+currentMonth)%12)>0 ? ((nMese+currentMonth)%12)-1 : 11]).arg(point.y()));
+        msgBox.exec();
+    }else{
+        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()).arg(point.y()));
+        msgBox.exec();
+    }
 }
 

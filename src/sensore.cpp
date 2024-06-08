@@ -43,18 +43,6 @@ Valore Sensore::getRandom(const QDateTime &dataOra)
     return valore;
 }
 
-void Sensore::modificaData(QDateTime &data)
-{
-    //cout << "Sensore::modificaData" << endl;
-    data = data.addDays(1);
-    int currentMonth = data.date().month();
-    if (data.date().daysInMonth() < data.date().day()) {
-        data = data.addMonths(1);
-        data.setDate(QDate(data.date().year(), currentMonth, data.date().day()));
-    }
-    //cout << "Data modificata: " << data.toString().toStdString() << endl;
-}
-
 unsigned int Sensore::getId() const{
     return id;
 }

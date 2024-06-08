@@ -19,6 +19,13 @@ public:
                             QString classeEnergetica,
                             double potenzaMax,
                             double valore);
-};
 
+    QString getClasseEnergetica() const;
+    void setClasseEnergetica(const QString &value);
+    void modificaData(QDateTime &dataOra);
+    void generaDati();
+
+    virtual Sensore *clone() const override;
+    Valore getRandom(const QDateTime &dataOra) override;
+};
 #endif // SENSOREELETTRODOMESTICO_H

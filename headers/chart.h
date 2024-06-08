@@ -16,8 +16,10 @@ private:
     QCategoryAxis *axisX;
     QValueAxis *axisY;
     QVector<Valore> valori;
+    QVector<QString> mesi;
+    QString tipo;
 
-    void chartAnno(int currentMonth, int &max, int &min, QVector<QString> mesi);
+    void chartAnno(int currentMonth, int &max, int &min);
     void chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer);
     void chartSettimana(int &max, int &min, bool lampadina, bool dimmer);
     void chartGiorno(int &max, int &min);

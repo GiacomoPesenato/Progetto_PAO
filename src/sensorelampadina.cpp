@@ -57,23 +57,9 @@ void SensoreLampadina::generaDati() {
     QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
     QTime startTime(0, 0, 0);
     QDateTime data(primoDelMese, startTime);
-    // int somma = 0;
-    // int counter = 0;
     for (int i = 0; i < 366*24; ++i) {
         Valore val = this->getRandom(data);
         this->setValore(val.getValore());
-        // if(data.date().day() <= 7 && data.date().month() == dataCorrente.month()){
-        //     if (counter < 24){
-        //         somma += val.getValore();
-        //         counter ++;
-        //     }
-        //     if (counter == 24){
-        //         cout << "Media del giorno: " << somma/counter << endl;
-        //         counter = 0;
-        //         somma = 0;
-        //     }
-        // }
-
         data = data.addSecs(3600);
         this->addValore(val);
     }

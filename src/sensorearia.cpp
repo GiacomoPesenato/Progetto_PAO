@@ -52,12 +52,28 @@ Valore SensoreAria::getRandom(const QDateTime &dataOra)  {
     return Valore(randomNumber, dataOra);
 }
 
+void SensoreAria::modificaData(QDateTime &data)
+{
+    //cout << "Sensore::modificaData" << endl;
+    data = data.addDays(1);
+    int currentMonth = data.date().month();
+    if (data.date().daysInMonth() < data.date().day()) {
+        data = data.addMonths(1);
+        data.setDate(QDate(data.date().year(), currentMonth, data.date().day()));
+    }
+    //cout << "Data modificata: " << data.toString().toStdString() << endl;
+}
+
 Sensore *SensoreAria::clone() const {
     return new SensoreAria(*this);
 }
 
 int SensoreAria::getSogliaMassima() const {
     return sogliaMassima;
+}
+
+void SensoreAria::setSogliaMassima(int value) {
+    sogliaMassima = value;
 }
 
 void SensoreAria::generaDati() {
@@ -73,7 +89,7 @@ void SensoreAria::generaDati() {
     }
 }
 
-int main(int argc, char *argv[])
+int hmain(int argc, char *argv[])
 {
     SensoreAria s = SensoreAria(0,"Sensore1", "IQA", "prova","cucina",180,50);
     s.generaDati();

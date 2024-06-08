@@ -41,7 +41,6 @@ public:
     QVector<Valore> getValori() const;
     void setValori(QVector<Valore> &valori);
 
-    virtual void modificaData(QDateTime &data);
     virtual ~Sensore() = default;
     virtual Sensore *clone() const = 0;
     virtual Valore getRandom(const QDateTime &dataOra);

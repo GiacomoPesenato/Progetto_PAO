@@ -18,11 +18,14 @@ public:
                 const QString gruppo,
                 int sogliaMassima,
                 double valore);
+    int getSogliaMassima() const;
+    void setSogliaMassima(int value);
+
+    void modificaData(QDateTime &dataOra);
+    void generaDati();
     ~SensoreAria() = default;
     Valore getRandom(const QDateTime &dataOra) override;
     virtual Sensore *clone() const override;
-    void generaDati();
-    int getSogliaMassima() const;
 };
 
 
