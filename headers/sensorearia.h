@@ -19,9 +19,8 @@ public:
                 int sogliaMassima,
                 double valore);
     int getSogliaMassima() const;
-    void setSogliaMassima(int value);
+    void setSogliaMassima(const int &value);
 
-    void modificaData(QDateTime &dataOra);
     void generaDati();
     ~SensoreAria() = default;
     Valore getRandom(const QDateTime &dataOra) override;

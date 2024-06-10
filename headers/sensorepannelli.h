@@ -20,6 +20,17 @@ public:
                     double potenzaPannello,
                     double potenzaMax,
                     double valore);
+
+    int getNPannelli() const;
+    void setNPannelli(const int &value);
+    double getPotenzaPannello() const;
+    void setPotenzaPannello(const double &value);
+    void generaDati();
+    Valore getRandom(const QDateTime &dataOra) override;
+
+    virtual Sensore *clone() const override;
+    ~SensorePannelli() = default;
+
 };
 
 #endif // SENSOREPANNELLI_H

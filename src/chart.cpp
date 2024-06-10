@@ -38,22 +38,19 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     if(tipo == "anno"){
         chartAnno(currentMonth, max, min);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        axisY->setTickCount(int((max - min) / 10) + 1);
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
         chartMese(max, min, giorniMese, lampadina, dimmer);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "settimana"){
         chartSettimana(max, min, lampadina, dimmer);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        axisY->setTickCount(int((max - min) / 5) + 1);
     } else if (tipo == "giorno"){
         chartGiorno(max, min);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        axisY->setTickCount(int((max - min) / 5) + 1);
     }
 
+    axisY->setTickCount(5);
     axisY->setLabelFormat("%d");
 
     markerSeries->setMarkerSize(10);
@@ -174,7 +171,7 @@ void Chart::chartSettimana(int &max, int &min, bool lampadina, bool dimmer){
             //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
             //cout<<counter<<endl;
         }else{
-            value = valori[counter+i-1];
+            value = valori[counter+i];
         }
         QPointF point(i+OFFSET, value.getValore());
         series->append(point);
@@ -202,7 +199,7 @@ void Chart::chartGiorno(int &max, int &min){
         if (valori[i].getValore() < min || min == -1){
             min = valori[i].getValore();
         }
-        axisX->append(QString::number(i+1),i+1);
+        axisX->append(QString::number(i),i+1);
 
     }
 }
@@ -264,7 +261,7 @@ void Chart::onClick(const QPointF &point) {
         msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(mesi[((nMese+currentMonth)%12)>0 ? ((nMese+currentMonth)%12)-1 : 11]).arg(point.y()));
         msgBox.exec();
     }else{
-        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()).arg(point.y()));
+        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()-OFFSET+1).arg(point.y()));
         msgBox.exec();
     }
 }

@@ -22,7 +22,6 @@ public:
 
     QString getClasseEnergetica() const;
     void setClasseEnergetica(const QString &value);
-    void modificaData(QDateTime &dataOra);
     void generaDati();
 
     virtual Sensore *clone() const override;

@@ -24,16 +24,6 @@ void SensoreElettrodomestico::setClasseEnergetica(const QString &value) {
     classeEnergetica = value;
 }
 
-void SensoreElettrodomestico::modificaData(QDateTime &data) {
-    data = data.addDays(1);
-    int currentMonth = data.date().month();
-    if (data.date().daysInMonth() < data.date().day()) {
-        data = data.addMonths(1);
-        data.setDate(QDate(data.date().year(), currentMonth, data.date().day()));
-    }
-    // cout << "Data modificata: " << data.toString().toStdString() << endl;
-}
-
 Sensore *SensoreElettrodomestico::clone() const {
     return new SensoreElettrodomestico(*this);
 }
@@ -89,9 +79,8 @@ void SensoreElettrodomestico::generaDati() {
         Valore val = this->getRandom(data);
         //cout<<"Valore: "<<val.getValore()<<" Data: "<<data.toString().toStdString()<<endl;
         this->setValore(val.getValore());
-        this->modificaData(data);
         this->addValore(val);
-
+        data =data.addDays(1);
         // Aggiorna la somma dei valori per il mese corrente
         sommaValoriMese += val.getValore();
         // Controlla se siamo passati a un nuovo mese
@@ -109,11 +98,11 @@ void SensoreElettrodomestico::generaDati() {
 }
 
 
-int main(int argc, char *argv[])
+int nmain(int argc, char *argv[])
 {
     SensoreElettrodomestico s = SensoreElettrodomestico(0,"Sensore1", "Kw/h", "prova","cucina","D",100,rand()%100);
     s.generaDati();
-    QString abc = "anno";
+    QString abc = "settimana";
     QApplication a(argc, argv);
     QMainWindow window;
     Chart palle;

@@ -86,3 +86,4 @@ QVector<Valore> Sensore::getValori() const{
 void Sensore::setValori(QVector<Valore> &valori){
     this->valori = valori;
 }
+
