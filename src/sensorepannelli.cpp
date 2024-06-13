@@ -3,7 +3,6 @@
 #include "../headers/chart.h"
 #include <QtWidgets>
 #include <iostream>
-#include <random>
 
 SensorePannelli::SensorePannelli():SensoreElettricita(), nPannelli(65535), potenzaPannello(0) {}
 
@@ -90,7 +89,7 @@ void SensorePannelli::generaDati() {
     }
 }
 
-int sessomain(int argc, char *argv[]) {
+int sqmain(int argc, char *argv[]) {
     SensorePannelli pannelli = SensorePannelli(1, "pannelli", "Watt", "icona", "elettricita", 100, 60, 100*60, rand() % 100);
     pannelli.generaDati();
     QString abc = "anno";

@@ -20,7 +20,19 @@ public:
                        double tempMin,
                        double tempMax,
                        double valore);
+
     double getValoreTarget() const;
+    void setValoreTarget(const double &value);
+    double getTempMin() const;
+    void setTempMin(const double &value);
+    double getTempMax() const;
+    void setTempMax(const double &value);
+    void generaDati();
+    Valore getRandom(const QDateTime &dataOra) override;
+
+    virtual Sensore *clone() const override;
+    ~SensoreTemperatura() = default;
+
 };
 
 #endif // SENSORETEMPERATURA_H

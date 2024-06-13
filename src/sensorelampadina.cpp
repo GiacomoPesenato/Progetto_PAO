@@ -77,10 +77,10 @@ void SensoreLampadina::generaDati() {
 }
 
 
-int main(int argc, char *argv[]) {
+int gfmain(int argc, char *argv[]) {
     SensoreLampadina lampadina = SensoreLampadina(1, "lampadina", "W", "resources/lampadina.png", "casa", false, 100, 50);
     lampadina.generaDati();
-    QString abc = "giorno";
+    QString abc = "settimana";
     QApplication a(argc, argv);
     QMainWindow window;
     Chart palle;

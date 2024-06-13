@@ -69,7 +69,7 @@ void SensoreAria::generaDati() {
     QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
     QTime startTime(0, 0, 0);
     QDateTime data(primoDelMese, startTime);
-    for (int i = 0; i < 366; ++i) {
+    for (int i = 0; i < 365; ++i) {
         Valore val = this->getRandom(data);
         this->setValore(val.getValore());
         this->addValore(val);

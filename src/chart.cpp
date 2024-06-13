@@ -130,6 +130,7 @@ void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia){
 
 void Chart::chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer){
     axisX->setRange(0,giorniMese);
+
     int counter = 0;
     Valore value = valori[0];
 
@@ -225,9 +226,12 @@ Valore Chart::mediaLampadina(int &counter, bool dimmer){
         cout << "media: " << somma/24<< endl;
         value.setValore(somma/24);
     }else{
-        if (somma >= 12){//se più della metà delle volte è spenta allora gli assegno 0
+        //cout << "somma: " << somma << endl;
+        if (somma >= 11){//se più della metà delle volte è spenta allora gli assegno 0
+            //cout << "spenta" << endl;
             value.setValore(0);
         }else{
+            //cout << "accesa" << endl;
             value.setValore(maxVal);//altrimenti il max valore
         }
     }
@@ -258,10 +262,10 @@ void Chart::onClick(const QPointF &point) {
         int nMese = point.x()-OFFSET;
         int currentMonth = QDateTime::currentDateTime().date().month();
         cout << "Punto cliccato: " << " " << point.y() << endl;
-        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(mesi[((nMese+currentMonth)%12)>0 ? ((nMese+currentMonth)%12)-1 : 11]).arg(point.y()));
+        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(mesi[((nMese+currentMonth)%12)>0 ? ((nMese+currentMonth)%12)-1 : 11]).arg(QString::number(point.y(), 'f', 2)));
         msgBox.exec();
     }else{
-        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()-OFFSET+1).arg(point.y()));
+        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()-OFFSET+1).arg(QString::number(point.y(), 'f', 2)));
         msgBox.exec();
     }
 }

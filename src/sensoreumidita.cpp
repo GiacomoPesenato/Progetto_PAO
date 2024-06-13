@@ -1,6 +1,8 @@
 #include "../headers/sensoreumidita.h"
 #include "../headers/sensore.h"
+#include "../headers/chart.h"
 #include <random>
+#include <iostream>
 
 using namespace std;
 
@@ -25,23 +27,56 @@ double SensoreUmidita::getValoreTarget() const
     return valoreTarget;
 }
 
-Valore SensoreUmidita::getRandom(const QDateTime &dataOra){
-    // Inizializza il generatore di numeri casuali con il tempo corrente
+void SensoreUmidita::setValoreTarget(const double &value)
+{
+    valoreTarget = value;
+}
+
+Sensore *SensoreUmidita::clone() const
+{
+    return new SensoreUmidita(*this);
+}
+
+void SensoreUmidita::generaDati() {
+    QDate dataCorrente = QDate::currentDate();
+    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
+    QTime startTime(0, 0, 0);
+    QDateTime data(primoDelMese, startTime);
+
+    for (int i = 0; i < 365; i++) {
+        Valore val = this->getRandom(data);
+        std::cout << "Valore: " << val.getValore() << " Data: " << data.toString().toStdString() << std::endl;
+        this->setValore(val.getValore());
+        this->addValore(val);
+        data = data.addDays(1);
+    }
+}
+
+Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
     random_device rd;
     mt19937 gen(rd());
 
-    // Definisci la distribuzione normale con media = valoreTarget e deviazione standard = 3
-    // La deviazione standard controlla la dispersione dei valori generati
-    normal_distribution<double> distribution(valoreTarget, 3.0);
+    double minRange = valoreTarget*0.7;
+    double maxRange = valoreTarget*1.3;
 
-    // Genera il valore casuale
-    double valoreCasuale = distribution(gen);
+    if (minRange < 0) minRange = 0;
+    if (maxRange > 100) maxRange = 100;
 
-    // Limita il valoreCasuale tra valoreTarget-10 e valoreTarget+5
-    valoreCasuale = max(valoreTarget - 10.0, min(valoreCasuale, valoreTarget + 3.0));
+    uniform_real_distribution<> dis(minRange, maxRange);
+    double valoreRandom = dis(gen);
 
-    double random = valoreCasuale;
+    return Valore(valoreRandom,dataOra);
+}
 
-    Valore valore = Valore(random, dataOra);
-    return valore;
+int main(int argc, char *argv[]) {
+    SensoreUmidita umido = SensoreUmidita(1, "Umidità", "%", "umidita.png", "Clima", 80, 0);
+    umido.generaDati();
+    QString abc = "mese";
+    QApplication a(argc, argv);
+    QMainWindow window;
+    Chart palle;
+    window.setCentralWidget(palle.getChart(umido, abc));
+    window.resize(1000,1000);
+    window.show();
+    return a.exec();
 }
