@@ -38,6 +38,8 @@ public:
     QString getIcona() const;
     void setIcona(QString &icona);
 
+    QString getGruppo() const;
+
     QVector<Valore> getValori() const;
     void setValori(QVector<Valore> &valori);
 

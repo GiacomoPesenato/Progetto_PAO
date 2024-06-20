@@ -1,3 +1,8 @@
+#define NOMINMAX // Avoid conflicts with min/max macros
+#include <windows.h>
+#undef byte // Undefine byte to avoid conflicts with std::byte
+#include <cstddef> // For std::byte
+
 #include <QtCharts>
 #include <QVector>
 #include <QObject>
@@ -8,7 +13,6 @@
 #define OFFSET 0.5
 #define MARGIN_TOP 1.1
 #define MARGIN_BOTTOM 0.9
-using namespace std;
 
 Chart::Chart()  {}
 
@@ -29,7 +33,7 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
         "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
     };
 
-    cout << "Tipo: " << tipo.toStdString() << endl;
+    std::cout << "Tipo: " << tipo.toStdString() << std::endl;
 
     if (const SensoreLampadina *lamp = dynamic_cast<const SensoreLampadina*>(&s)) {
         lampadina = true;

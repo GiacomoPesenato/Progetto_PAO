@@ -3,7 +3,6 @@
 #include "../headers/chart.h"
 #include <QtWidgets>
 #include <iostream>
-
 SensorePannelli::SensorePannelli():SensoreElettricita(), nPannelli(65535), potenzaPannello(0) {}
 
 SensorePannelli::SensorePannelli(const unsigned int id,

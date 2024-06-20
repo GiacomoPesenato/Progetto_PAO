@@ -19,7 +19,14 @@ SOURCES += \
     src/sensorepannelli.cpp \
     src/sensoretemperatura.cpp \
     src/sensoreumidita.cpp \
-    src/valore.cpp
+    src/valore.cpp \
+    src/widgetsensore.cpp \
+    src/mainwindow.cpp \
+    src/schermatasensore.cpp \
+    src/schermatasensori.cpp \
+    src/sidebar.cpp \
+    src/schermatanuovosensore.cpp
+
 
 HEADERS += \
     headers/main.h \
@@ -32,7 +39,13 @@ HEADERS += \
     headers/sensoretemperatura.h \
     headers/sensoreumidita.h \
     headers/valore.h \
-    headers/chart.h
+    headers/chart.h \
+    headers/widgetsensore.h \
+    headers/mainwindow.h \
+    headers/schermatasensore.h \
+    headers/schermatasensori.h \
+    headers/sidebar.h \
+    headers/schermatanuovosensore.h
 
 TRANSLATIONS += \
     domotica_it_IT.ts

@@ -5,8 +5,6 @@
 #include <QVector>
 #include <iostream>
 
-using namespace std;
-
 Sensore::Sensore(const unsigned int &id, const QString &nome, const QString &unitaMisura, const QString &icona, const QString &gruppo,  double &valore)
     : id(id)
     , nome(nome)
@@ -69,6 +67,11 @@ void Sensore::setNome(QString &nome){
 QString Sensore::getUnitaMisura() const{
     return unitaMisura;
 }
+
+QString Sensore::getGruppo() const{
+    return gruppo;
+}
+
 void Sensore::setUnitaMisura(QString &unitaMisura){
     this->unitaMisura = unitaMisura;
 }

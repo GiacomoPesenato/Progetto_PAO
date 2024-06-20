@@ -1,10 +1,13 @@
+#define NOMINMAX // Avoid conflicts with min/max macros
+#include <windows.h>
+#undef byte // Undefine byte to avoid conflicts with std::byte
+#include <cstddef> // For std::byte
+
 #include "../headers/sensoreumidita.h"
 #include "../headers/sensore.h"
 #include "../headers/chart.h"
 #include <random>
 #include <iostream>
-
-using namespace std;
 
 SensoreUmidita::SensoreUmidita()
     : Sensore()
@@ -68,7 +71,7 @@ Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
     return Valore(valoreRandom,dataOra);
 }
 
-int main(int argc, char *argv[]) {
+int umimain(int argc, char *argv[]) {
     SensoreUmidita umido = SensoreUmidita(1, "Umidità", "%", "umidita.png", "Clima", 80, 0);
     umido.generaDati();
     QString abc = "mese";

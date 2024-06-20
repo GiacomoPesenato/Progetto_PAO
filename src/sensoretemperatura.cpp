@@ -1,9 +1,13 @@
+#define NOMINMAX // Avoid conflicts with min/max macros
+#include <windows.h>
+#undef byte // Undefine byte to avoid conflicts with std::byte
+#include <cstddef> // For std::byte
+
 #include "../headers/sensoretemperatura.h"
 #include "../headers/sensore.h"
 #include "../headers/chart.h"
 #include <QtWidgets>
 #include <iostream>
-
 
 SensoreTemperatura::SensoreTemperatura():Sensore(), valoreTarget(0), tempMin(0), tempMax(0){}
 

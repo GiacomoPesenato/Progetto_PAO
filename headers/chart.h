@@ -5,6 +5,11 @@
 #include <QVector>
 #include "../headers/sensore.h"
 
+#define NOMINMAX // Avoid conflicts with min/max macros
+#include <windows.h>
+#undef byte // Undefine byte to avoid conflicts with std::byte
+#include <cstddef> // For std::byte
+
 class Chart : public QObject {
     Q_OBJECT
 

@@ -5,8 +5,6 @@
 #include <QDateTime>
 #include <QtCharts>
 
-using namespace std;
-
 SensoreAria::SensoreAria():Sensore(), sogliaMassima(180){}
 
 SensoreAria::SensoreAria(const unsigned int id,
