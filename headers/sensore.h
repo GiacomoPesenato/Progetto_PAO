@@ -46,5 +46,10 @@ public:
     virtual ~Sensore() = default;
     virtual Sensore *clone() const = 0;
     virtual Valore getRandom(const QDateTime &dataOra);
+    virtual void generaDati();
+    void rimuoviDati();
+
 };
 #endif // SENSORE_H
+
+

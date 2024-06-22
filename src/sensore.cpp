@@ -41,6 +41,19 @@ Valore Sensore::getRandom(const QDateTime &dataOra)
     return valore;
 }
 
+void Sensore::generaDati() {
+    QDate dataCorrente = QDate::currentDate();
+    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
+    QTime startTime(0, 0, 0);
+    QDateTime data(primoDelMese, startTime);
+    for (int i = 0; i < 365; ++i) {
+        Valore val = this->getRandom(data);
+        this->setValore(val.getValore());
+        this->addValore(val);
+        data = data.addDays(1);
+    }
+}
+
 unsigned int Sensore::getId() const{
     return id;
 }
@@ -88,5 +101,8 @@ QVector<Valore> Sensore::getValori() const{
 }
 void Sensore::setValori(QVector<Valore> &valori){
     this->valori = valori;
+}
+void Sensore::rimuoviDati(){
+    valori.clear();
 }
 

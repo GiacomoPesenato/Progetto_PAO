@@ -130,8 +130,8 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     checkBoxLayout->addStretch();
     checkBoxLayout->addWidget(inputDimmerabile);
     checkBoxLayout->addStretch();
-
     centerLayout->addLayout(checkBoxLayout);
+
     //Numero pannelli (SensorePannelli)
     QLabel *labelNumeroPannelli = new QLabel("Numero pannelli:");
     labelNumeroPannelli->setAlignment(Qt::AlignCenter);
@@ -253,7 +253,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
             }else if(inputTipo2->currentText() == "Forno"){
                 icona = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/forno.png";
             }
-            SensoreElettrodomestico *sensoreelettrodomestico = new SensoreElettrodomestico();
+            SensoreElettrodomestico *sensoreelettrodomestico = new SensoreElettrodomestico(0, inputNome->text(), "W", icona, inputGruppo->text(), inputClasseEnergetica->currentText(), inputPotenzaMassima->value(), 0);
             emit nuovoSensoreCreato(sensoreelettrodomestico);
         }
         if(inputTipo1->currentText() == "Temperatura"){

@@ -19,18 +19,21 @@ class SchermataSensore : public QWidget {
     Q_OBJECT
 private slots:
     void chiudiSchermataSensore();
+    void simula();
 signals:
     void chiudiSchermataSensoreSignal();
 public:
     explicit SchermataSensore(QWidget *parent = nullptr);
     void setSensore(Sensore *sensore);
 private:
+    Sensore *sensore;
     QHBoxLayout* mainLayout;
     QLabel* labelId;
     QLabel* labelNome;
     QLabel* labelGruppo;
     QLabel* labelValore;
     QLabel *labelIcona;
+    QVBoxLayout *chartLayout;
 };
 
 #endif // SCHERMATASENSORE_H

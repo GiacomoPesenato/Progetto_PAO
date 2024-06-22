@@ -1,14 +1,28 @@
+#define NOMINMAX // Avoid conflicts with min/max macros
+#include <windows.h>
+#undef byte // Undefine byte to avoid conflicts with std::byte
+#include <cstddef> // For std::byte
+
 #include "../headers/schermatasensore.h"
+#include "../headers/chart.h"
 
 SchermataSensore::SchermataSensore(QWidget *parent)
     : QWidget(parent){
 
-    mainLayout = new QHBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
 
-    QPushButton *nuovosensore = new QPushButton("Indietro");
-    connect(nuovosensore, &QPushButton::clicked, this, &SchermataSensore::chiudiSchermataSensore);
-    mainLayout->addWidget(nuovosensore);
+    // Sotto-layout per posizionare i widget in alto a sinistra
+    QHBoxLayout *topLeftLayout = new QHBoxLayout;
+    QWidget *topLeftWidget = new QWidget;
+    topLeftWidget->setLayout(topLeftLayout);
+    topLeftLayout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    mainLayout->addWidget(topLeftWidget, 0, Qt::AlignTop);
+
+    QPushButton *buttonIndietro = new QPushButton;
+    QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
+    buttonIndietro->setIcon(iconIndietro);
+    buttonIndietro->setIconSize(QSize(24, 24));
 
     QWidget *widgetIconaSensore = new QWidget;
     QVBoxLayout *layoutIconaSensore = new QVBoxLayout(widgetIconaSensore);
@@ -18,13 +32,13 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QVBoxLayout *layoutInfoSensore = new QVBoxLayout(widgetInfoSensore);
     widgetInfoSensore->setLayout(layoutInfoSensore);
 
-    mainLayout->addWidget(widgetIconaSensore);
-    mainLayout->addWidget(widgetInfoSensore);
+    topLeftLayout->addWidget(widgetIconaSensore);
+    topLeftLayout->addWidget(widgetInfoSensore);
 
     int idSensore = 0;
     QString nomeSensore = "";
     QString gruppoSensore = "";
-    QString iconaSensore = "";
+    QString iconaSensore = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png";
     QString unitaMisuraSensore = "";
     double valoreSensore = NULL;
 
@@ -42,21 +56,65 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     labelGruppo->setStyleSheet("color: white; font-size: 16px;");
     labelValore->setStyleSheet("color: white; font-size: 16px;");
 
+    QPushButton *buttonSimula = new QPushButton("Simula");
+
+    layoutIconaSensore->addWidget(buttonIndietro, Qt::AlignTop | Qt::AlignLeft);
     layoutIconaSensore->addWidget(labelIcona, Qt::AlignTop | Qt::AlignLeft);
+    layoutIconaSensore->addWidget(buttonSimula, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelId, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelNome, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelGruppo, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelValore, Qt::AlignTop | Qt::AlignLeft);
 
+    connect(buttonIndietro, &QPushButton::clicked, this, &SchermataSensore::chiudiSchermataSensore);
+    connect(buttonSimula, &QPushButton::clicked, this, &SchermataSensore::simula);
+
+    // Creazione e aggiunta del QChart in basso al centro
+    QWidget *chartWidget = new QWidget;
+    chartLayout = new QVBoxLayout(chartWidget);
+    chartLayout->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    mainLayout->addWidget(chartWidget, 1); // Espande per occupare lo spazio rimanente
 }
 
 void SchermataSensore::setSensore(Sensore *sensore) {
-    labelId->setText("ID: "+QString::number(sensore->getId()));
+    this->sensore = sensore;
+    labelId->setText("ID: " + QString::number(sensore->getId()));
     labelNome->setText("Nome Sensore: " + sensore->getNome());
-    labelGruppo->setText("GRUPPO: "+sensore->getGruppo());
+    labelGruppo->setText("GRUPPO: " + sensore->getGruppo());
     labelValore->setText("Valore Sensore: " + QString::number(sensore->getValore()) + " " + sensore->getUnitaMisura());
+    QPixmap icona(sensore->getIcona());
+    labelIcona->setPixmap(icona.scaled(70, 70, Qt::KeepAspectRatio));
+    if (chartLayout->count() > 0) {
+        QWidget *oldChart = chartLayout->itemAt(0)->widget();
+        if (oldChart) {
+            chartLayout->removeWidget(oldChart);
+            oldChart->deleteLater();
+        }
+    }
+    if(sensore->getValori().size()>0){
+        Chart grafico;
+        chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
+    }
 }
 
-void SchermataSensore::chiudiSchermataSensore(){
+void SchermataSensore::chiudiSchermataSensore() {
     emit chiudiSchermataSensoreSignal();
+}
+
+void SchermataSensore::simula() {
+    sensore->rimuoviDati();
+    sensore->generaDati();
+    Chart grafico;
+
+    // Rimuovi il vecchio grafico se esiste
+    if (chartLayout->count() > 0) {
+        QWidget *oldChart = chartLayout->itemAt(0)->widget();
+        if (oldChart) {
+            chartLayout->removeWidget(oldChart);
+            oldChart->deleteLater();
+        }
+    }
+
+    // Aggiungi il nuovo grafico
+    chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
 }
