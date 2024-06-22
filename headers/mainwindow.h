@@ -25,6 +25,7 @@ public:
     void closeSchermataSensore();
 private slots:
     void showSensoreDetails(Sensore *widget);
+    void aggiungiNuovoSensore(Sensore *sensore);
 private:
     std::vector<Sensore*> sensori;
 

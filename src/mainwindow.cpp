@@ -100,6 +100,8 @@ MainWindow::MainWindow(QWidget* parent)
     connect(schermatasensori, &SchermataSensori::widgetSensoreClicked, this, &MainWindow::showSensoreDetails);
 
     connect(schermatasensore, &SchermataSensore::chiudiSchermataSensoreSignal, this, &MainWindow::closeSchermataSensore);
+    connect(schermatanuovosensore, &SchermataNuovoSensore::nuovoSensoreCreato, this, &MainWindow::aggiungiNuovoSensore);
+
 }
 
 void MainWindow::openNuovoSensore() {
@@ -125,4 +127,12 @@ void MainWindow::switchWidgets(QLayout *layout, QWidget *currentWidget, QWidget 
 void MainWindow::showSensoreDetails(Sensore *sensore) {
     schermatasensore->setSensore(sensore);
     switchWidgets(rightLayout, schermatasensori, schermatasensore);
+}
+
+void MainWindow::aggiungiNuovoSensore(Sensore *sensore) {
+    sensore->setId(sensori.size());
+    sensori.push_back(sensore);
+    schermatasensori->clearSensori();
+    schermatasensori->insertSensori(sensori);
+    switchWidgets(rightLayout, schermatanuovosensore, schermatasensori);
 }

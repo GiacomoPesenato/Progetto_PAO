@@ -7,6 +7,9 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QComboBox>
+#include <QCheckBox>
+#include <QDoubleSpinBox>
+#include "sensore.h"
 
 class SchermataNuovoSensore : public QWidget
 {
@@ -14,9 +17,10 @@ class SchermataNuovoSensore : public QWidget
 public:
     explicit SchermataNuovoSensore(QWidget *parent = nullptr);
     static QWidget* createWidget(QWidget *parent = nullptr); // Metodo statico per creare il widget
+signals:
+    void nuovoSensoreCreato(Sensore *sensore);
 private:
     QVBoxLayout* mainLayout;
-    QComboBox *secondComboBox;
 };
 
 #endif // SCHERMATANUOVSENSORE_H

@@ -51,6 +51,18 @@ void SchermataSensori::insertSensori(const std::vector<Sensore*>& sensori){
     }
 }
 
+void SchermataSensori::clearSensori() {
+    for (auto& groupBox : groupWidgets) {
+        QLayout* layout = groupBox->layout();
+        while (QLayoutItem* item = layout->takeAt(0)) {
+            if (QWidget* widget = item->widget()) {
+                widget->deleteLater();
+            }
+            delete item;
+        }
+    }
+}
+
 void SchermataSensori::handleWidgetSensoreClicked(WidgetSensore *widget){
     Sensore *sensore = widget->getSensore();
     QString nome = sensore->getNome();
