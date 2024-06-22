@@ -1,9 +1,12 @@
-// Includi gli header di Windows e Qt
+#ifdef _WIN32
+#define NOMINMAX // Avoid conflicts with min/max macros
 #include <windows.h>
-#undef byte // Rimuove la definizione di `byte` dopo aver incluso windows.h
+#undef byte // Undefine byte to avoid conflicts with std::byte
+#include <cstddef> // For std::byte
+#endif
+
 #include "../headers/schermatanuovosensore.h"
 #include "../headers/sensorearia.h"
-#include "../headers/sensoreelettricita.h"
 #include "../headers/sensoreelettrodomestico.h"
 #include "../headers/sensorelampadina.h"
 #include "../headers/sensorepannelli.h"
