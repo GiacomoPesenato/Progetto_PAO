@@ -60,14 +60,15 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(minVal, maxVal);
     double randomValue = dis(gen);
+    cout << "Usato questo getRandom " << randomValue << endl;
 
     return Valore(randomValue, dataOra);
 }
 
 
-int nmain(int argc, char *argv[])
+int smain(int argc, char *argv[])
 {
-    SensoreElettrodomestico s = SensoreElettrodomestico(0,"Sensore1", "Kw/h", "prova","cucina","D",100,rand()%100);
+    SensoreElettrodomestico s = SensoreElettrodomestico(0,"Sensore1", "Kw/h", "prova","cucina","A",100,rand()%100);
     s.generaDati();
     QString abc = "settimana";
     QApplication a(argc, argv);
