@@ -72,21 +72,6 @@ Valore SensorePannelli::getRandom(const QDateTime &data) {
     return Valore(potenzaRandom, data);
 }
 
-void SensorePannelli::generaDati() {
-    QDate dataCorrente = QDate::currentDate();
-    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
-
-    for (int i = 0; i < 365; i++) {
-        Valore val = this->getRandom(data);
-        std::cout << "Valore: " << val.getValore() << " Data: " << data.toString().toStdString() << std::endl;
-        this->setValore(val.getValore());
-        this->addValore(val);
-        data = data.addDays(1);
-    }
-}
-
 int sqmain(int argc, char *argv[]) {
     SensorePannelli pannelli = SensorePannelli(1, "pannelli", "Watt", "icona", "elettricita", 100, 60, 100*60, rand() % 100);
     pannelli.generaDati();

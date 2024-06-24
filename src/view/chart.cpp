@@ -52,8 +52,8 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
         chartSettimana(max, min, lampadina, dimmer);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
     } else if (tipo == "giorno"){
-        chartGiorno(max, min);
-        axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        chartGiorno(max);
+        axisY->setRange(0, max*MARGIN_TOP);
     }
 
     axisY->setTickCount(5);
@@ -194,7 +194,7 @@ void Chart::chartSettimana(int &max, int &min, bool lampadina, bool dimmer){
     }
 }
 
-void Chart::chartGiorno(int &max, int &min){
+void Chart::chartGiorno(int &max){
     axisX->setRange(0,24);
     for (int i = 0; i < 24; i++) {
         QPointF point(i+OFFSET, valori[i].getValore());
@@ -203,10 +203,7 @@ void Chart::chartGiorno(int &max, int &min){
         if (valori[i].getValore() > max || max == -1){
             max = valori[i].getValore();
         }
-        if (valori[i].getValore() < min || min == -1){
-            min = valori[i].getValore();
-        }
-        axisX->append(QString::number(i),i+1);
+        axisX->append(QString::number(i+1),i+1);
 
     }
 }
@@ -233,7 +230,7 @@ Valore Chart::mediaLampadina(int &counter, bool dimmer){
         value.setValore(somma/24);
     }else{
         //cout << "somma: " << somma << endl;
-        if (somma >= 11){//se più della metà delle volte è spenta allora gli assegno 0
+        if (somma >= 16){//se più di 16 volte è 0 gli assegno 0, ho scelto 16 in quanto 20% di 24
             //cout << "spenta" << endl;
             value.setValore(0);
         }else{

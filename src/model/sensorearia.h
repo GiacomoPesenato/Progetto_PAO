@@ -21,7 +21,6 @@ public:
     int getSogliaMassima() const;
     void setSogliaMassima(const int &value);
 
-    void generaDati();
     ~SensoreAria() = default;
     Valore getRandom(const QDateTime &dataOra) override;
     virtual Sensore *clone() const override;

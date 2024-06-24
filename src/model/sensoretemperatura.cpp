@@ -93,21 +93,6 @@ Valore SensoreTemperatura::getRandom(const QDateTime &dataOra) {
     return Valore(valoreRandom, dataOra);
 }
 
-void SensoreTemperatura::generaDati() {
-    QDate dataCorrente = QDate::currentDate();
-    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
-
-    for (int i = 0; i < 365; i++) {
-        Valore val = this->getRandom(data);
-        std::cout << "Valore: " << val.getValore() << " Data: " << data.toString().toStdString() << std::endl;
-        this->setValore(val.getValore());
-        this->addValore(val);
-        data = data.addDays(1);
-    }
-}
-
 int jhgmain(int argc, char *argv[]) {
     SensoreTemperatura termometro = SensoreTemperatura(1, "temperatura", "°C", "termometro", "casa", 20, -10, 40, 20);
     termometro.generaDati();

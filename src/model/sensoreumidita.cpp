@@ -41,21 +41,6 @@ Sensore *SensoreUmidita::clone() const
     return new SensoreUmidita(*this);
 }
 
-void SensoreUmidita::generaDati() {
-    QDate dataCorrente = QDate::currentDate();
-    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
-
-    for (int i = 0; i < 365; i++) {
-        Valore val = this->getRandom(data);
-        std::cout << "Valore: " << val.getValore() << " Data: " << data.toString().toStdString() << std::endl;
-        this->setValore(val.getValore());
-        this->addValore(val);
-        data = data.addDays(1);
-    }
-}
-
 Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
     random_device rd;
     mt19937 gen(rd());

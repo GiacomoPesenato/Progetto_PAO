@@ -61,18 +61,6 @@ void SensoreAria::setSogliaMassima(const int &value) {
     sogliaMassima = value;
 }
 
-void SensoreAria::generaDati() {
-    QDate dataCorrente = QDate::currentDate();
-    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
-    for (int i = 0; i < 365; ++i) {
-        Valore val = this->getRandom(data);
-        this->setValore(val.getValore());
-        this->addValore(val);
-        data = data.addDays(1);
-    }
-}
 
 int hmain(int argc, char *argv[])
 {

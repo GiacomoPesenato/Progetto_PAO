@@ -28,7 +28,7 @@ private:
     void chartAnno(int currentMonth, int &max, int &min);
     void chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer);
     void chartSettimana(int &max, int &min, bool lampadina, bool dimmer);
-    void chartGiorno(int &max, int &min);
+    void chartGiorno(int &max);
 
     Valore mediaLampadina(int &counter, bool dimmer);
 

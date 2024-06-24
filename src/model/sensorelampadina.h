@@ -21,7 +21,7 @@ public:
                      double valore);
 
     Valore getRandom(const QDateTime &dataOra) override;
-    void generaDati();
+    void generaDati() override;
     bool getDimmer() const;
     void setDimmer(bool value);
 

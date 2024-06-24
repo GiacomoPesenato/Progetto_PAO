@@ -64,38 +64,6 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
     return Valore(randomValue, dataOra);
 }
 
-void SensoreElettrodomestico::generaDati() {
-    QDate dataCorrente = QDate::currentDate();
-    QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
-
-    double sommaValoriMese = 0.0;
-    int giorniNelMese = primoDelMese.daysInMonth();
-    int meseCorrente = primoDelMese.month();
-
-    for (int i = 0; i < 365; ++i) {
-        Valore val = this->getRandom(data);
-        //cout<<"Valore: "<<val.getValore()<<" Data: "<<data.toString().toStdString()<<endl;
-        this->setValore(val.getValore());
-        this->addValore(val);
-        data =data.addDays(1);
-        // Aggiorna la somma dei valori per il mese corrente
-        sommaValoriMese += val.getValore();
-        // Controlla se siamo passati a un nuovo mese
-        if (data.date().month() != meseCorrente) {
-            // Calcola e stampa la media per il mese corrente
-            double media = sommaValoriMese / giorniNelMese;
-            cout << "Mese: " << meseCorrente << " Media:" << media<<endl;
-
-            // Reset della somma e aggiornamento dei contatori per il nuovo mese
-            sommaValoriMese = val.getValore();
-            meseCorrente = data.date().month();
-            giorniNelMese = data.date().daysInMonth();
-        }
-    }
-}
-
 
 int nmain(int argc, char *argv[])
 {

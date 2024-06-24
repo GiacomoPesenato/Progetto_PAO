@@ -20,7 +20,6 @@ public:
                    double valore);
     double getValoreTarget() const;
     void setValoreTarget(const double &value);
-    void generaDati();
     Valore getRandom(const QDateTime &dataOra) override;
 
     virtual Sensore *clone() const override;
