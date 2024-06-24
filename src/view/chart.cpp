@@ -44,16 +44,20 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     if(tipo == "anno"){
         chartAnno(currentMonth, max, min);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        chart->setTitle("Visione Annuale");
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
         chartMese(max, min, giorniMese, lampadina, dimmer);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        chart->setTitle("Visione Mensile");
     } else if (tipo == "settimana"){
         chartSettimana(max, min, lampadina, dimmer);
         axisY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        chart->setTitle("Visione Settimanale");
     } else if (tipo == "giorno"){
         chartGiorno(max);
         axisY->setRange(0, max*MARGIN_TOP);
+        chart->setTitle("Visione Giornaliera");
     }
 
     axisY->setTickCount(5);
@@ -74,7 +78,6 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     markerSeries->attachAxis(axisY);
 
     chart->legend()->hide();
-    chart->setTitle("Media per mese");
     chartView->setRenderHint(QPainter::Antialiasing);
 
     connect(markerSeries, &QScatterSeries::clicked, this, &Chart::onClick);

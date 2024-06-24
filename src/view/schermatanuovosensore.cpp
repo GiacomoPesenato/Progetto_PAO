@@ -13,6 +13,7 @@
 #include "../model/sensoretemperatura.h"
 #include "../model/sensoreumidita.h"
 #include <iostream>
+#include <QMessageBox>
 
 SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     : QWidget(parent)
@@ -173,50 +174,112 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
             inputPotenzaMassima->setVisible(true);
             labelClasseEnergetica->setVisible(true);
             inputClasseEnergetica->setVisible(true);
-        } else {
-            std::cout << "Nascondere Elettrodomestico" << std::endl;
+
+            labelTemperaturaTarget->setVisible(false);
+            inputTemperaturaTarget->setVisible(false);
+            labelUmiditaTarget->setVisible(false);
+            inputUmiditaTarget->setVisible(false);
+            labelDimmerabile->setVisible(false);
+            inputDimmerabile->setVisible(false);
+            labelNumeroPannelli->setVisible(false);
+            inputNumeroPannelli->setVisible(false);
+            labelPotenzaPannello->setVisible(false);
+            inputPotenzaPannello->setVisible(false);
+        }
+        else if(inputTipo1->currentText() == "Temperatura"){
+            std::cout << "Rendere visibile per Temperatura" << std::endl;
+            labelTemperaturaTarget->setVisible(true);
+            inputTemperaturaTarget->setVisible(true);
+
             inputTipo2->setVisible(false);
             labelTipo2->setVisible(false);
             labelPotenzaMassima->setVisible(false);
             inputPotenzaMassima->setVisible(false);
             labelClasseEnergetica->setVisible(false);
             inputClasseEnergetica->setVisible(false);
-        }
-
-        if(inputTipo1->currentText() == "Temperatura"){
-            labelTemperaturaTarget->setVisible(true);
-            inputTemperaturaTarget->setVisible(true);
-        } else {
-            labelTemperaturaTarget->setVisible(false);
-            inputTemperaturaTarget->setVisible(false);
-        }
-
-        if(inputTipo1->currentText() == "Umidità"){
-            labelUmiditaTarget->setVisible(true);
-            inputUmiditaTarget->setVisible(true);
-        } else {
             labelUmiditaTarget->setVisible(false);
             inputUmiditaTarget->setVisible(false);
+            labelDimmerabile->setVisible(false);
+            inputDimmerabile->setVisible(false);
+            labelNumeroPannelli->setVisible(false);
+            inputNumeroPannelli->setVisible(false);
+            labelPotenzaPannello->setVisible(false);
+            inputPotenzaPannello->setVisible(false);
         }
+        else if(inputTipo1->currentText() == "Umidità"){
+            std::cout << "Rendere visibile per Umidità" << std::endl;
+            labelUmiditaTarget->setVisible(true);
+            inputUmiditaTarget->setVisible(true);
 
-        if(inputTipo1->currentText() == "Lampadina"){
+            inputTipo2->setVisible(false);
+            labelTipo2->setVisible(false);
+            labelPotenzaMassima->setVisible(false);
+            inputPotenzaMassima->setVisible(false);
+            labelClasseEnergetica->setVisible(false);
+            inputClasseEnergetica->setVisible(false);
+            labelTemperaturaTarget->setVisible(false);
+            inputTemperaturaTarget->setVisible(false);
+            labelDimmerabile->setVisible(false);
+            inputDimmerabile->setVisible(false);
+            labelNumeroPannelli->setVisible(false);
+            inputNumeroPannelli->setVisible(false);
+            labelPotenzaPannello->setVisible(false);
+            inputPotenzaPannello->setVisible(false);
+        }
+        else if(inputTipo1->currentText() == "Lampadina"){
+            std::cout << "Rendere visibile per Lampadina" << std::endl;
             labelPotenzaMassima->setVisible(true);
             inputPotenzaMassima->setVisible(true);
             labelDimmerabile->setVisible(true);
             inputDimmerabile->setVisible(true);
-        } else {
-            labelPotenzaMassima->setVisible(false);
-            inputPotenzaMassima->setVisible(false);
-            labelDimmerabile->setVisible(false);
-            inputDimmerabile->setVisible(false);
-        }
 
-        if(inputTipo1->currentText() == "Pannelli fotovoltaici"){
+            inputTipo2->setVisible(false);
+            labelTipo2->setVisible(false);
+            labelClasseEnergetica->setVisible(false);
+            inputClasseEnergetica->setVisible(false);
+            labelTemperaturaTarget->setVisible(false);
+            inputTemperaturaTarget->setVisible(false);
+            labelUmiditaTarget->setVisible(false);
+            inputUmiditaTarget->setVisible(false);
+            labelNumeroPannelli->setVisible(false);
+            inputNumeroPannelli->setVisible(false);
+            labelPotenzaPannello->setVisible(false);
+            inputPotenzaPannello->setVisible(false);
+        }
+        else if(inputTipo1->currentText() == "Pannelli fotovoltaici"){
+            std::cout << "Rendere visibile per Pannelli fotovoltaici" << std::endl;
             labelNumeroPannelli->setVisible(true);
             inputNumeroPannelli->setVisible(true);
             labelPotenzaPannello->setVisible(true);
             inputPotenzaPannello->setVisible(true);
-        } else {
+
+            inputTipo2->setVisible(false);
+            labelTipo2->setVisible(false);
+            labelPotenzaMassima->setVisible(false);
+            inputPotenzaMassima->setVisible(false);
+            labelClasseEnergetica->setVisible(false);
+            inputClasseEnergetica->setVisible(false);
+            labelTemperaturaTarget->setVisible(false);
+            inputTemperaturaTarget->setVisible(false);
+            labelUmiditaTarget->setVisible(false);
+            inputUmiditaTarget->setVisible(false);
+            labelDimmerabile->setVisible(false);
+            inputDimmerabile->setVisible(false);
+        }
+        else {
+            std::cout << "Nascondere tutti gli altri campi" << std::endl;
+            inputTipo2->setVisible(false);
+            labelTipo2->setVisible(false);
+            labelPotenzaMassima->setVisible(false);
+            inputPotenzaMassima->setVisible(false);
+            labelClasseEnergetica->setVisible(false);
+            inputClasseEnergetica->setVisible(false);
+            labelTemperaturaTarget->setVisible(false);
+            inputTemperaturaTarget->setVisible(false);
+            labelUmiditaTarget->setVisible(false);
+            inputUmiditaTarget->setVisible(false);
+            labelDimmerabile->setVisible(false);
+            inputDimmerabile->setVisible(false);
             labelNumeroPannelli->setVisible(false);
             inputNumeroPannelli->setVisible(false);
             labelPotenzaPannello->setVisible(false);
@@ -247,6 +310,22 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerWidget->setStyleSheet(style);
 
     connect(nuovoSensore, &QPushButton::clicked, this, [=]() {
+        // Verifica che i campi non siano vuoti
+        if (inputNome->text().isEmpty() || inputGruppo->text().isEmpty() ||
+            (inputTipo1->currentText() == "Elettrodomestico" && (inputTipo2->currentText().isEmpty() || inputClasseEnergetica->currentText().isEmpty() || inputPotenzaMassima->value() == 0)) ||
+            (inputTipo1->currentText() == "Temperatura" && inputTemperaturaTarget->value() == 0) ||
+            (inputTipo1->currentText() == "Umidità" && inputUmiditaTarget->value() == 0) ||
+            (inputTipo1->currentText() == "Lampadina" && inputPotenzaMassima->value() == 0) ||
+            (inputTipo1->currentText() == "Pannelli fotovoltaici" && (inputNumeroPannelli->value() == 0 || inputPotenzaPannello->value() == 0))) {
+
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Errore");
+            msgBox.setText("Per favore, riempi tutti i campi richiesti.");
+            msgBox.setIcon(QMessageBox::Warning);
+            msgBox.exec();
+            return;
+        }
+
         if(inputTipo1->currentText() == "Qualità aria"){
             SensoreAria *sensorearia = new SensoreAria(0, inputNome->text(), "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", inputGruppo->text(), 180, rand()%100);
             emit nuovoSensoreCreato(sensorearia);
