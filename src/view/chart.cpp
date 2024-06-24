@@ -9,8 +9,8 @@
 #include <QVector>
 #include <QObject>
 #include <iostream>
-#include "../headers/chart.h"
-#include "../headers/sensorelampadina.h"
+#include "chart.h"
+#include "../model/sensorelampadina.h"
 
 #define OFFSET 0.5
 #define MARGIN_TOP 1.1

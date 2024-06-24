@@ -1,5 +1,5 @@
-#include "../headers/widgetsensore.h"
-#include "../headers/sensore.h"
+#include "widgetsensore.h"
+#include "../model/sensore.h"
 
 WidgetSensore::WidgetSensore(Sensore *sensore, QWidget *parent)
     : QWidget(parent), sensore(sensore)

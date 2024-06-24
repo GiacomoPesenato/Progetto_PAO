@@ -1,9 +1,9 @@
-#include "../headers/mainwindow.h"
-#include "../headers/sensorearia.h"
-#include "../headers/sensoretemperatura.h"
-#include "../headers/sensoreelettricita.h"
-#include "../headers/sensoreelettrodomestico.h"
-#include "../headers/schermatasensori.h"
+#include "mainwindow.h"
+#include "schermatasensori.h"
+#include "../model/sensorearia.h"
+#include "../model/sensoretemperatura.h"
+#include "../model/sensoreelettricita.h"
+#include "../model/sensoreelettrodomestico.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -95,6 +95,9 @@ MainWindow::MainWindow(QWidget* parent)
     schermatanuovosensore = new SchermataNuovoSensore();
 
     connect(sidebar, &SideBar::openNuovoSensoreSignal, this, &MainWindow::openNuovoSensore);
+    connect(sidebar, &SideBar::openSalvaSignal, this, &MainWindow::openSalva);
+    connect(sidebar, &SideBar::openSalvaConNomeSignal, this, &MainWindow::openSalvaConNome);
+    connect(sidebar, &SideBar::openCaricaSignal, this, &MainWindow::openCarica);
 
     schermatasensore = new SchermataSensore();
     connect(schermatasensori, &SchermataSensori::widgetSensoreClicked, this, &MainWindow::showSensoreDetails);
@@ -106,6 +109,25 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::openNuovoSensore() {
     switchWidgets(rightLayout, schermatasensori, schermatanuovosensore);
+}
+
+void MainWindow::openSalva(){
+    /*
+    if (repository == nullptr) {
+        return;
+    }
+    repository->store();
+    has_unsaved_changes = false;
+    showStatus("Dataset saved.");
+    */
+}
+
+void MainWindow::openSalvaConNome(){
+
+}
+
+void MainWindow::openCarica(){
+
 }
 
 void MainWindow::openSchermataSensore(Sensore* sensore) {

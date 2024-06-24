@@ -5,9 +5,8 @@
 #include <cstddef> // For std::byte
 #endif
 
-#include "../headers/sensoreumidita.h"
-#include "../headers/sensore.h"
-#include "../headers/chart.h"
+#include "sensoreumidita.h"
+#include "../view/chart.h"
 #include <random>
 #include <iostream>
 

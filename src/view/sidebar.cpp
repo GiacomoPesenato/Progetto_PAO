@@ -1,4 +1,4 @@
-#include "../headers/sidebar.h"
+#include "sidebar.h"
 
 SideBar::SideBar(QWidget* parent)
     : QWidget(parent)
@@ -31,8 +31,17 @@ SideBar::SideBar(QWidget* parent)
 
     // Creazione del bottone per il cambio di widget
     QPushButton *nuovosensore = new QPushButton("Nuovo Sensore");
+    QPushButton *salva = new QPushButton("Salva");
+    QPushButton *salvaConNome = new QPushButton("Salva con nome");
+    QPushButton *carica = new QPushButton("Carica");
     connect(nuovosensore, &QPushButton::clicked, this, &SideBar::openNuovoSensore);
+    connect(salva, &QPushButton::clicked, this, &SideBar::openSalva);
+    connect(salva, &QPushButton::clicked, this, &SideBar::openSalvaConNome);
+    connect(carica, &QPushButton::clicked, this, &SideBar::openCarica);
     mainLayout->addWidget(nuovosensore);
+    mainLayout->addWidget(salva);
+    mainLayout->addWidget(salvaConNome);
+    mainLayout->addWidget(carica);
 }
 
 void SideBar::setDataOra() const{
@@ -54,3 +63,16 @@ void SideBar::setDataOra() const{
 void SideBar::openNuovoSensore(){
     emit openNuovoSensoreSignal();
 }
+
+void SideBar::openSalva(){
+    emit openSalvaSignal();
+}
+
+void SideBar::openSalvaConNome(){
+    emit openSalvaConNomeSignal();
+}
+
+void SideBar::openCarica(){
+    emit openCaricaSignal();
+}
+

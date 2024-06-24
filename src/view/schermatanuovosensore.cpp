@@ -5,13 +5,13 @@
 #include <cstddef> // For std::byte
 #endif
 
-#include "../headers/schermatanuovosensore.h"
-#include "../headers/sensorearia.h"
-#include "../headers/sensoreelettrodomestico.h"
-#include "../headers/sensorelampadina.h"
-#include "../headers/sensorepannelli.h"
-#include "../headers/sensoretemperatura.h"
-#include "../headers/sensoreumidita.h"
+#include "schermatanuovosensore.h"
+#include "../model/sensorearia.h"
+#include "../model/sensoreelettrodomestico.h"
+#include "../model/sensorelampadina.h"
+#include "../model/sensorepannelli.h"
+#include "../model/sensoretemperatura.h"
+#include "../model/sensoreumidita.h"
 
 SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     : QWidget(parent)

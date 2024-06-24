@@ -1,4 +1,4 @@
-#include "../headers/valore.h"
+#include "valore.h"
 
 Valore::Valore(double valore, const QDateTime &dataOra)
     : valore(valore)

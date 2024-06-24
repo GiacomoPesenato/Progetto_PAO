@@ -1,6 +1,4 @@
-QT       += core gui widgets charts
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT  += core gui widgets charts
 
 CONFIG += c++17
 
@@ -9,43 +7,44 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/chart.cpp \
+    src/view/chart.cpp \
     src/main.cpp \
-    src/sensore.cpp \
-    src/sensorearia.cpp \
-    src/sensoreelettricita.cpp \
-    src/sensoreelettrodomestico.cpp \
-    src/sensorelampadina.cpp \
-    src/sensorepannelli.cpp \
-    src/sensoretemperatura.cpp \
-    src/sensoreumidita.cpp \
-    src/valore.cpp \
-    src/widgetsensore.cpp \
-    src/mainwindow.cpp \
-    src/schermatasensore.cpp \
-    src/schermatasensori.cpp \
-    src/sidebar.cpp \
-    src/schermatanuovosensore.cpp
+    src/model/sensore.cpp \
+    src/model/sensorearia.cpp \
+    src/model/sensoreelettricita.cpp \
+    src/model/sensoreelettrodomestico.cpp \
+    src/model/sensorelampadina.cpp \
+    src/model/sensorepannelli.cpp \
+    src/model/sensoretemperatura.cpp \
+    src/model/sensoreumidita.cpp \
+    src/model/valore.cpp \
+    src/view/widgetsensore.cpp \
+    src/view/mainwindow.cpp \
+    src/view/schermatasensore.cpp \
+    src/view/schermatasensori.cpp \
+    src/view/sidebar.cpp \
+    src/view/schermatanuovosensore.cpp
 
 
 HEADERS += \
-    headers/main.h \
-    headers/sensore.h \
-    headers/sensorearia.h \
-    headers/sensoreelettricita.h \
-    headers/sensoreelettrodomestico.h \
-    headers/sensorelampadina.h \
-    headers/sensorepannelli.h \
-    headers/sensoretemperatura.h \
-    headers/sensoreumidita.h \
-    headers/valore.h \
-    headers/chart.h \
-    headers/widgetsensore.h \
-    headers/mainwindow.h \
-    headers/schermatasensore.h \
-    headers/schermatasensori.h \
-    headers/sidebar.h \
-    headers/schermatanuovosensore.h
+    src/view/chart.h \
+    src/main.h \
+    src/model/sensore.h \
+    src/model/sensorearia.h \
+    src/model/sensoreelettricita.h \
+    src/model/sensoreelettrodomestico.h \
+    src/model/sensorelampadina.h \
+    src/model/sensorepannelli.h \
+    src/model/sensoretemperatura.h \
+    src/model/sensoreumidita.h \
+    src/model/valore.h \
+    src/view/widgetsensore.h \
+    src/view/mainwindow.h \
+    src/view/schermatasensore.h \
+    src/view/schermatasensori.h \
+    src/view/sidebar.h \
+    src/view/schermatanuovosensore.h
+
 
 TRANSLATIONS += \
     domotica_it_IT.ts

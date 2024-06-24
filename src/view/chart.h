@@ -3,7 +3,7 @@
 
 #include <QtCharts>
 #include <QVector>
-#include "../headers/sensore.h"
+#include "../model/sensore.h"
 
 #ifdef _WIN32
 #define NOMINMAX // Avoid conflicts with min/max macros

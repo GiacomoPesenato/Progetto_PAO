@@ -10,7 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-#include "sensore.h"
+#include "../model/sensore.h"
 #include "widgetsensore.h"
 
 class SchermataSensori: public QWidget

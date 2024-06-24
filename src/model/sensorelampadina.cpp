@@ -1,6 +1,5 @@
-#include "../headers/sensorelampadina.h"
-#include "../headers/sensoreelettricita.h"
-#include "../headers/chart.h"
+#include "sensorelampadina.h"
+#include "../view/chart.h"
 #include <QtWidgets>
 #include <iostream>
 

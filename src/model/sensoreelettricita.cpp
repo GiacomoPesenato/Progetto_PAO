@@ -1,5 +1,4 @@
-#include "../headers/sensoreelettricita.h"
-#include "../headers/sensore.h"
+#include "sensoreelettricita.h"
 
 SensoreElettricita::SensoreElettricita():Sensore(), potenzaMax(0){}
 

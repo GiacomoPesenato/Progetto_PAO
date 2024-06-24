@@ -1,5 +1,5 @@
-#include "../headers/schermatasensori.h"
-#include "../headers/widgetsensore.h"
+#include "../view/schermatasensori.h"
+#include "../view/widgetsensore.h"
 #include <iostream>
 
 

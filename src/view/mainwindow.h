@@ -10,7 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-#include "sensore.h"
+#include "../model/sensore.h"
 #include "sidebar.h"
 #include "schermatasensori.h"
 #include "schermatasensore.h"
@@ -21,6 +21,9 @@ class MainWindow: public QMainWindow
 public:
     explicit MainWindow(QWidget* parent = 0);
     void openNuovoSensore();
+    void openSalva();
+    void openSalvaConNome();
+    void openCarica();
     void openSchermataSensore(Sensore* sensore = nullptr);
     void closeSchermataSensore();
 private slots:

@@ -1,6 +1,5 @@
-#include "../headers/sensorearia.h"
-#include "../headers/sensore.h"
-#include "../headers/chart.h"
+#include "sensorearia.h"
+#include "../view/chart.h"
 
 #include <QDateTime>
 #include <QtCharts>

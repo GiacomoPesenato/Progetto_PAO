@@ -1,7 +1,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QtWidgets>
-#include "../headers/mainwindow.h"
+#include "view/mainwindow.h"
 
 class SectionWidget : public QWidget
 {

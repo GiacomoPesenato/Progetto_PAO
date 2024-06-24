@@ -13,7 +13,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDebug>
-#include "sensore.h"
+#include "../model/sensore.h"
 
 class SchermataSensore : public QWidget {
     Q_OBJECT

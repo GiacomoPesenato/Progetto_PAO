@@ -1,6 +1,5 @@
-#include "../headers/sensorepannelli.h"
-#include "../headers/sensoreelettricita.h"
-#include "../headers/chart.h"
+#include "sensorepannelli.h"
+#include "../view/chart.h"
 #include <QtWidgets>
 #include <iostream>
 SensorePannelli::SensorePannelli():SensoreElettricita(), nPannelli(65535), potenzaPannello(0) {}

@@ -5,9 +5,8 @@
 #include <cstddef> // For std::byte
 #endif
 
-#include "../headers/sensoretemperatura.h"
-#include "../headers/sensore.h"
-#include "../headers/chart.h"
+#include "sensoretemperatura.h"
+#include "../view/chart.h"
 #include <QtWidgets>
 #include <iostream>
 

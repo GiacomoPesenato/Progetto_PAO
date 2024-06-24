@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QMouseEvent>
 
-#include "sensore.h"
+#include "../model/sensore.h"
 
 class WidgetSensore:  public QWidget
 {

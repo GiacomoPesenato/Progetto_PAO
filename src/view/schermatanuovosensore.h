@@ -9,7 +9,7 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QDoubleSpinBox>
-#include "sensore.h"
+#include "../model/sensore.h"
 
 class SchermataNuovoSensore : public QWidget
 {

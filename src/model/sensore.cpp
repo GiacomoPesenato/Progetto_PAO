@@ -1,5 +1,5 @@
-#include "../headers/sensore.h"
-#include "../headers/valore.h"
+#include "sensore.h"
+#include "valore.h"
 
 #include <QDateTime>
 #include <QVector>

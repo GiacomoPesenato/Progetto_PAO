@@ -1,6 +1,5 @@
-#include "../headers/sensoreelettrodomestico.h"
-#include "../headers/sensoreelettricita.h"
-#include "../headers/chart.h"
+#include "sensoreelettrodomestico.h"
+#include "../view/chart.h"
 #include <QtWidgets>
 #include <iostream>
 
