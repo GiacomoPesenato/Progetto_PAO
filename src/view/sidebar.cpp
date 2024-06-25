@@ -97,11 +97,11 @@ void SideBar::openCarica(){
 
 void SideBar::caricaJsonFile(Repository::JsonRepository*& repository)
 {
-    QString defaultFolder = "JsonDocuments";
+    QString defaultFolder = "../../jsonDoc";
     QFileDialog dialog(this);
     dialog.setDirectory(defaultFolder);
     QString fileName = dialog.getOpenFileName(this, "Apri file JSON", defaultFolder,
-                                              "JSON Files (*.json);;All Files (*)");
+                                              "JSON Files (*.json);S");
 
     if (!fileName.isEmpty()) {
         delete repository;
@@ -124,7 +124,7 @@ void SideBar::salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::Js
 
 void SideBar::salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository)
 {
-    QString defaultFolder = "JsonDocuments";
+    QString defaultFolder = "../../jsonDoc";
     QFileDialog dialog(this);
     dialog.setDirectory(defaultFolder);
 

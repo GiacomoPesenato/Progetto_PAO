@@ -119,7 +119,7 @@ void MainWindow::openSalvaConNome() {
 
 void MainWindow::openCarica(){
     sidebar->caricaJsonFile(repository);
-    aggiornaSensori();
+    if(repository != nullptr) aggiornaSensori();
 }
 
 void MainWindow::aggiornaSensori() {
