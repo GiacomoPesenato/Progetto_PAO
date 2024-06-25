@@ -94,17 +94,6 @@ void SideBar::caricaJsonFile(Repository::JsonRepository*& repository)
     if (!fileName.isEmpty()) {
         delete repository;
         repository = new Repository::JsonRepository(Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
-
-        /* Questa era la precedente implementazione, ma c'era un bug, in certe situazioni non riusciva più a entrare in else, allora sono andato a forza
-           bruta eliminando e ricreando ogni volta repository */
-        /*if(repository==nullptr)
-            repository = new Sensor::Repository::JsonRepository(Sensor::Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
-        else{
-            repository->setPath(fileName.toStdString());
-            qDebug()<<"Sono entrato qui";
-        }*/
-
-        // Load del file Json nel repository, che poi viene salvato nel sensors di MainWindow
         repository->load();
     }
 }
@@ -116,6 +105,7 @@ void SideBar::salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::Js
     } else {
         // Sovrascrizione della std::map di repository, che poi archivia nel Json
         repository->overwrite(sensori);
+        cout << "Salvataggio in corso..." << endl;
         repository->store();
     }
 }

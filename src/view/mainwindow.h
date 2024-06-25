@@ -28,6 +28,7 @@ public:
     void openSchermataSensore(Sensore* sensore = nullptr);
     void closeSchermataSensore();
     void closeSchermataNuovoSensore();
+    void aggiornaSensori();
 
 private slots:
     void showSensoreDetails(Sensore *widget);

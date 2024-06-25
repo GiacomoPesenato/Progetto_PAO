@@ -70,10 +70,6 @@ std::vector<Sensore*> JsonRepository::readAll() const {
 }
 
 void JsonRepository::overwrite(const std::vector<Sensore*> newSensors) {
-    // Prima di sovrascrivere, liberiamo la memoria degli oggetti nella mappa corrente
-    for (const auto& pair : repository) {
-        delete pair.second;
-    }
     repository.clear();
 
     // Itera attraverso il vettore di sensori della MainWindow e inserisce i loro cloni nella mappa

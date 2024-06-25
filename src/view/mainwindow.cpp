@@ -118,6 +118,16 @@ void MainWindow::openSalvaConNome() {
 }
 
 void MainWindow::openCarica(){
+    sidebar->caricaJsonFile(repository);
+    aggiornaSensori();
+}
+
+void MainWindow::aggiornaSensori() {
+    sensori.clear();
+    schermatasensori->clearSensori();
+    for (const auto& pair : repository->getRepository()) {
+        aggiungiNuovoSensore(pair.second);
+    }
 
 }
 
