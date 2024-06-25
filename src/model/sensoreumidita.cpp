@@ -57,6 +57,10 @@ Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
     return Valore(valoreRandom,dataOra);
 }
 
+void SensoreUmidita::accept(sensoreVisitor& visitor) const {
+    visitor.visit(*this);
+}
+
 int umimain(int argc, char *argv[]) {
     SensoreUmidita umido = SensoreUmidita(1, "Umidità", "%", "umidita.png", "Clima", 80, 0);
     umido.generaDati();

@@ -24,6 +24,7 @@ public:
 
     virtual Sensore *clone() const override;
     ~SensoreUmidita() = default;
+    virtual void accept(sensoreVisitor& visitor) const override;
 };
 
 #endif // SENSOREUMIDITA_H

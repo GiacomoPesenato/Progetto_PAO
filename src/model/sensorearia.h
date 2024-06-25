@@ -24,6 +24,7 @@ public:
     ~SensoreAria() = default;
     Valore getRandom(const QDateTime &dataOra) override;
     virtual Sensore *clone() const override;
+    virtual void accept(sensoreVisitor& visitor) const override;
 };
 
 

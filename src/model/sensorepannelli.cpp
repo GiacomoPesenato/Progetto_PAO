@@ -72,6 +72,10 @@ Valore SensorePannelli::getRandom(const QDateTime &data) {
     return Valore(potenzaRandom, data);
 }
 
+void SensorePannelli::accept(sensoreVisitor& visitor) const {
+    visitor.visit(*this);
+}
+
 int sqmain(int argc, char *argv[]) {
     SensorePannelli pannelli = SensorePannelli(1, "pannelli", "Watt", "icona", "elettricita", 100, 60, 100*60, rand() % 100);
     pannelli.generaDati();

@@ -1,4 +1,5 @@
 #include "sidebar.h"
+#include <iostream>
 
 SideBar::SideBar(QWidget* parent)
     : QWidget(parent)
@@ -36,7 +37,7 @@ SideBar::SideBar(QWidget* parent)
     QPushButton *carica = new QPushButton("Carica");
     connect(nuovosensore, &QPushButton::clicked, this, &SideBar::openNuovoSensore);
     connect(salva, &QPushButton::clicked, this, &SideBar::openSalva);
-    connect(salva, &QPushButton::clicked, this, &SideBar::openSalvaConNome);
+    connect(salvaConNome, &QPushButton::clicked, this, &SideBar::openSalvaConNome);
     connect(carica, &QPushButton::clicked, this, &SideBar::openCarica);
     mainLayout->addWidget(nuovosensore);
     mainLayout->addWidget(salva);
@@ -74,5 +75,66 @@ void SideBar::openSalvaConNome(){
 
 void SideBar::openCarica(){
     emit openCaricaSignal();
+}
+
+void SideBar::caricaJsonFile(Repository::JsonRepository*& repository)
+{
+    QString defaultFolder = "JsonDocuments";
+    QFileDialog dialog(this);
+    dialog.setDirectory(defaultFolder);
+    QString fileName = dialog.getOpenFileName(this, "Apri file JSON", defaultFolder,
+                                              "JSON Files (*.json);;All Files (*)");
+
+    if (!fileName.isEmpty()) {
+        delete repository;
+        repository = new Repository::JsonRepository(Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
+
+        /* Questa era la precedente implementazione, ma c'era un bug, in certe situazioni non riusciva più a entrare in else, allora sono andato a forza
+           bruta eliminando e ricreando ogni volta repository */
+        /*if(repository==nullptr)
+            repository = new Sensor::Repository::JsonRepository(Sensor::Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
+        else{
+            repository->setPath(fileName.toStdString());
+            qDebug()<<"Sono entrato qui";
+        }*/
+
+        // Load del file Json nel repository, che poi viene salvato nel sensors di MainWindow
+        repository->load();
+    }
+}
+
+void SideBar::salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository)
+{
+    if (repository == nullptr) {
+        salvaJsonFileConNome(sensori, repository);
+    } else {
+        // Sovrascrizione della std::map di repository, che poi archivia nel Json
+        repository->overwrite(sensori);
+        repository->store();
+    }
+}
+
+void SideBar::salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository)
+{
+    QString defaultFolder = "JsonDocuments";
+    QFileDialog dialog(this);
+    dialog.setDirectory(defaultFolder);
+
+    QString fileName = dialog.getSaveFileName(this, "Salva file JSON", defaultFolder, "JSON Files (*.json)");
+
+    if (!fileName.isEmpty()) {
+        // Aggiungi l'estensione .json se non è già presente
+        if (!fileName.endsWith(".json", Qt::CaseSensitive)) {
+            fileName += ".json";
+        }
+        if(repository==nullptr){
+            repository = new Repository::JsonRepository(Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
+        }else{
+            repository->setPath(fileName.toStdString());
+        }
+        // Sovrascrizione della std::map di repository, che poi archivia nel Json
+        repository->overwrite(sensori);
+        repository->store();
+    }
 }
 

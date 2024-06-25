@@ -29,6 +29,7 @@ public:
 
     virtual Sensore *clone() const override;
     ~SensorePannelli() = default;
+    virtual void accept(sensoreVisitor& visitor) const override;
 
 };
 

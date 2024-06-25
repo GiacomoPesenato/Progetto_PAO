@@ -7,7 +7,7 @@
 class SensoreElettricita: public Sensore
 {
 private:
-    const double potenzaMax;
+    double potenzaMax;
 
 public:
     SensoreElettricita();
@@ -20,8 +20,8 @@ public:
                        double valore);
 
     double getPotenzaMax() const;
+    void setPotenzaMax(const double &value);
 
-    virtual Sensore *clone() const override;
     ~SensoreElettricita() = default;
 };
 

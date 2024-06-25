@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include "../model/Repository/jsonRepo.h"
 
 class SideBar: public QWidget
 {
@@ -20,6 +21,9 @@ signals:
     void openCaricaSignal();
 public:
     explicit SideBar(QWidget* parent = 0);
+    void caricaJsonFile(Repository::JsonRepository*& repository);
+    void salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository);
+    void salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository);
 public slots:
     void openNuovoSensore();
     void openSalva();

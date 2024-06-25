@@ -31,6 +31,7 @@ public:
 
     virtual Sensore *clone() const override;
     ~SensoreTemperatura() = default;
+    virtual void accept(sensoreVisitor& visitor) const override;
 
 };
 

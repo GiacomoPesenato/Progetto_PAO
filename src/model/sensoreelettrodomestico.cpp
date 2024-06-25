@@ -65,6 +65,10 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
     return Valore(randomValue, dataOra);
 }
 
+void SensoreElettrodomestico::accept(sensoreVisitor& visitor) const {
+    visitor.visit(*this);
+}
+
 
 int smain(int argc, char *argv[])
 {

@@ -75,6 +75,10 @@ void SensoreLampadina::generaDati() {
     }
 }
 
+void SensoreLampadina::accept(sensoreVisitor& visitor) const {
+    visitor.visit(*this);
+}
+
 
 int gfmain(int argc, char *argv[]) {
     SensoreLampadina lampadina = SensoreLampadina(1, "lampadina", "W", "resources/lampadina.png", "casa", false, 10, 10);

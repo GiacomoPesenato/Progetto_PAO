@@ -93,6 +93,10 @@ Valore SensoreTemperatura::getRandom(const QDateTime &dataOra) {
     return Valore(valoreRandom, dataOra);
 }
 
+void SensoreTemperatura::accept(sensoreVisitor& visitor) const {
+    visitor.visit(*this);
+}
+
 int jhgmain(int argc, char *argv[]) {
     SensoreTemperatura termometro = SensoreTemperatura(1, "temperatura", "°C", "termometro", "casa", 20, -10, 40, 20);
     termometro.generaDati();

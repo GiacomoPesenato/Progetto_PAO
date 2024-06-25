@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
+#include "../model/Repository/jsonRepo.h"
 #include "../model/sensore.h"
 #include "sidebar.h"
 #include "schermatasensori.h"
@@ -31,6 +32,7 @@ private slots:
     void aggiungiNuovoSensore(Sensore *sensore);
 private:
     std::vector<Sensore*> sensori;
+    Repository::JsonRepository* repository;
 
     QWidget* centralWidget;
     QHBoxLayout* mainLayout;

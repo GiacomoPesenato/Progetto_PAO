@@ -25,5 +25,6 @@ public:
 
     virtual Sensore *clone() const override;
     Valore getRandom(const QDateTime &dataOra) override;
+    virtual void accept(sensoreVisitor& visitor) const override;
 };
 #endif // SENSOREELETTRODOMESTICO_H

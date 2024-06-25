@@ -2,6 +2,7 @@
 #define SENSORE_H
 
 #include <QWidget>
+#include "sensorevisitor.h"
 #include "valore.h"
 #include <QVector>
 
@@ -43,11 +44,13 @@ public:
     QVector<Valore> getValori() const;
     void setValori(QVector<Valore> &valori);
 
+    void rimuoviDati();
+
     virtual ~Sensore() = default;
     virtual Sensore *clone() const = 0;
     virtual Valore getRandom(const QDateTime &dataOra);
     virtual void generaDati();
-    void rimuoviDati();
+    virtual void accept(sensoreVisitor& visitor) const = 0;
 
 };
 #endif // SENSORE_H

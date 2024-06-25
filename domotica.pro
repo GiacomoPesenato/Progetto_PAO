@@ -18,6 +18,11 @@ SOURCES += \
     src/model/sensoretemperatura.cpp \
     src/model/sensoreumidita.cpp \
     src/model/valore.cpp \
+    src/model/Converter/json.cpp \
+    src/model/Converter/jsonVisitor.cpp \
+    src/model/Converter/reader.cpp \
+    src/model/DataMapper/jsonFile.cpp \
+    src/model/Repository/jsonRepo.cpp \
     src/view/widgetsensore.cpp \
     src/view/mainwindow.cpp \
     src/view/schermatasensore.cpp \
@@ -27,6 +32,7 @@ SOURCES += \
 
 
 HEADERS += \
+    src/model/sensorevisitor.h \
     src/view/chart.h \
     src/main.h \
     src/model/sensore.h \
@@ -38,6 +44,13 @@ HEADERS += \
     src/model/sensoretemperatura.h \
     src/model/sensoreumidita.h \
     src/model/valore.h \
+    src/model/Converter/json.h \
+    src/model/Converter/jsonVisitor.h \
+    src/model/Converter/reader.h \
+    src/model/Converter/sensoreLettura.h \
+    src/model/DataMapper/jsonFile.h \
+    src/model/Repository/jsonRepo.h \
+    src/model/Repository/sensoreRepo.h \
     src/view/widgetsensore.h \
     src/view/mainwindow.h \
     src/view/schermatasensore.h \

@@ -1,10 +1,6 @@
 #include "mainwindow.h"
 #include "schermatasensori.h"
-#include "../model/sensorearia.h"
-#include "../model/sensoretemperatura.h"
-#include "../model/sensoreelettricita.h"
-#include "../model/sensoreelettrodomestico.h"
-
+#include <iostream>
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
 {
@@ -99,6 +95,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(sidebar, &SideBar::openSalvaConNomeSignal, this, &MainWindow::openSalvaConNome);
     connect(sidebar, &SideBar::openCaricaSignal, this, &MainWindow::openCarica);
 
+
     schermatasensore = new SchermataSensore();
     connect(schermatasensori, &SchermataSensori::widgetSensoreClicked, this, &MainWindow::showSensoreDetails);
 
@@ -112,18 +109,11 @@ void MainWindow::openNuovoSensore() {
 }
 
 void MainWindow::openSalva(){
-    /*
-    if (repository == nullptr) {
-        return;
-    }
-    repository->store();
-    has_unsaved_changes = false;
-    showStatus("Dataset saved.");
-    */
+    sidebar->salvaJsonFile(sensori, repository);
 }
 
-void MainWindow::openSalvaConNome(){
-
+void MainWindow::openSalvaConNome() {
+    sidebar->salvaJsonFileConNome(sensori, repository);
 }
 
 void MainWindow::openCarica(){
