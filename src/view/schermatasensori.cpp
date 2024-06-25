@@ -61,6 +61,10 @@ void SchermataSensori::clearSensori() {
             delete item;
         }
     }
+    for (auto it = groupWidgets.begin(); it != groupWidgets.end(); ++it) {
+        delete it.value(); // Elimina il QGroupBox
+    }
+    groupWidgets.clear(); // Svuota il QMap
 }
 
 void SchermataSensori::handleWidgetSensoreClicked(WidgetSensore *widget){

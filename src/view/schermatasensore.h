@@ -20,8 +20,12 @@ class SchermataSensore : public QWidget {
 private slots:
     void chiudiSchermataSensore();
     void simula();
+    void eliminaSensore();
+    void modificaSensore();
 signals:
     void chiudiSchermataSensoreSignal();
+    void eliminaSensoreSignal(Sensore *sensore);
+    void modificaSensoreSignal(Sensore *sensore);
 public:
     explicit SchermataSensore(QWidget *parent = nullptr);
     void setSensore(Sensore *sensore);

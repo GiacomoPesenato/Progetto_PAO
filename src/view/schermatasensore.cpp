@@ -98,8 +98,11 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     layoutFunzioniSensore->addWidget(buttonModifica, Qt::AlignTop | Qt::AlignRight);
     layoutFunzioniSensore->addWidget(buttonElimina, Qt::AlignTop | Qt::AlignRight);
 
+    // Connect dei button indietro, simula, modifica ed elimina
     connect(buttonIndietro, &QPushButton::clicked, this, &SchermataSensore::chiudiSchermataSensore);
     connect(buttonSimula, &QPushButton::clicked, this, &SchermataSensore::simula);
+    connect(buttonModifica, &QPushButton::clicked, this, &SchermataSensore::modificaSensore);
+    connect(buttonElimina, &QPushButton::clicked, this, &SchermataSensore::eliminaSensore);
 
     // Creazione e aggiunta del QChart in basso al centro
     QWidget *chartWidget = new QWidget;
@@ -149,4 +152,12 @@ void SchermataSensore::simula() {
 
     // Aggiungi il nuovo grafico
     chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
+}
+
+void SchermataSensore::modificaSensore(){
+    emit modificaSensoreSignal(sensore);
+}
+
+void SchermataSensore::eliminaSensore(){
+    emit eliminaSensoreSignal(sensore);
 }

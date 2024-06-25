@@ -102,6 +102,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(schermatasensore, &SchermataSensore::chiudiSchermataSensoreSignal, this, &MainWindow::closeSchermataSensore);
     connect(schermatanuovosensore, &SchermataNuovoSensore::nuovoSensoreCreato, this, &MainWindow::aggiungiNuovoSensore);
     connect(schermatanuovosensore, &SchermataNuovoSensore::chiudiSchermataNuovoSensoreSignal, this, &MainWindow::closeSchermataNuovoSensore);
+    connect(schermatasensore, &SchermataSensore::eliminaSensoreSignal, this, &MainWindow::eliminaSensore);
 }
 
 void MainWindow::openNuovoSensore() {
@@ -152,4 +153,19 @@ void MainWindow::aggiungiNuovoSensore(Sensore *sensore) {
     schermatasensori->clearSensori();
     schermatasensori->insertSensori(sensori);
     switchWidgets(rightLayout, schermatanuovosensore, schermatasensori);
+}
+
+void MainWindow::eliminaSensore(Sensore *sensore){
+    for (std::vector<Sensore*>::iterator it = sensori.begin(); it != sensori.end(); it++)
+        if (*it == sensore) {
+            sensori.erase(it);
+            break;
+        };
+    schermatasensori->clearSensori();
+    schermatasensori->insertSensori(sensori);
+    switchWidgets(rightLayout, schermatasensore, schermatasensori);
+}
+
+void MainWindow::modificaSensore(Sensore *widget){
+
 }

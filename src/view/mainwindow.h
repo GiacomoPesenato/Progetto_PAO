@@ -28,9 +28,12 @@ public:
     void openSchermataSensore(Sensore* sensore = nullptr);
     void closeSchermataSensore();
     void closeSchermataNuovoSensore();
+
 private slots:
     void showSensoreDetails(Sensore *widget);
     void aggiungiNuovoSensore(Sensore *sensore);
+    void eliminaSensore(Sensore *widget);
+    void modificaSensore(Sensore *widget);
 private:
     std::vector<Sensore*> sensori;
     Repository::JsonRepository* repository;
