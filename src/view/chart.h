@@ -33,7 +33,7 @@ private:
     Valore mediaLampadina(int &counter, bool dimmer);
 
 public:
-    Chart();
+    Chart(QObject *parent = nullptr);
     QChartView* getChart(const Sensore &s, QString tipo);
 
 private slots:

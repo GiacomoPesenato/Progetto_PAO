@@ -43,6 +43,12 @@ SideBar::SideBar(QWidget* parent)
     mainLayout->addWidget(salva);
     mainLayout->addWidget(salvaConNome);
     mainLayout->addWidget(carica);
+    this->setStyleSheet("    QPushButton {background-color: white;"
+                        "    color: black;"
+                        "    font-size: 16px;"
+                        "    border-radius: 10px;"
+                        "    margin: 5px;"
+                        "    padding: 5px;}");
 }
 
 void SideBar::setDataOra() const{

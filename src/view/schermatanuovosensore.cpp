@@ -27,6 +27,13 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->setAlignment(Qt::AlignCenter);
     mainLayout->addWidget(centerWidget);
 
+    //Button indietro
+    QPushButton *buttonIndietro = new QPushButton;
+    QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
+    buttonIndietro->setIcon(iconIndietro);
+    buttonIndietro->setIconSize(QSize(24, 24));
+    centerLayout->addWidget(buttonIndietro);
+
     // Tipo sensore (generale)
     QLabel *labelTipo1 = new QLabel("Tipo sensore:");
     labelTipo1->setAlignment(Qt::AlignCenter);
@@ -162,7 +169,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(nuovoSensore);
     nuovoSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    // Connect inputTipo1 changes to visibility adjustments
+    // Ad ogni cambiamento di tipo di sensore aggiorna la visibilità dei campi
     connect(inputTipo1, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](){
         std::cout << "Tipo selezionato: " << inputTipo1->currentText().toStdString() << std::endl;
 
@@ -288,7 +295,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     });
 
     // Stile
-    QString style = "QComboBox, QLineEdit, QDoubleSpinBox, QSpinBox, QPushButton {"
+    QString style = "QComboBox, QLineEdit, QDoubleSpinBox, QSpinBox {"
                     "    background-color: white;"
                     "    color: black;"
                     "    font-size: 24px;"
@@ -308,6 +315,15 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
                     "}";
 
     centerWidget->setStyleSheet(style);
+
+    nuovoSensore->setStyleSheet("    background-color: white;"
+                                "    color: black;"
+                                "    font-size: 24px;"
+                                "    border-radius: 10px;"
+                                "    margin: 10px;"
+                                "    padding: 5px;");
+
+    connect(buttonIndietro, &QPushButton::clicked, this, &SchermataNuovoSensore::chiudiSchermataNuovoSensore);
 
     connect(nuovoSensore, &QPushButton::clicked, this, [=]() {
         // Verifica che i campi non siano vuoti
@@ -353,7 +369,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
             emit nuovoSensoreCreato(sensoreumidita);
         }
         if(inputTipo1->currentText() == "Pannelli fotovoltaici"){
-            SensorePannelli *sensorepannelli = new SensorePannelli(0, inputNome->text(), "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/pannelli.png", inputGruppo->text(), inputNumeroPannelli->value(), inputPotenzaPannello->value(), inputNumeroPannelli->value()*inputPotenzaPannello->value(), 3400);
+            SensorePannelli *sensorepannelli = new SensorePannelli(0, inputNome->text(), "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/pannello.png", inputGruppo->text(), inputNumeroPannelli->value(), inputPotenzaPannello->value(), inputNumeroPannelli->value()*inputPotenzaPannello->value(), 3400);
             emit nuovoSensoreCreato(sensorepannelli);
         }
         if(inputTipo1->currentText() == "Lampadina"){
@@ -365,4 +381,8 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
 
 QWidget* SchermataNuovoSensore::createWidget(QWidget *parent) {
     return new SchermataNuovoSensore(parent);
+}
+
+void SchermataNuovoSensore::chiudiSchermataNuovoSensore() {
+    emit chiudiSchermataNuovoSensoreSignal();
 }

@@ -16,7 +16,8 @@
 #define MARGIN_TOP 1.1
 #define MARGIN_BOTTOM 0.9
 
-Chart::Chart()  {}
+Chart::Chart(QObject *parent) : QObject(parent)
+  {}
 
 QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     markerSeries = new QScatterSeries;

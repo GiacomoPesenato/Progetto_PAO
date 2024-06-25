@@ -35,8 +35,14 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QVBoxLayout *layoutInfoSensore = new QVBoxLayout(widgetInfoSensore);
     widgetInfoSensore->setLayout(layoutInfoSensore);
 
+    QWidget *widgetFunzioniSensore = new QWidget;
+    QVBoxLayout *layoutFunzioniSensore = new QVBoxLayout(widgetFunzioniSensore);
+    widgetFunzioniSensore->setLayout(layoutFunzioniSensore);
+
     topLeftLayout->addWidget(widgetIconaSensore);
     topLeftLayout->addWidget(widgetInfoSensore);
+    topLeftLayout->addStretch();
+    topLeftLayout->addWidget(widgetFunzioniSensore);
 
     int idSensore = 0;
     QString nomeSensore = "";
@@ -60,14 +66,37 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     labelValore->setStyleSheet("color: white; font-size: 16px;");
 
     QPushButton *buttonSimula = new QPushButton("Simula");
+    QPushButton *buttonModifica = new QPushButton("Modifica");
+    QPushButton *buttonElimina = new QPushButton("Elimina");
+
+    buttonSimula->setStyleSheet("    background-color: white;"
+                                "    color: black;"
+                                "    font-size: 16px;"
+                                "    border-radius: 10px;"
+                                "    margin: 5px;"
+                                "    padding: 5px;");
+    buttonModifica->setStyleSheet("    background-color: white;"
+                                "    color: black;"
+                                "    font-size: 16px;"
+                                "    border-radius: 10px;"
+                                "    margin: 5px;"
+                                "    padding: 5px;");
+    buttonElimina->setStyleSheet("    background-color: white;"
+                                "    color: black;"
+                                "    font-size: 16px;"
+                                "    border-radius: 10px;"
+                                "    margin: 5px;"
+                                "    padding: 5px;");
 
     layoutIconaSensore->addWidget(buttonIndietro, Qt::AlignTop | Qt::AlignLeft);
     layoutIconaSensore->addWidget(labelIcona, Qt::AlignTop | Qt::AlignLeft);
-    layoutIconaSensore->addWidget(buttonSimula, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelId, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelNome, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelGruppo, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelValore, Qt::AlignTop | Qt::AlignLeft);
+    layoutFunzioniSensore->addWidget(buttonSimula, Qt::AlignTop | Qt::AlignRight);
+    layoutFunzioniSensore->addWidget(buttonModifica, Qt::AlignTop | Qt::AlignRight);
+    layoutFunzioniSensore->addWidget(buttonElimina, Qt::AlignTop | Qt::AlignRight);
 
     connect(buttonIndietro, &QPushButton::clicked, this, &SchermataSensore::chiudiSchermataSensore);
     connect(buttonSimula, &QPushButton::clicked, this, &SchermataSensore::simula);

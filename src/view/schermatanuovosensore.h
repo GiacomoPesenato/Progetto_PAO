@@ -17,8 +17,11 @@ class SchermataNuovoSensore : public QWidget
 public:
     explicit SchermataNuovoSensore(QWidget *parent = nullptr);
     static QWidget* createWidget(QWidget *parent = nullptr); // Metodo statico per creare il widget
+public slots:
+    void chiudiSchermataNuovoSensore();
 signals:
     void nuovoSensoreCreato(Sensore *sensore);
+    void chiudiSchermataNuovoSensoreSignal();
 private:
     QVBoxLayout* mainLayout;
 };
