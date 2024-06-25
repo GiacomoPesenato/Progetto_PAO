@@ -18,5 +18,15 @@
         "type": "SensoreAria",
         "unitaMisura": "IQA",
         "valore": 86
+    },
+    {
+        "gruppo": "asdasd",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 2,
+        "nome": "sdad",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 83
     }
 ]

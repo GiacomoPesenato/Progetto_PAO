@@ -29,6 +29,8 @@ public:
     void closeSchermataSensore();
     void closeSchermataNuovoSensore();
     void aggiornaSensori();
+    void vuoiSalvare();
+    void popupTemporaneo(QString titolo, QString testo);
 
 private slots:
     void showSensoreDetails(Sensore *widget);
@@ -38,6 +40,7 @@ private slots:
 private:
     std::vector<Sensore*> sensori;
     Repository::JsonRepository* repository = nullptr;
+    bool isSaved = true;
 
     QWidget* centralWidget;
     QHBoxLayout* mainLayout;

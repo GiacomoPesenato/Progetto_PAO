@@ -101,7 +101,7 @@ void SideBar::caricaJsonFile(Repository::JsonRepository*& repository)
     QFileDialog dialog(this);
     dialog.setDirectory(defaultFolder);
     QString fileName = dialog.getOpenFileName(this, "Apri file JSON", defaultFolder,
-                                              "JSON Files (*.json);S");
+                                              "JSON Files (*.json)");
 
     if (!fileName.isEmpty()) {
         delete repository;

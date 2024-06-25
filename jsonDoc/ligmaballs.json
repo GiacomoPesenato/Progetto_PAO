@@ -1,13 +1,13 @@
 [
     {
-        "gruppo": "palle",
+        "gruppo": "<szdxvvn ",
         "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
         "id": 0,
-        "nome": "palle",
+        "nome": "sdafbn",
         "sogliaMassima": 180,
         "type": "SensoreAria",
         "unitaMisura": "IQA",
-        "valore": 83
+        "valore": 86
     },
     {
         "gruppo": "sadd",
@@ -17,6 +17,6 @@
         "sogliaMassima": 180,
         "type": "SensoreAria",
         "unitaMisura": "IQA",
-        "valore": 86
+        "valore": 83
     }
 ]
