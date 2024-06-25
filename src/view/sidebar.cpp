@@ -35,10 +35,22 @@ SideBar::SideBar(QWidget* parent)
     QPushButton *salva = new QPushButton("Salva");
     QPushButton *salvaConNome = new QPushButton("Salva con nome");
     QPushButton *carica = new QPushButton("Carica");
+
+    QShortcut *shortcutNuovoSensore = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this);
+    QShortcut *shortcutSalva = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this);
+    QShortcut *shortcutSalvaConNome = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_S), this);
+    QShortcut *shortcutCarica = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this);
+
+    connect(shortcutNuovoSensore, &QShortcut::activated, this, &SideBar::openNuovoSensore);
+    connect(shortcutSalva, &QShortcut::activated, this, &SideBar::openSalva);
+    connect(shortcutSalvaConNome, &QShortcut::activated, this, &SideBar::openSalvaConNome);
+    connect(shortcutCarica, &QShortcut::activated, this, &SideBar::openCarica);
+
     connect(nuovosensore, &QPushButton::clicked, this, &SideBar::openNuovoSensore);
     connect(salva, &QPushButton::clicked, this, &SideBar::openSalva);
     connect(salvaConNome, &QPushButton::clicked, this, &SideBar::openSalvaConNome);
     connect(carica, &QPushButton::clicked, this, &SideBar::openCarica);
+
     mainLayout->addWidget(nuovosensore);
     mainLayout->addWidget(salva);
     mainLayout->addWidget(salvaConNome);

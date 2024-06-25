@@ -49,7 +49,7 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QString gruppoSensore = "";
     QString iconaSensore = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png";
     QString unitaMisuraSensore = "";
-    double valoreSensore = NULL;
+    double valoreSensore = 0.0;
 
     labelId = new QLabel("ID: "+QString::number(idSensore));
     labelNome = new QLabel("NOME: "+nomeSensore);
