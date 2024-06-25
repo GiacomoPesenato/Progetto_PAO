@@ -1,5 +1,5 @@
-#ifndef SCHERMATANUOVOSENSORE_H
-#define SCHERMATANUOVOSENSORE_H
+#ifndef SCHERMATAMODIFICASENSORE_H
+#define SCHERMATAMODIFICASENSORE_H
 
 #include <QWidget>
 #include <QPushButton>
@@ -11,19 +11,16 @@
 #include <QDoubleSpinBox>
 #include "../model/sensore.h"
 
-class SchermataNuovoSensore : public QWidget
+class SchermataModificaSensore : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SchermataNuovoSensore(QWidget *parent = nullptr);
+    explicit SchermataModificaSensore(QWidget *parent = nullptr);
     static QWidget* createWidget(QWidget *parent = nullptr); // Metodo statico per creare il widget
 public slots:
-    void chiudiSchermataNuovoSensore();
 signals:
-    void nuovoSensoreCreato(Sensore *sensore);
-    void chiudiSchermataNuovoSensoreSignal();
 private:
     QVBoxLayout* mainLayout;
 };
 
-#endif // SCHERMATANUOVOSENSORE_H
+#endif // SCHERMATAMODIFICASENSORE_H

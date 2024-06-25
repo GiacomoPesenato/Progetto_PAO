@@ -28,7 +28,8 @@ SOURCES += \
     src/view/schermatasensore.cpp \
     src/view/schermatasensori.cpp \
     src/view/sidebar.cpp \
-    src/view/schermatanuovosensore.cpp
+    src/view/schermatanuovosensore.cpp \
+    src/view/schermatamodificasensore.cpp
 
 
 HEADERS += \
@@ -56,7 +57,8 @@ HEADERS += \
     src/view/schermatasensore.h \
     src/view/schermatasensori.h \
     src/view/sidebar.h \
-    src/view/schermatanuovosensore.h
+    src/view/schermatanuovosensore.h \
+    src/view/schermatamodificasensore.h
 
 
 TRANSLATIONS += \

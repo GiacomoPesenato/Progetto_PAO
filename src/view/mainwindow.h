@@ -36,7 +36,7 @@ private slots:
     void modificaSensore(Sensore *widget);
 private:
     std::vector<Sensore*> sensori;
-    Repository::JsonRepository* repository;
+    Repository::JsonRepository* repository = nullptr;
 
     QWidget* centralWidget;
     QHBoxLayout* mainLayout;
