@@ -69,25 +69,6 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QPushButton *buttonModifica = new QPushButton("Modifica");
     QPushButton *buttonElimina = new QPushButton("Elimina");
 
-    buttonSimula->setStyleSheet("    background-color: white;"
-                                "    color: black;"
-                                "    font-size: 16px;"
-                                "    border-radius: 10px;"
-                                "    margin: 5px;"
-                                "    padding: 5px;");
-    buttonModifica->setStyleSheet("    background-color: white;"
-                                "    color: black;"
-                                "    font-size: 16px;"
-                                "    border-radius: 10px;"
-                                "    margin: 5px;"
-                                "    padding: 5px;");
-    buttonElimina->setStyleSheet("    background-color: white;"
-                                "    color: black;"
-                                "    font-size: 16px;"
-                                "    border-radius: 10px;"
-                                "    margin: 5px;"
-                                "    padding: 5px;");
-
     layoutIconaSensore->addWidget(buttonIndietro, Qt::AlignTop | Qt::AlignLeft);
     layoutIconaSensore->addWidget(labelIcona, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelId, Qt::AlignTop | Qt::AlignLeft);
@@ -109,6 +90,26 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     chartLayout = new QVBoxLayout(chartWidget);
     chartLayout->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     mainLayout->addWidget(chartWidget, 1); // Espande per occupare lo spazio rimanente
+
+    this->setStyleSheet(
+        "QPushButton {"
+        "    background-color: #009688;"
+        "    color: white;"
+        "    font-size: 16px;"
+        "    border-radius: 10px;"
+        "    padding: 10px 20px;"
+        "    text-align: center;"
+        "    transition: all 0.3s;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #00796B;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #004D40;"
+        "    color: #B2EBF2;"
+        "}"
+        );
+
 }
 
 void SchermataSensore::setSensore(Sensore *sensore) {

@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon("Assets/Icona.svg"));
-
     MainWindow window;
     window.resize(1200, 600);
     window.show();
