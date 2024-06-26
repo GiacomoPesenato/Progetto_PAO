@@ -65,8 +65,8 @@ MainWindow::MainWindow(QWidget* parent)
     mainLayout->addWidget(scrollArea);
 
     // Apply gradient background to central widget
-    QString hexColorStart = "#323a3d"; // Light grey
-    QString hexColorEnd = "#0d1114";   // Dark grey
+    QString hexColorStart = "#3C3F41"; // Light grey
+    QString hexColorEnd = "#1B1E21";   // Dark grey
 
     QColor colorStart(hexColorStart);
     QColor colorEnd(hexColorEnd);

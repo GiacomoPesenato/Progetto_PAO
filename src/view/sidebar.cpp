@@ -55,12 +55,27 @@ SideBar::SideBar(QWidget* parent)
     mainLayout->addWidget(salva);
     mainLayout->addWidget(salvaConNome);
     mainLayout->addWidget(carica);
-    this->setStyleSheet("    QPushButton {background-color: white;"
-                        "    color: black;"
-                        "    font-size: 16px;"
-                        "    border-radius: 10px;"
-                        "    margin: 5px;"
-                        "    padding: 5px;}");
+
+    this->setStyleSheet(
+        "QPushButton {"
+        "    background-color: #009688;"
+        "    color: white;"
+        "    font-size: 16px;"
+        "    border-radius: 10px;"
+        "    padding: 10px 20px;"
+        "    text-align: center;"
+        "    transition: all 0.3s;"
+        "    min-width: 100px;"
+        "    min-height: 40px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #00796B;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #004D40;"
+        "    color: #B2EBF2;"
+        "}"
+        );
 }
 
 void SideBar::setDataOra() const{
@@ -175,7 +190,8 @@ void SideBar::popupTemporaneo(QString titolo, QString contenuto) {
 
 
     connect(animation, &QPropertyAnimation::finished, popup, &QDialog::close);
-    popup->show();
-    animation->start();
+    QTimer::singleShot(500, [popup, animation]() {
+        popup->show();
+        animation->start();
+    });
 }
-
