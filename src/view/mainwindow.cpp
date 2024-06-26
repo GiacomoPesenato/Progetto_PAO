@@ -130,8 +130,10 @@ void MainWindow::openCarica(){
     if(!isSaved){
         vuoiSalvare();
     }
-    sidebar->caricaJsonFile(repository);
-    if(repository != nullptr) aggiornaSensori();
+    if(isSaved){
+        sidebar->caricaJsonFile(repository);
+        if(repository != nullptr) aggiornaSensori();
+    }
 }
 
 void MainWindow::aggiornaSensori() {
@@ -183,6 +185,7 @@ void MainWindow::eliminaSensore(Sensore *sensore){
     for (std::vector<Sensore*>::iterator it = sensori.begin(); it != sensori.end(); it++)
         if (*it == sensore) {
             sensori.erase(it);
+            sensore->~Sensore();
             break;
         };
     schermatasensori->clearSensori();
@@ -195,10 +198,10 @@ void MainWindow::vuoiSalvare(){
     QMessageBox::StandardButton resBtn = QMessageBox::question(this, "Conferma",
                                                                    "Ci sono modifiche non salvate. Vuoi salvare il lavoro svolto?",
                                                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-    if (resBtn == QMessageBox::Yes) {
+    if (resBtn == QMessageBox::Yes || resBtn == QMessageBox::No ) {
         emit sidebar->openSalvaSignal();
+        isSaved = true;
     }
-    isSaved = true;
 }
 
 void MainWindow::modificaSensore(Sensore *sensore){

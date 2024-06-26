@@ -32,6 +32,8 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
     QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
     buttonIndietro->setIcon(iconIndietro);
     buttonIndietro->setIconSize(QSize(24, 24));
+    buttonIndietro->setFixedSize(100, 60);
+    buttonIndietro->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     centerLayout->addWidget(buttonIndietro);
 
     // Tipo sensore (generale)
@@ -167,7 +169,7 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
     centerLayout->addWidget(inputPotenzaPannello);
 
     // Button aggiungi sensore
-    QPushButton *modificaSensore = new QPushButton("Aggiungi Sensore");
+    QPushButton *modificaSensore = new QPushButton("Salva Modifiche");
     centerLayout->addWidget(modificaSensore);
     modificaSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -189,16 +191,25 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
                     "QLabel {"
                     "    color: white;"
                     "    font-size: 24px;"
+                    "}"
+                    "QPushButton {"
+                    "    background-color: #009688;"
+                    "    color: white;"
+                    "    font-size: 24px;"
+                    "    border-radius: 10px;"
+                    "    padding: 10px 20px;"
+                    "    text-align: center;"
+                    "    transition: all 0.3s;"
+                    "}"
+                    "QPushButton:hover {"
+                    "    background-color: #00796B;"
+                    "}"
+                    "QPushButton:pressed {"
+                    "    background-color: #004D40;"
+                    "    color: #B2EBF2;"
                     "}";
 
     centerWidget->setStyleSheet(style);
-
-    modificaSensore->setStyleSheet("    background-color: white;"
-                                "    color: black;"
-                                "    font-size: 24px;"
-                                "    border-radius: 10px;"
-                                "    margin: 10px;"
-                                "    padding: 5px;");
 
     connect(buttonIndietro, &QPushButton::clicked, this, &SchermataModificaSensore::chiudiSchermataModificaSensore);
 
