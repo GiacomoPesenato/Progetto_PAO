@@ -66,7 +66,6 @@ SideBar::SideBar(QWidget* parent)
         "    border-radius: 10px;"
         "    padding: 10px 10px;"
         "    text-align: center;"
-        "    transition: all 0.3s;"
         "    min-width: 100px;"
         "    min-height: 35px;"
         "    margin-top: 10px"

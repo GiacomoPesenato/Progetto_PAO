@@ -7,7 +7,7 @@
         "sogliaMassima": 180,
         "tipo": "SensoreAria",
         "unitaMisura": "IQA",
-        "valore": 70.3200135507696
+        "valore": 70.32
     },
     {
         "gruppo": "TempTarget 20",
@@ -18,7 +18,7 @@
         "tempMin": 10,
         "tipo": "SensoreTemperatura",
         "unitaMisura": "°",
-        "valore": 29.593308874902228,
+        "valore": 29.59,
         "valoreTarget": 20
     },
     {
@@ -28,7 +28,7 @@
         "nome": "Umidità",
         "tipo": "SensoreUmidita",
         "unitaMisura": "%",
-        "valore": 12.747544879855736,
+        "valore": 12.74,
         "valoreTarget": 15
     },
     {
@@ -63,7 +63,7 @@
         "potenzaPannello": 400,
         "tipo": "SensorePannelli",
         "unitaMisura": "W",
-        "valore": 2766.2287467945903
+        "valore": 2766.22
     },
     {
         "classeEnergetica": "B",
@@ -74,6 +74,6 @@
         "potenzaMax": 300,
         "tipo": "SensoreElettrodomestico",
         "unitaMisura": "W",
-        "valore": 83.36516140760789
+        "valore": 83.36
     }
 ]

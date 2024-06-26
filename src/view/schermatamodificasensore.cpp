@@ -198,7 +198,6 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
                     "    border-radius: 10px;"
                     "    padding: 10px 20px;"
                     "    text-align: center;"
-                    "    transition: all 0.3s;"
                     "}"
                     "QPushButton:hover {"
                     "    background-color: #4885af;"
