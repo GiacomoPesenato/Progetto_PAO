@@ -71,13 +71,13 @@ MainWindow::MainWindow(QWidget* parent)
     QColor colorStart(hexColorStart);
     QColor colorEnd(hexColorEnd);
 
-    QLinearGradient gradient(0, 0, 0, 1000);
-    gradient.setColorAt(0, colorStart);
-    gradient.setColorAt(1, colorEnd);
+    QLinearGradient gradiente(0, 0, 0, 1000);
+    gradiente.setColorAt(0, colorStart);
+    gradiente.setColorAt(1, colorEnd);
 
     centralWidget->setAutoFillBackground(true);
     QPalette palette;
-    palette.setBrush(QPalette::Window, QBrush(gradient));
+    palette.setBrush(QPalette::Window, QBrush(gradiente));
     centralWidget->setPalette(palette);
 
     sidebar = new SideBar();
@@ -198,8 +198,10 @@ void MainWindow::vuoiSalvare(){
     QMessageBox::StandardButton resBtn = QMessageBox::question(this, "Conferma",
                                                                    "Ci sono modifiche non salvate. Vuoi salvare il lavoro svolto?",
                                                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-    if (resBtn == QMessageBox::Yes || resBtn == QMessageBox::No ) {
+    if (resBtn == QMessageBox::Yes) {
         emit sidebar->openSalvaSignal();
+        flgSalvato = true;
+    }else if(resBtn == QMessageBox::No){
         flgSalvato = true;
     }
 }

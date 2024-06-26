@@ -19,16 +19,16 @@ int SensorePannelli::getNPannelli() const {
     return nPannelli;
 }
 
-void SensorePannelli::setNPannelli(const int &value) {
-    nPannelli = value;
+void SensorePannelli::setNPannelli(const int &valore) {
+    nPannelli = valore;
 }
 
 double SensorePannelli::getPotenzaPannello() const {
     return potenzaPannello;
 }
 
-void SensorePannelli::setPotenzaPannello(const double &value) {
-    potenzaPannello = value;
+void SensorePannelli::setPotenzaPannello(const double &valore) {
+    potenzaPannello = valore;
 }
 
 Sensore *SensorePannelli::clone() const {

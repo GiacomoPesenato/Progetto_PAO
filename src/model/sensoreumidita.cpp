@@ -31,9 +31,9 @@ double SensoreUmidita::getValoreTarget() const
     return valoreTarget;
 }
 
-void SensoreUmidita::setValoreTarget(const double &value)
+void SensoreUmidita::setValoreTarget(const double &valore)
 {
-    valoreTarget = value;
+    valoreTarget = valore;
 }
 
 Sensore *SensoreUmidita::clone() const

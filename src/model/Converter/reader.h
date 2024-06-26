@@ -17,17 +17,17 @@ namespace Converter {
 class Reader: public sensoreLettura {
 private:
     std::map<unsigned int, Sensore*> cache;
-    SensoreAria* leggiSensoreAria(const QJsonObject& object) const;
-    SensoreElettrodomestico* leggiSensoreElettrodomestico(const QJsonObject& object) const;
-    SensoreLampadina* leggiSensoreLampadina(const QJsonObject& object) const;
-    SensorePannelli* leggiSensorePannelli(const QJsonObject& object) const;
-    SensoreTemperatura* leggiSensoreTemperatura(const QJsonObject& object) const;
-    SensoreUmidita* leggiSensoreUmidita(const QJsonObject& object) const;
+    SensoreAria* leggiSensoreAria(const QJsonObject& oggetto) const;
+    SensoreElettrodomestico* leggiSensoreElettrodomestico(const QJsonObject& oggetto) const;
+    SensoreLampadina* leggiSensoreLampadina(const QJsonObject& oggetto) const;
+    SensorePannelli* leggiSensorePannelli(const QJsonObject& oggetto) const;
+    SensoreTemperatura* leggiSensoreTemperatura(const QJsonObject& oggetto) const;
+    SensoreUmidita* leggiSensoreUmidita(const QJsonObject& oggetto) const;
 public:
     const std::map<unsigned int, Sensore*>& getCache() const;
-    Reader& clear();
+    Reader& pulisci();
 
-    Sensore* leggiSensore(const QJsonObject& object) override;
+    Sensore* leggiSensore(const QJsonObject& oggetto) override;
 };
 
 }

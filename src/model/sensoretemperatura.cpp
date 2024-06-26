@@ -29,9 +29,9 @@ double SensoreTemperatura::getValoreTarget() const
     return valoreTarget;
 }
 
-void SensoreTemperatura::setValoreTarget(const double &value)
+void SensoreTemperatura::setValoreTarget(const double &valore)
 {
-    valoreTarget = value;
+    valoreTarget = valore;
 }
 
 double SensoreTemperatura::getTempMin() const
@@ -39,9 +39,9 @@ double SensoreTemperatura::getTempMin() const
     return tempMin;
 }
 
-void SensoreTemperatura::setTempMin(const double &value)
+void SensoreTemperatura::setTempMin(const double &valore)
 {
-    tempMin = value;
+    tempMin = valore;
 }
 
 double SensoreTemperatura::getTempMax() const
@@ -49,9 +49,9 @@ double SensoreTemperatura::getTempMax() const
     return tempMax;
 }
 
-void SensoreTemperatura::setTempMax(const double &value)
+void SensoreTemperatura::setTempMax(const double &valore)
 {
-    tempMax = value;
+    tempMax = valore;
 }
 
 Sensore *SensoreTemperatura::clone() const

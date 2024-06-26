@@ -18,180 +18,124 @@ const std::map<unsigned int, Sensore*>& Reader::getCache() const {
     return cache;
 }
 
-Reader& Reader::clear() {
+Reader& Reader::pulisci() {
     cache.clear();
     return *this;
 }
 
-Sensore* Reader::leggiSensore(const QJsonObject& object) {
-    QJsonValue type = object.value("type");
+Sensore* Reader::leggiSensore(const QJsonObject& oggetto) {
+    QJsonValue type = oggetto.value("tipo");
     if (type.isUndefined()) {
-        throw std::invalid_argument("Manca il 'type'");
+        throw std::invalid_argument("Manca il 'tipo'");
     }
 
-    const unsigned int identifier = object.value("id").toInt();
+    const unsigned int id = oggetto.value("id").toInt();
 
-    if (cache.count(identifier) > 0) {
-        return cache[identifier];
+    if (cache.count(id) > 0) {
+        return cache[id];
     }
     else if (type.toString().compare("SensoreAria") == 0) {
-        cache[identifier] = leggiSensoreAria(object);
+        cache[id] = leggiSensoreAria(oggetto);
     }
     else if (type.toString().compare("SensoreElettrodomestico") == 0) {
-        cache[identifier] = leggiSensoreElettrodomestico(object);
+        cache[id] = leggiSensoreElettrodomestico(oggetto);
     }
     else if (type.toString().compare("SensoreLampadina") == 0) {
-        cache[identifier] = leggiSensoreLampadina(object);
+        cache[id] = leggiSensoreLampadina(oggetto);
     }
     else if (type.toString().compare("SensorePannelli") == 0) {
-        cache[identifier] = leggiSensorePannelli(object);
+        cache[id] = leggiSensorePannelli(oggetto);
     }
     else if (type.toString().compare("SensoreTemperatura") == 0) {
-        cache[identifier] = leggiSensoreTemperatura(object);
+        cache[id] = leggiSensoreTemperatura(oggetto);
     }
     else if (type.toString().compare("SensoreUmidita") == 0) {
-        cache[identifier] = leggiSensoreUmidita(object);
+        cache[id] = leggiSensoreUmidita(oggetto);
     }
     else {
-        throw std::invalid_argument("Type non riconosciuto");
+        throw std::invalid_argument("Tipo non riconosciuto");
     }
 
-    return cache[identifier];
+    return cache[id];
 }
 
-SensoreAria* Reader::leggiSensoreAria(const QJsonObject& object) const {
+SensoreAria* Reader::leggiSensoreAria(const QJsonObject& oggetto) const {
     return new SensoreAria(
-        object.value("id").toInt(),
-        object.value("nome").toString(),
-        object.value("unitaMisura").toString(),
-        object.value("icona").toString(),
-        object.value("gruppo").toString(),
-        object.value("sogliaMassima").toDouble(),
-        object.value("valore").toDouble()
+        oggetto.value("id").toInt(),
+        oggetto.value("nome").toString(),
+        oggetto.value("unitaMisura").toString(),
+        oggetto.value("icona").toString(),
+        oggetto.value("gruppo").toString(),
+        oggetto.value("sogliaMassima").toDouble(),
+        oggetto.value("valore").toDouble()
     );
 }
 
-SensoreElettrodomestico* Reader::leggiSensoreElettrodomestico(const QJsonObject& object) const {
+SensoreElettrodomestico* Reader::leggiSensoreElettrodomestico(const QJsonObject& oggetto) const {
     return new SensoreElettrodomestico(
-        object.value("id").toInt(),
-        object.value("nome").toString(),
-        object.value("unitaMisura").toString(),
-        object.value("icona").toString(),
-        object.value("gruppo").toString(),
-        object.value("classeEnergetica").toString(),
-        object.value("potenzaMax").toDouble(),
-        object.value("valore").toDouble(),
-        object.value("tipoElettrodomestico").toString()
+        oggetto.value("id").toInt(),
+        oggetto.value("nome").toString(),
+        oggetto.value("unitaMisura").toString(),
+        oggetto.value("icona").toString(),
+        oggetto.value("gruppo").toString(),
+        oggetto.value("classeEnergetica").toString(),
+        oggetto.value("potenzaMax").toDouble(),
+        oggetto.value("valore").toDouble(),
+        oggetto.value("tipoElettrodomestico").toString()
     );
 }
 
-SensoreLampadina* Reader::leggiSensoreLampadina(const QJsonObject& object) const {
+SensoreLampadina* Reader::leggiSensoreLampadina(const QJsonObject& oggetto) const {
     return new SensoreLampadina(
-        object.value("id").toInt(),
-        object.value("nome").toString(),
-        object.value("unitaMisura").toString(),
-        object.value("icona").toString(),
-        object.value("gruppo").toString(),
-        object.value("dimmer").toDouble(),
-        object.value("potenzaMax").toDouble(),
-        object.value("valore").toDouble()
+        oggetto.value("id").toInt(),
+        oggetto.value("nome").toString(),
+        oggetto.value("unitaMisura").toString(),
+        oggetto.value("icona").toString(),
+        oggetto.value("gruppo").toString(),
+        oggetto.value("dimmer").toDouble(),
+        oggetto.value("potenzaMax").toDouble(),
+        oggetto.value("valore").toDouble()
     );
 }
 
-SensorePannelli* Reader::leggiSensorePannelli(const QJsonObject& object) const {
+SensorePannelli* Reader::leggiSensorePannelli(const QJsonObject& oggetto) const {
     return new SensorePannelli(
-        object.value("id").toInt(),
-        object.value("nome").toString(),
-        object.value("unitaMisura").toString(),
-        object.value("icona").toString(),
-        object.value("gruppo").toString(),
-        object.value("nPannelli").toInt(),
-        object.value("potenzaPannello").toDouble(),
-        object.value("potenzaMax").toDouble(),
-        object.value("valore").toDouble()
+        oggetto.value("id").toInt(),
+        oggetto.value("nome").toString(),
+        oggetto.value("unitaMisura").toString(),
+        oggetto.value("icona").toString(),
+        oggetto.value("gruppo").toString(),
+        oggetto.value("nPannelli").toInt(),
+        oggetto.value("potenzaPannello").toDouble(),
+        oggetto.value("potenzaMax").toDouble(),
+        oggetto.value("valore").toDouble()
     );
 }
 
-SensoreTemperatura* Reader::leggiSensoreTemperatura(const QJsonObject& object) const {
+SensoreTemperatura* Reader::leggiSensoreTemperatura(const QJsonObject& oggetto) const {
     return new SensoreTemperatura(
-        object.value("id").toInt(),
-        object.value("nome").toString(),
-        object.value("unitaMisura").toString(),
-        object.value("icona").toString(),
-        object.value("gruppo").toString(),
-        object.value("valoreTarget").toDouble(),
-        object.value("tempMin").toDouble(),
-        object.value("tempMax").toDouble(),
-        object.value("valore").toDouble()
+        oggetto.value("id").toInt(),
+        oggetto.value("nome").toString(),
+        oggetto.value("unitaMisura").toString(),
+        oggetto.value("icona").toString(),
+        oggetto.value("gruppo").toString(),
+        oggetto.value("valoreTarget").toDouble(),
+        oggetto.value("tempMin").toDouble(),
+        oggetto.value("tempMax").toDouble(),
+        oggetto.value("valore").toDouble()
     );
 }
 
-SensoreUmidita* Reader::leggiSensoreUmidita(const QJsonObject& object) const {
+SensoreUmidita* Reader::leggiSensoreUmidita(const QJsonObject& oggetto) const {
     return new SensoreUmidita(
-        object.value("id").toInt(),
-        object.value("nome").toString(),
-        object.value("unitaMisura").toString(),
-        object.value("icona").toString(),
-        object.value("gruppo").toString(),
-        object.value("valoreTarget").toDouble(),
-        object.value("valore").toDouble()
+        oggetto.value("id").toInt(),
+        oggetto.value("nome").toString(),
+        oggetto.value("unitaMisura").toString(),
+        oggetto.value("icona").toString(),
+        oggetto.value("gruppo").toString(),
+        oggetto.value("valoreTarget").toDouble(),
+        oggetto.value("valore").toDouble()
     );
 }
-
-// Accelerometer* Reader::readAccelerometer(const QJsonObject& object) const {
-//     try {
-//         return new Accelerometer(
-//             object.value("id").toInt(),
-//             object.value("name").toString().toStdString(),
-//             static_cast<Chronometer&>(Json::toObject(object.value("chronometer").toObject())),
-//             static_cast<SpeedSensor&>(Json::toObject(object.value("speedSensor").toObject()))//,
-//             //Json::QJsonArrayToStdVector(object.value("data").toArray())
-//         );
-//     } catch (const std::bad_cast& e) {
-//         std::cerr << "Static_cast fallito! " << e.what() << std::endl;
-//         return nullptr;
-//     }
-// }
-
-// Chronometer* Reader::readChronometer(const QJsonObject& object) const {
-//     return new Chronometer(
-//         object.value("id").toInt(),
-//         object.value("name").toString().toStdString(),
-//         //Json::QJsonArrayToStdVector(object.value("data").toArray())
-//         object.value("min_value").toDouble(),
-//         object.value("max_value").toDouble(),
-//         object.value("mean").toDouble(),
-//         object.value("variance").toDouble(),
-//         object.value("lambda").toDouble()
-//     );
-// }
-
-// DistanceCoveredSensor* Reader::readDistanceCoveredSensor(const QJsonObject& object) const {
-//     return new DistanceCoveredSensor(
-//         object.value("id").toInt(),
-//         object.value("name").toString().toStdString(),
-//         //Json::QJsonArrayToStdVector(object.value("data").toArray())
-//         object.value("min_value").toDouble(),
-//         object.value("max_value").toDouble(),
-//         object.value("mean").toDouble(),
-//         object.value("variance").toDouble(),
-//         object.value("lambda").toDouble()
-//     );
-// }
-
-// SpeedSensor* Reader::readSpeedSensor(const QJsonObject& object) const {
-//     try {
-//         return new SpeedSensor(
-//             object.value("id").toInt(),
-//             object.value("name").toString().toStdString(),
-//             static_cast<DistanceCoveredSensor&>(Json::toObject(object.value("distanceCoveredSensor").toObject())),
-//             static_cast<Chronometer&>(Json::toObject(object.value("chronometer").toObject()))//,
-//             //Json::QJsonArrayToStdVector(object.value("data").toArray())
-//         );
-//     } catch (const std::bad_cast& e) {
-//         std::cerr << "Static_cast fallito! " << e.what() << std::endl;
-//         return nullptr;
-//     }
-// }
 
 }

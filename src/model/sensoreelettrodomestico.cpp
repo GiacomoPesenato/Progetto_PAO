@@ -20,16 +20,16 @@ QString SensoreElettrodomestico::getClasseEnergetica() const {
     return classeEnergetica;
 }
 
-void SensoreElettrodomestico::setClasseEnergetica(const QString &value) {
-    classeEnergetica = value;
+void SensoreElettrodomestico::setClasseEnergetica(const QString &valore) {
+    classeEnergetica = valore;
 }
 
 QString SensoreElettrodomestico::getTipoElettrodomestico() const {
     return tipoElettrodomestico;
 }
 
-void SensoreElettrodomestico::setTipoElettrodomestico(const QString &value){
-    tipoElettrodomestico = value;
+void SensoreElettrodomestico::setTipoElettrodomestico(const QString &valore){
+    tipoElettrodomestico = valore;
 }
 
 Sensore *SensoreElettrodomestico::clone() const {
@@ -68,9 +68,9 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(minVal, maxVal);
-    double randomValue = dis(gen);
+    double valoreRandom = dis(gen);
 
-    return Valore(randomValue, dataOra);
+    return Valore(valoreRandom, dataOra);
 }
 
 void SensoreElettrodomestico::accetta(sensoreVisitor& visitor) const {

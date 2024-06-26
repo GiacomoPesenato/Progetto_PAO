@@ -185,13 +185,13 @@ void SchermataSensore::chiudiSchermataSensore() {
 void SchermataSensore::simula() {
     sensore->rimuoviDati();
     sensore->generaDati();
-    Chart grafico;
+    Chart nuovoGrafico;
 
     if (chartLayout->count() > 0) {
-        QWidget *oldChart = chartLayout->itemAt(0)->widget();
-        if (oldChart) {
-            chartLayout->removeWidget(oldChart);
-            oldChart->deleteLater();
+        QWidget *vecchioGrafico = chartLayout->itemAt(0)->widget();
+        if (vecchioGrafico) {
+            chartLayout->removeWidget(vecchioGrafico);
+            vecchioGrafico->deleteLater();
         }
     }
 
@@ -204,7 +204,7 @@ void SchermataSensore::simula() {
         buttonMese->setStyleSheet("background-color: #4885af;");
         buttonSettimana->setStyleSheet("background-color: #5DADE2;");
         buttonGiorno->setStyleSheet("background-color: #5DADE2;");
-        chartLayout->addWidget(grafico.getChart(*sensore, "mese"));
+        chartLayout->addWidget(nuovoGrafico.getChart(*sensore, "mese"));
     }else{
         buttonAnno->setVisible(true);
         buttonMese->setVisible(true);
@@ -214,7 +214,7 @@ void SchermataSensore::simula() {
         buttonMese->setStyleSheet("background-color: #5DADE2;");
         buttonSettimana->setStyleSheet("background-color: #5DADE2;");
         buttonGiorno->setStyleSheet("background-color: #5DADE2;");
-        chartLayout->addWidget(grafico.getChart(*sensore, "anno"));
+        chartLayout->addWidget(nuovoGrafico.getChart(*sensore, "anno"));
     }
 }
 
@@ -228,12 +228,12 @@ void SchermataSensore::eliminaSensore(){
 
 void SchermataSensore::setGraficoAnno(){
     if (chartLayout->count() > 0) {
-        QWidget *oldChart = chartLayout->itemAt(0)->widget();
-        if (oldChart) {
-            chartLayout->removeWidget(oldChart);
-            oldChart->deleteLater();
-            Chart grafico;
-            chartLayout->addWidget(grafico.getChart(*sensore, "anno"));
+        QWidget *vecchioGrafico = chartLayout->itemAt(0)->widget();
+        if (vecchioGrafico) {
+            chartLayout->removeWidget(vecchioGrafico);
+            vecchioGrafico->deleteLater();
+            Chart nuovoGrafico;
+            chartLayout->addWidget(nuovoGrafico.getChart(*sensore, "anno"));
             buttonAnno->setStyleSheet("background-color: #4885af;");
             buttonMese->setStyleSheet("background-color: #5DADE2;");
             buttonSettimana->setStyleSheet("background-color: #5DADE2;");
@@ -244,12 +244,12 @@ void SchermataSensore::setGraficoAnno(){
 
 void SchermataSensore::setGraficoMese(){
     if (chartLayout->count() > 0) {
-        QWidget *oldChart = chartLayout->itemAt(0)->widget();
-        if (oldChart) {
-            chartLayout->removeWidget(oldChart);
-            oldChart->deleteLater();
-            Chart grafico;
-            chartLayout->addWidget(grafico.getChart(*sensore, "mese"));
+        QWidget *vecchioGrafico = chartLayout->itemAt(0)->widget();
+        if (vecchioGrafico) {
+            chartLayout->removeWidget(vecchioGrafico);
+            vecchioGrafico->deleteLater();
+            Chart nuovoGrafico;
+            chartLayout->addWidget(nuovoGrafico.getChart(*sensore, "mese"));
             buttonAnno->setStyleSheet("background-color: #5DADE2;");
             buttonMese->setStyleSheet("background-color: #4885af;");
             buttonSettimana->setStyleSheet("background-color: #5DADE2;");
@@ -260,12 +260,12 @@ void SchermataSensore::setGraficoMese(){
 
 void SchermataSensore::setGraficoSettimana(){
     if (chartLayout->count() > 0) {
-        QWidget *oldChart = chartLayout->itemAt(0)->widget();
-        if (oldChart) {
-            chartLayout->removeWidget(oldChart);
-            oldChart->deleteLater();
-            Chart grafico;
-            chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
+        QWidget *vecchioGrafico = chartLayout->itemAt(0)->widget();
+        if (vecchioGrafico) {
+            chartLayout->removeWidget(vecchioGrafico);
+            vecchioGrafico->deleteLater();
+            Chart nuovoGrafico;
+            chartLayout->addWidget(nuovoGrafico.getChart(*sensore, "settimana"));
             buttonAnno->setStyleSheet("background-color: #5DADE2;");
             buttonMese->setStyleSheet("background-color: #5DADE2;");
             buttonSettimana->setStyleSheet("background-color: #4885af;");
@@ -276,12 +276,12 @@ void SchermataSensore::setGraficoSettimana(){
 
 void SchermataSensore::setGraficoGiorno(){
     if (chartLayout->count() > 0) {
-        QWidget *oldChart = chartLayout->itemAt(0)->widget();
-        if (oldChart) {
-            chartLayout->removeWidget(oldChart);
-            oldChart->deleteLater();
-            Chart grafico;
-            chartLayout->addWidget(grafico.getChart(*sensore, "giorno"));
+        QWidget *vecchioGrafico = chartLayout->itemAt(0)->widget();
+        if (vecchioGrafico) {
+            chartLayout->removeWidget(vecchioGrafico);
+            vecchioGrafico->deleteLater();
+            Chart nuovoGrafico;
+            chartLayout->addWidget(nuovoGrafico.getChart(*sensore, "giorno"));
             buttonAnno->setStyleSheet("background-color: #5DADE2;");
             buttonMese->setStyleSheet("background-color: #5DADE2;");
             buttonSettimana->setStyleSheet("background-color: #5DADE2;");

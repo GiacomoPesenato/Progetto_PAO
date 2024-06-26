@@ -13,10 +13,10 @@
 
 namespace DataMapper {
 
-JsonFile::JsonFile(const std::string& path) : percorso(path) {}
+JsonFile::JsonFile(const std::string& percorso) : percorso(percorso) {}
 
-JsonFile JsonFile::dalPercorso(const std::string& path) {
-    JsonFile data_mapper(path);
+JsonFile JsonFile::dalPercorso(const std::string& percorso) {
+    JsonFile data_mapper(percorso);
     return data_mapper;
 }
 
@@ -24,36 +24,36 @@ const std::string& JsonFile::getPercorso() const {
     return percorso;
 }
 
-void JsonFile::setPercorso(const std::string& path) {
-    this->percorso = path;
+void JsonFile::setPercorso(const std::string& percorso) {
+    this->percorso = percorso;
 }
 
-void JsonFile::scriviJson(const std::vector<Sensore*>& sensors) {
-    QJsonArray json_sensors;
-    for (const Sensore* sensor : sensors) {
-        json_sensors.push_back(Converter::Json::daOggetto(*sensor));
+void JsonFile::scriviJson(const std::vector<Sensore*>& sensori) {
+    QJsonArray jsonSensori;
+    for (const Sensore* sensori : sensori) {
+        jsonSensori.push_back(Converter::Json::daOggetto(*sensori));
     }
-    QJsonDocument document(json_sensors);
-    QFile json_file(percorso.c_str());
-    json_file.open(QFile::WriteOnly);
-    json_file.write(document.toJson());
-    json_file.close();
+    QJsonDocument documento(jsonSensori);
+    QFile jsonFile(percorso.c_str());
+    jsonFile.open(QFile::WriteOnly);
+    jsonFile.write(documento.toJson());
+    jsonFile.close();
 }
 
 std::vector<Sensore*> JsonFile::caricaSensoriJson() {
-    std::vector<Sensore*> sensors;
-    QFile json_file(percorso.c_str());
-    json_file.open(QFile::ReadOnly);
-    QByteArray data = json_file.readAll();
-    json_file.close();
-    QJsonDocument document = QJsonDocument::fromJson(data);
-    QJsonArray json_sensors = document.array();
+    std::vector<Sensore*> sensori;
+    QFile jsonFile(percorso.c_str());
+    jsonFile.open(QFile::ReadOnly);
+    QByteArray data = jsonFile.readAll();
+    jsonFile.close();
+    QJsonDocument documento = QJsonDocument::fromJson(data);
+    QJsonArray jsonSensori = documento.array();
 
-    for (const QJsonValue& value : json_sensors) {
-        QJsonObject json_object = value.toObject();
-        sensors.push_back(&(Converter::Json::aOggetto(json_object)));
+    for (const QJsonValue& valori : jsonSensori) {
+        QJsonObject jsonOggetto = valori.toObject();
+        sensori.push_back(&(Converter::Json::aOggetto(jsonOggetto)));
     }
-    return sensors;
+    return sensori;
 }
 
 }

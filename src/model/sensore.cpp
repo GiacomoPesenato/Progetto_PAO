@@ -44,8 +44,8 @@ Valore Sensore::getRandom(const QDateTime &dataOra)
 void Sensore::generaDati() {
     QDate dataCorrente = QDate::currentDate();
     QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
+    QTime orarioInizio(0, 0, 0);
+    QDateTime data(primoDelMese, orarioInizio);
     for (int i = 0; i < 365; ++i) {
         Valore val = this->getRandom(data);
         this->setValore(val.getValore());

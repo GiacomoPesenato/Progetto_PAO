@@ -13,14 +13,14 @@
 #include "../model/sensorelampadina.h"
 
 #define OFFSET 0.5
-#define MARGIN_TOP 1.1
-#define MARGIN_BOTTOM 0.9
+#define MARGINE_SUPERIORE 1.1
+#define MARGINE_INFERIORE 0.9
 
 Chart::Chart(QObject *parent) : QObject(parent)
   {}
 
 QChartView* Chart::getChart(const Sensore &s, QString tipo) {
-    markerSeries = new QScatterSeries;
+    scatterSeries = new QScatterSeries;
     chart = new QChart();
     chartView = new QChartView(chart);
     series = new QLineSeries;
@@ -28,7 +28,7 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     asseY = new QValueAxis();
     valori = s.getValori();
     this->tipo = tipo;
-    int currentMonth = valori[0].getDataOra().date().month();
+    int meseCorrente = valori[0].getDataOra().date().month();
     int max = -1, min = -1;
     bool lampadina = false, dimmer = false;
     mesi = {
@@ -43,66 +43,64 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
         dimmer = lamp->getDimmer();
     }
     if(tipo == "anno"){
-        chartAnno(currentMonth, max, min);
-        asseY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        chartAnno(meseCorrente, max, min);
+        asseY->setRange(min*MARGINE_INFERIORE, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultimo Anno");
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
         chartMese(max, min, giorniMese, lampadina, dimmer);
-        asseY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        asseY->setRange(min*MARGINE_INFERIORE, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultimo Mese");
     } else if (tipo == "settimana"){
         chartSettimana(max, min, lampadina, dimmer);
-        asseY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
+        asseY->setRange(min*MARGINE_INFERIORE, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultima settimana");
     } else if (tipo == "giorno"){
         chartGiorno(max);
-        asseY->setRange(0, max*MARGIN_TOP);
+        asseY->setRange(0, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultimo Giorno");
     }
 
     asseY->setTickCount(5);
     asseY->setLabelFormat("%d");
 
-    markerSeries->setMarkerSize(10);
-    markerSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-    markerSeries->setColor(Qt::red);
+    scatterSeries->setMarkerSize(10);
+    scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+    scatterSeries->setColor(Qt::red);
 
     chart->addSeries(series);
-    chart->addSeries(markerSeries);
+    chart->addSeries(scatterSeries);
 
     chart->addAxis(asseX, Qt::AlignBottom);
     chart->addAxis(asseY, Qt::AlignLeft);
     series->attachAxis(asseX);
     series->attachAxis(asseY);
-    markerSeries->attachAxis(asseX);
-    markerSeries->attachAxis(asseY);
+    scatterSeries->attachAxis(asseX);
+    scatterSeries->attachAxis(asseY);
 
     chart->legend()->hide();
     chartView->setRenderHint(QPainter::Antialiasing);
-
-    connect(markerSeries, &QScatterSeries::clicked, this, &Chart::onClick);
 
     return chartView;
 }
 
 
-void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia){
+void Chart::chartAnno(int meseCorrente, int &maxMedia, int &minMedia){
     double somma = 0.0,media = 0.0;
-    int count = 0, pos = 0;
+    int contatore = 0, pos = 0;
 
     for (int i = 0; i < valori.size(); ++i){
-        Valore value = valori[i];
-        int mese = value.getDataOra().date().month();
+        Valore valore = valori[i];
+        int mese = valore.getDataOra().date().month();
 
-        if (mese == currentMonth) {
-            somma += value.getValore();
-            ++count;
+        if (mese == meseCorrente) {
+            somma += valore.getValore();
+            ++contatore;
         } else {
-            media = (count > 0) ? somma / count : 0.0;
-            QPointF point(pos + OFFSET, media);
-            series->append(point);
-            markerSeries->append(point);
+            media = (contatore > 0) ? somma / contatore : 0.0;
+            QPointF punto(pos + OFFSET, media);
+            series->append(punto);
+            scatterSeries->append(punto);
 
             if (media > maxMedia || maxMedia == -1) {
                 maxMedia = media;
@@ -112,17 +110,17 @@ void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia){
             }
 
             pos++;
-            currentMonth = mese;
-            somma = value.getValore();
-            count = 1;
+            meseCorrente = mese;
+            somma = valore.getValore();
+            contatore = 1;
         }
     }
 
     // aggiunta dell'ultimo mese
-    media = (count > 0) ? somma / count : 0.0;
-    QPointF point(pos + OFFSET, media);
-    series->append(point);
-    markerSeries->append(point);
+    media = (contatore > 0) ? somma / contatore : 0.0;
+    QPointF punto(pos + OFFSET, media);
+    series->append(punto);
+    scatterSeries->append(punto);
 
     if (media > maxMedia || maxMedia == -1) {
         maxMedia = media;
@@ -133,7 +131,7 @@ void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia){
 
     asseX->setRange(0, 12);
     for (int i = 0; i < 12; ++i) {
-        asseX->append(mesi[(i + currentMonth) % 12], i + 1);
+        asseX->append(mesi[(i + meseCorrente) % 12], i + 1);
     }
 }
 
@@ -141,27 +139,27 @@ void Chart::chartAnno(int currentMonth, int &maxMedia, int &minMedia){
 void Chart::chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer){
     asseX->setRange(0,giorniMese);
 
-    int counter = 0;
-    Valore value = valori[0];
+    int contatore = 0;
+    Valore valore = valori[0];
 
     for (int i = 0; i < giorniMese; i++) {
         if (lampadina != 0){
-            value = mediaLampadina(counter, dimmer);
-            counter = 24*i;
+            valore = mediaLampadina(contatore, dimmer);
+            contatore = 24*i;
             // cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
             // cout<<counter<<endl;
         }else{
-            value = valori[counter+i];
-            std::cout << value.getValore() <<" "<<value.getDataOra().date().day()<< std::endl;
+            valore = valori[contatore+i];
+            std::cout << valore.getValore() <<" "<<valore.getDataOra().date().day()<< std::endl;
         }
-        QPointF point(i+OFFSET, value.getValore());
+        QPointF point(i+OFFSET, valore.getValore());
         series->append(point);
-        markerSeries->append(point);
-        if (value.getValore() > max || max == -1){
-            max = value.getValore();
+        scatterSeries->append(point);
+        if (valore.getValore() > max || max == -1){
+            max = valore.getValore();
         }
-        if (value.getValore() < min || min == -1){
-            min = value.getValore();
+        if (valore.getValore() < min || min == -1){
+            min = valore.getValore();
         }
         asseX->append(QString::number(i+1),i+1);
     }
@@ -171,26 +169,26 @@ void Chart::chartMese(int &max, int &min, int giorniMese, bool lampadina, bool d
 void Chart::chartSettimana(int &max, int &min, bool lampadina, bool dimmer){
     asseX->setRange(0,7);
 
-    int counter = 0;
-    Valore value = valori[0];
+    int contatore = 0;
+    Valore valore = valori[0];
 
     for (int i = 0; i < 7; i++) {
         if (lampadina != 0){
-            value = mediaLampadina(counter, dimmer);
-            counter = 24*i;
+            valore = mediaLampadina(contatore, dimmer);
+            contatore = 24*i;
             //cout<<value.getValore()<<" "<<value.getDataOra().toString("dd/MM/yyyy").toStdString()<<endl;
             //cout<<counter<<endl;
         }else{
-            value = valori[counter+i];
+            valore = valori[contatore+i];
         }
-        QPointF point(i+OFFSET, value.getValore());
-        series->append(point);
-        markerSeries->append(point);
-        if (value.getValore() > max || max == -1){
-            max = value.getValore();
+        QPointF punto(i+OFFSET, valore.getValore());
+        series->append(punto);
+        scatterSeries->append(punto);
+        if (valore.getValore() > max || max == -1){
+            max = valore.getValore();
         }
-        if (value.getValore() < min || min == -1){
-            min = value.getValore();
+        if (valore.getValore() < min || min == -1){
+            min = valore.getValore();
         }
         asseX->append(QString::number(i+1),i+1);
 
@@ -200,9 +198,9 @@ void Chart::chartSettimana(int &max, int &min, bool lampadina, bool dimmer){
 void Chart::chartGiorno(int &max){
     asseX->setRange(0,24);
     for (int i = 0; i < 24; i++) {
-        QPointF point(i+OFFSET, valori[i].getValore());
-        series->append(point);
-        markerSeries->append(point);
+        QPointF punto(i+OFFSET, valori[i].getValore());
+        series->append(punto);
+        scatterSeries->append(punto);
         if (valori[i].getValore() > max || max == -1){
             max = valori[i].getValore();
         }
@@ -212,19 +210,19 @@ void Chart::chartGiorno(int &max){
 }
 
 
-Valore Chart::mediaLampadina(int &counter, bool dimmer){
+Valore Chart::mediaLampadina(int &contatore, bool dimmer){
     int somma = 0, maxVal = -1;
-    Valore value = valori[counter];
+    Valore value = valori[contatore];
     for (int i = 0; i < 24; i++){
         if (dimmer){ //se è dimmerabile sommo tutti i valori
-            somma += valori[counter+i].getValore();
+            somma += valori[contatore+i].getValore();
             //cout << valori[counter+i].getValore() << endl;
         }else{
-            if (valori[counter+i].getValore() == 0){//se non è dimmerabile controllo se è spenta (se !dimmer gli unici val che può assumere sono 0 o max)
+            if (valori[contatore+i].getValore() == 0){//se non è dimmerabile controllo se è spenta (se !dimmer gli unici val che può assumere sono 0 o max)
                 somma += 1;//somma tutte le volte che è spenta
             }
-            if (valori[counter+i].getValore() > maxVal){
-                maxVal = valori[counter+i].getValore();//prendo il max val
+            if (valori[contatore+i].getValore() > maxVal){
+                maxVal = valori[contatore+i].getValore();//prendo il max val
             }
         }
     }
@@ -258,17 +256,4 @@ Lampadina NON dimmerabile min 0 max 20
 11: 20            23: 0
 12: 20            24: 0
 */
-
-void Chart::onClick(const QPointF &point) {
-    QMessageBox msgBox;
-    if (tipo == "anno"){
-        int nMese = point.x()-OFFSET;
-        int currentMonth = QDateTime::currentDateTime().date().month();
-        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(mesi[((nMese+currentMonth)%12)>0 ? ((nMese+currentMonth)%12)-1 : 11]).arg(QString::number(point.y(), 'f', 2)));
-        msgBox.exec();
-    }else{
-        msgBox.setText(QString("Punto cliccato: (%1, %2)").arg(point.x()-OFFSET+1).arg(QString::number(point.y(), 'f', 2)));
-        msgBox.exec();
-    }
-}
 

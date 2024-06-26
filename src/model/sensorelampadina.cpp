@@ -19,8 +19,8 @@ SensoreLampadina::SensoreLampadina(const unsigned int id,
 bool SensoreLampadina::getDimmer() const {
     return dimmer;
 }
-void SensoreLampadina::setDimmer(bool value) {
-    dimmer = value;
+void SensoreLampadina::setDimmer(bool valore) {
+    dimmer = valore;
 }
 
 Sensore *SensoreLampadina::clone() const {
@@ -33,7 +33,7 @@ Valore SensoreLampadina::getRandom(const QDateTime &dataOra) {
 
     int min = 0;
     int max = getPotenzaMax();
-    int randVal;
+    int valoreRandom;
     std::uniform_int_distribution<int> distribution(min, max);
 
     int orario = dataOra.time().hour();
@@ -41,31 +41,31 @@ Valore SensoreLampadina::getRandom(const QDateTime &dataOra) {
     //con uniform_int_distribution posso generare un numero da 0 a 4 e se il numero è 0 allora la lampadina sarà accesa altrimenti no. Facendo così la notte ho il 20% che la lampadina sia accesa
     if (!getDimmer()) {
         if (orario >= 22 || orario < 6) {
-            std::uniform_int_distribution<int> nightDistribution(0, 4);
-            randVal = (nightDistribution(gen) == 0) ? max : min;
+            std::uniform_int_distribution<int> distribuzioneNotte(0, 4);
+            valoreRandom = (distribuzioneNotte(gen) == 0) ? max : min;
         } else {
-            std::uniform_int_distribution<int> dayDistribution(0, 1);
-            randVal = (dayDistribution(gen) == 0) ? min : max;
+            std::uniform_int_distribution<int> distribuzioneGiorno(0, 1);
+            valoreRandom = (distribuzioneGiorno(gen) == 0) ? min : max;
         }
     } else {
         //qua invece alla notte se la lampadina è dimmerabile la sua potenza e quindi la sua luminosità sarà ridotta di 4 volte rispetto al giorno
         if (orario >= 22 || orario < 6) {
-            std::uniform_int_distribution<int> nightDistribution(min, max / 4);
-            randVal = nightDistribution(gen);
+            std::uniform_int_distribution<int> distribuzioneNotte(min, max / 4);
+            valoreRandom = distribuzioneNotte(gen);
         } else {
-            randVal = distribution(gen);
+            valoreRandom = distribution(gen);
         }
     }
 
-    return Valore(randVal, dataOra);
+    return Valore(valoreRandom, dataOra);
 }
 
 
 void SensoreLampadina::generaDati() {
     QDate dataCorrente = QDate::currentDate();
     QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime startTime(0, 0, 0);
-    QDateTime data(primoDelMese, startTime);
+    QTime orarioInizio(0, 0, 0);
+    QDateTime data(primoDelMese, orarioInizio);
     for (int i = 0; i < 365*24; ++i) {
         Valore val = this->getRandom(data);
         this->setValore(val.getValore());

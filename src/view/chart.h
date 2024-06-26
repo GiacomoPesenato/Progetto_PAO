@@ -15,7 +15,7 @@ class Chart : public QObject {
     Q_OBJECT
 
 private:
-    QScatterSeries *markerSeries;
+    QScatterSeries *scatterSeries;
     QChart *chart;
     QChartView *chartView;
     QLineSeries *series;
@@ -35,9 +35,6 @@ private:
 public:
     Chart(QObject *parent = nullptr);
     QChartView* getChart(const Sensore &s, QString tipo);
-
-private slots:
-    void onClick(const QPointF &point);
 };
 
 #endif // CHART_H
