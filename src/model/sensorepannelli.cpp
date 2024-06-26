@@ -64,11 +64,14 @@ Valore SensorePannelli::getRandom(const QDateTime &data) {
     potenza = devStdMensile[mese].first;
     devStd = devStdMensile[mese].second;
 
-    std::normal_distribution<> dis(potenza, devStd);
+    std::normal_distribution<double> dis(potenza, devStd);
     double potenzaRandom = dis(gen);
 
     if (potenzaRandom < minVal) potenzaRandom = minVal;
     if (potenzaRandom > media) potenzaRandom = media;
+
+    potenzaRandom = std::round(potenzaRandom * 100.0) / 100.0;
+
     return Valore(potenzaRandom, data);
 }
 

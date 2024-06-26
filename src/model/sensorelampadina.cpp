@@ -34,15 +34,15 @@ Valore SensoreLampadina::getRandom(const QDateTime &dataOra) {
     int min = 0;
     int max = getPotenzaMax();
     int valoreRandom;
-    std::uniform_int_distribution<int> distribution(min, max);
+    std::uniform_int_distribution<int> distribuzione(min, max);
 
     int orario = dataOra.time().hour();
     //aggiunto controllo se l'ora è compresa tra le 22 e le 6 per simulare la notte.Ho inoltre aggiunto che alla notte ho meno probabilità di avere la lampadina accesa
     //con uniform_int_distribution posso generare un numero da 0 a 4 e se il numero è 0 allora la lampadina sarà accesa altrimenti no. Facendo così la notte ho il 20% che la lampadina sia accesa
     if (!getDimmer()) {
         if (orario >= 22 || orario < 6) {
-            std::uniform_int_distribution<int> distribuzioneNotte(0, 4);
-            valoreRandom = (distribuzioneNotte(gen) == 0) ? max : min;
+            std::uniform_int_distribution<int> distribuzioneNotturnaNoDimmer(0, 4);
+            valoreRandom = (distribuzioneNotturnaNoDimmer(gen) == 0) ? max : min;
         } else {
             std::uniform_int_distribution<int> distribuzioneGiorno(0, 1);
             valoreRandom = (distribuzioneGiorno(gen) == 0) ? min : max;
@@ -50,10 +50,10 @@ Valore SensoreLampadina::getRandom(const QDateTime &dataOra) {
     } else {
         //qua invece alla notte se la lampadina è dimmerabile la sua potenza e quindi la sua luminosità sarà ridotta di 4 volte rispetto al giorno
         if (orario >= 22 || orario < 6) {
-            std::uniform_int_distribution<int> distribuzioneNotte(min, max / 4);
-            valoreRandom = distribuzioneNotte(gen);
+            std::uniform_int_distribution<int> distribuzioneNotturaDimmer(min, max / 4);
+            valoreRandom = distribuzioneNotturaDimmer(gen);
         } else {
-            valoreRandom = distribution(gen);
+            valoreRandom = distribuzione(gen);
         }
     }
 
@@ -64,8 +64,8 @@ Valore SensoreLampadina::getRandom(const QDateTime &dataOra) {
 void SensoreLampadina::generaDati() {
     QDate dataCorrente = QDate::currentDate();
     QDate primoDelMese = QDate(dataCorrente.year(), dataCorrente.month(), 1);
-    QTime orarioInizio(0, 0, 0);
-    QDateTime data(primoDelMese, orarioInizio);
+    QTime startTime(0, 0, 0);
+    QDateTime data(primoDelMese, startTime);
     for (int i = 0; i < 365*24; ++i) {
         Valore val = this->getRandom(data);
         this->setValore(val.getValore());

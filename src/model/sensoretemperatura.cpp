@@ -84,12 +84,13 @@ Valore SensoreTemperatura::getRandom(const QDateTime &dataOra) {
     media = devStdMensile[mese].first;
     devStd = devStdMensile[mese].second;
 
-    std::normal_distribution<> dis(media, devStd);
+    std::normal_distribution<double> dis(media, devStd);
     double valoreRandom = dis(gen);
 
     if (valoreRandom < tempMin) valoreRandom = tempMin;
     if (valoreRandom > tempMax) valoreRandom = tempMax;
 
+    valoreRandom = std::round(valoreRandom * 100.0) / 100.0;
     return Valore(valoreRandom, dataOra);
 }
 

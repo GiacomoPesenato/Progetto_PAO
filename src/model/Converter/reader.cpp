@@ -92,7 +92,7 @@ SensoreLampadina* Reader::leggiSensoreLampadina(const QJsonObject& oggetto) cons
         oggetto.value("unitaMisura").toString(),
         oggetto.value("icona").toString(),
         oggetto.value("gruppo").toString(),
-        oggetto.value("dimmer").toDouble(),
+        oggetto.value("dimmer").toBool(),
         oggetto.value("potenzaMax").toDouble(),
         oggetto.value("valore").toDouble()
     );

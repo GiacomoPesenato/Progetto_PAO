@@ -68,7 +68,7 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(minVal, maxVal);
-    double valoreRandom = dis(gen);
+    double valoreRandom = std::round(dis(gen) * 100.0) / 100.0;;
 
     return Valore(valoreRandom, dataOra);
 }

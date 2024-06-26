@@ -27,26 +27,26 @@ Valore SensoreAria::getRandom(const QDateTime &dataOra)  {
 
     //distribuzione tra min e max della variazione es getValore = 50 min = 45 max= 55
     std::uniform_real_distribution<double> distribution(min, max);
-    double numeroRandom = distribution(gen);
+    double valoreRandom = distribution(gen);
 
     //calcolo la variazione rispetto al valore precedente
-    double variazioneDalPrecedente = numeroRandom - this->getValore();
+    double variazioneDalPrecedente = valoreRandom - this->getValore();
     if (variazioneDalPrecedente > maxVariazione || variazioneDalPrecedente < -maxVariazione) {
-        numeroRandom = this->getValore() + std::uniform_real_distribution<double>(-maxVariazione, maxVariazione)(gen); // se è troppo distante dal valore precedente, lo rendo più vicino
+        valoreRandom = this->getValore() + std::uniform_real_distribution<double>(-maxVariazione, maxVariazione)(gen); // se è troppo distante dal valore precedente, lo rendo più vicino
     }
 
     //sistemo il numero compreso tra 30 e 180
-    numeroRandom = std::max(30.0, std::min(180.0, numeroRandom));
+    valoreRandom = std::max(30.0, std::min(180.0, valoreRandom));
 
     //aggiungo la probabilistica variazione del 20% tra 50 e 75
     if (std::uniform_real_distribution<double>(0.0, 1.0)(gen) < 0.20) {
         double numeroProbabilistico = std::uniform_real_distribution<double>(50.0, 75.0)(gen);
         if (numeroProbabilistico >= this->getValore() - maxVariazione && numeroProbabilistico <= this->getValore() + maxVariazione) {
-            numeroRandom = numeroProbabilistico;
+            valoreRandom = numeroProbabilistico;
         }
     }
-
-    return Valore(numeroRandom, dataOra);
+    valoreRandom = std::round(valoreRandom * 100.0) / 100.0;
+    return Valore(valoreRandom, dataOra);
 }
 
 Sensore *SensoreAria::clone() const {

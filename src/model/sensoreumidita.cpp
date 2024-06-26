@@ -54,6 +54,7 @@ Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
     std::uniform_real_distribution<> dis(minRange, maxRange);
     double valoreRandom = dis(gen);
 
+    valoreRandom = std::round(valoreRandom * 100.0) / 100.0;
     return Valore(valoreRandom,dataOra);
 }
 

@@ -44,16 +44,16 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     }
     if(tipo == "anno"){
         chartAnno(meseCorrente, max, min);
-        asseY->setRange(min*MARGINE_INFERIORE, max*MARGINE_SUPERIORE);
+        asseY->setRange(min, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultimo Anno");
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
         chartMese(max, min, giorniMese, lampadina, dimmer);
-        asseY->setRange(min*MARGINE_INFERIORE, max*MARGINE_SUPERIORE);
+        asseY->setRange(min, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultimo Mese");
     } else if (tipo == "settimana"){
         chartSettimana(max, min, lampadina, dimmer);
-        asseY->setRange(min*MARGINE_INFERIORE, max*MARGINE_SUPERIORE);
+        asseY->setRange(min, max*MARGINE_SUPERIORE);
         chart->setTitle("Ultima settimana");
     } else if (tipo == "giorno"){
         chartGiorno(max);
@@ -62,7 +62,7 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     }
 
     asseY->setTickCount(5);
-    asseY->setLabelFormat("%d");
+    asseY->setLabelFormat("%0.1f");
 
     scatterSeries->setMarkerSize(10);
     scatterSeries->setMarkerShape(QScatterSeries::MarkerShapeCircle);
@@ -97,7 +97,7 @@ void Chart::chartAnno(int meseCorrente, int &maxMedia, int &minMedia){
             somma += valore.getValore();
             ++contatore;
         } else {
-            media = (contatore > 0) ? somma / contatore : 0.0;
+            media = (contatore > 0) ? std::round((somma / contatore) * 100.0) / 100.0 : 0.0;;
             QPointF punto(pos + OFFSET, media);
             series->append(punto);
             scatterSeries->append(punto);
@@ -117,7 +117,7 @@ void Chart::chartAnno(int meseCorrente, int &maxMedia, int &minMedia){
     }
 
     // aggiunta dell'ultimo mese
-    media = (contatore > 0) ? somma / contatore : 0.0;
+    media = (contatore > 0) ? std::round((somma / contatore) * 100.0) / 100.0 : 0.0;;
     QPointF punto(pos + OFFSET, media);
     series->append(punto);
     scatterSeries->append(punto);
@@ -227,7 +227,7 @@ Valore Chart::mediaLampadina(int &contatore, bool dimmer){
         }
     }
     if (dimmer){
-        value.setValore(somma/24);
+        value.setValore(std::round((somma / 24) * 100.0) / 100.0);
     }else{
         //cout << "somma: " << somma << endl;
         if (somma >= 16){//se più di 16 volte è 0 gli assegno 0, ho scelto 16 in quanto 20% di 24

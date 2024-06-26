@@ -355,7 +355,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
         std::mt19937 rng(dev());
 
         if(inputTipo1->currentText() == "Qualità aria"){
-            std::uniform_int_distribution<std::mt19937::result_type> dist(0,180);
+            std::uniform_int_distribution<std::mt19937::result_type> dist(30,180);
             SensoreAria *sensorearia = new SensoreAria(0, inputNome->text(), "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", inputGruppo->text(), 180, dist(rng));
             emit nuovoSensoreCreato(sensorearia);
         }
