@@ -7,6 +7,7 @@
 
 
 #include "schermatasensore.h"
+#include "../model/sensorelampadina.h"
 #include "chart.h"
 
 SchermataSensore::SchermataSensore(QWidget *parent)
@@ -39,6 +40,11 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QVBoxLayout *layoutFunzioniSensore = new QVBoxLayout(widgetFunzioniSensore);
     widgetFunzioniSensore->setLayout(layoutFunzioniSensore);
 
+    QWidget *widgetFiltriGrafico = new QWidget;
+    QHBoxLayout *layoutFiltriGrafico = new QHBoxLayout(widgetFiltriGrafico);
+    widgetFiltriGrafico->setLayout(layoutFiltriGrafico);
+    mainLayout->addWidget(widgetFiltriGrafico);
+
     topLeftLayout->addWidget(widgetIconaSensore);
     topLeftLayout->addWidget(widgetInfoSensore);
     topLeftLayout->addStretch();
@@ -69,6 +75,11 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QPushButton *buttonModifica = new QPushButton("Modifica");
     QPushButton *buttonElimina = new QPushButton("Elimina");
 
+    buttonAnno = new QPushButton("Anno");
+    buttonMese = new QPushButton("Mese");
+    buttonSettimana = new QPushButton("Settimana");
+    buttonGiorno = new QPushButton("Giorno");
+
     layoutIconaSensore->addWidget(buttonIndietro, Qt::AlignTop | Qt::AlignLeft);
     layoutIconaSensore->addWidget(labelIcona, Qt::AlignTop | Qt::AlignLeft);
     layoutInfoSensore->addWidget(labelId, Qt::AlignTop | Qt::AlignLeft);
@@ -78,12 +89,23 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     layoutFunzioniSensore->addWidget(buttonSimula, Qt::AlignTop | Qt::AlignRight);
     layoutFunzioniSensore->addWidget(buttonModifica, Qt::AlignTop | Qt::AlignRight);
     layoutFunzioniSensore->addWidget(buttonElimina, Qt::AlignTop | Qt::AlignRight);
+    layoutFiltriGrafico->addWidget(buttonAnno, Qt::AlignTop | Qt::AlignRight);
+    layoutFiltriGrafico->addWidget(buttonMese, Qt::AlignTop | Qt::AlignRight);
+    layoutFiltriGrafico->addWidget(buttonSettimana, Qt::AlignTop | Qt::AlignRight);
+    layoutFiltriGrafico->addWidget(buttonGiorno, Qt::AlignTop | Qt::AlignRight);
+    layoutFiltriGrafico->addStretch();
 
     // Connect dei button indietro, simula, modifica ed elimina
     connect(buttonIndietro, &QPushButton::clicked, this, &SchermataSensore::chiudiSchermataSensore);
     connect(buttonSimula, &QPushButton::clicked, this, &SchermataSensore::simula);
     connect(buttonModifica, &QPushButton::clicked, this, &SchermataSensore::modificaSensore);
     connect(buttonElimina, &QPushButton::clicked, this, &SchermataSensore::eliminaSensore);
+
+    connect(buttonAnno, &QPushButton::clicked, this, &SchermataSensore::setGraficoAnno);
+    connect(buttonMese, &QPushButton::clicked, this, &SchermataSensore::setGraficoMese);
+    connect(buttonSettimana, &QPushButton::clicked, this, &SchermataSensore::setGraficoSettimana);
+    connect(buttonGiorno, &QPushButton::clicked, this, &SchermataSensore::setGraficoGiorno);
+
 
     // Creazione e aggiunta del QChart in basso al centro
     QWidget *chartWidget = new QWidget;
@@ -93,7 +115,7 @@ SchermataSensore::SchermataSensore(QWidget *parent)
 
     this->setStyleSheet(
         "QPushButton {"
-        "    background-color: #009688;"
+        "    background-color: #5DADE2;"
         "    color: white;"
         "    font-size: 16px;"
         "    border-radius: 10px;"
@@ -102,14 +124,13 @@ SchermataSensore::SchermataSensore(QWidget *parent)
         "    transition: all 0.3s;"
         "}"
         "QPushButton:hover {"
-        "    background-color: #00796B;"
+        "    background-color: #4885af;"
         "}"
         "QPushButton:pressed {"
-        "    background-color: #004D40;"
+        "    background-color: #335e7c;"
         "    color: #B2EBF2;"
         "}"
         );
-
 }
 
 void SchermataSensore::setSensore(Sensore *sensore) {
@@ -127,9 +148,33 @@ void SchermataSensore::setSensore(Sensore *sensore) {
             oldChart->deleteLater();
         }
     }
+    buttonAnno->setVisible(false);
+    buttonMese->setVisible(false);
+    buttonSettimana->setVisible(false);
+    buttonGiorno->setVisible(false);
     if(sensore->getValori().size()>0){
         Chart grafico;
-        chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
+        if (dynamic_cast<SensoreLampadina*>(sensore)) {
+            buttonAnno->setVisible(false);
+            buttonMese->setVisible(true);
+            buttonSettimana->setVisible(true);
+            buttonGiorno->setVisible(true);
+            buttonAnno->setStyleSheet("background-color: #5DADE2;");
+            buttonMese->setStyleSheet("background-color: #4885af;");
+            buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+            buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+            chartLayout->addWidget(grafico.getChart(*sensore, "mese"));
+        }else{
+            buttonAnno->setVisible(true);
+            buttonMese->setVisible(true);
+            buttonSettimana->setVisible(true);
+            buttonGiorno->setVisible(false);
+            buttonAnno->setStyleSheet("background-color: #4885af;");
+            buttonMese->setStyleSheet("background-color: #5DADE2;");
+            buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+            buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+            chartLayout->addWidget(grafico.getChart(*sensore, "anno"));
+        }
     }
 }
 
@@ -142,7 +187,6 @@ void SchermataSensore::simula() {
     sensore->generaDati();
     Chart grafico;
 
-    // Rimuovi il vecchio grafico se esiste
     if (chartLayout->count() > 0) {
         QWidget *oldChart = chartLayout->itemAt(0)->widget();
         if (oldChart) {
@@ -151,8 +195,27 @@ void SchermataSensore::simula() {
         }
     }
 
-    // Aggiungi il nuovo grafico
-    chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
+    if (dynamic_cast<SensoreLampadina*>(sensore)) {
+        buttonAnno->setVisible(false);
+        buttonMese->setVisible(true);
+        buttonSettimana->setVisible(true);
+        buttonGiorno->setVisible(true);
+        buttonAnno->setStyleSheet("background-color: #5DADE2;");
+        buttonMese->setStyleSheet("background-color: #4885af;");
+        buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+        buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+        chartLayout->addWidget(grafico.getChart(*sensore, "mese"));
+    }else{
+        buttonAnno->setVisible(true);
+        buttonMese->setVisible(true);
+        buttonSettimana->setVisible(true);
+        buttonGiorno->setVisible(false);
+        buttonAnno->setStyleSheet("background-color: #4885af;");
+        buttonMese->setStyleSheet("background-color: #5DADE2;");
+        buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+        buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+        chartLayout->addWidget(grafico.getChart(*sensore, "anno"));
+    }
 }
 
 void SchermataSensore::modificaSensore(){
@@ -161,4 +224,68 @@ void SchermataSensore::modificaSensore(){
 
 void SchermataSensore::eliminaSensore(){
     emit eliminaSensoreSignal(sensore);
+}
+
+void SchermataSensore::setGraficoAnno(){
+    if (chartLayout->count() > 0) {
+        QWidget *oldChart = chartLayout->itemAt(0)->widget();
+        if (oldChart) {
+            chartLayout->removeWidget(oldChart);
+            oldChart->deleteLater();
+            Chart grafico;
+            chartLayout->addWidget(grafico.getChart(*sensore, "anno"));
+            buttonAnno->setStyleSheet("background-color: #4885af;");
+            buttonMese->setStyleSheet("background-color: #5DADE2;");
+            buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+            buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+        }
+    }
+}
+
+void SchermataSensore::setGraficoMese(){
+    if (chartLayout->count() > 0) {
+        QWidget *oldChart = chartLayout->itemAt(0)->widget();
+        if (oldChart) {
+            chartLayout->removeWidget(oldChart);
+            oldChart->deleteLater();
+            Chart grafico;
+            chartLayout->addWidget(grafico.getChart(*sensore, "mese"));
+            buttonAnno->setStyleSheet("background-color: #5DADE2;");
+            buttonMese->setStyleSheet("background-color: #4885af;");
+            buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+            buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+        }
+    }
+}
+
+void SchermataSensore::setGraficoSettimana(){
+    if (chartLayout->count() > 0) {
+        QWidget *oldChart = chartLayout->itemAt(0)->widget();
+        if (oldChart) {
+            chartLayout->removeWidget(oldChart);
+            oldChart->deleteLater();
+            Chart grafico;
+            chartLayout->addWidget(grafico.getChart(*sensore, "settimana"));
+            buttonAnno->setStyleSheet("background-color: #5DADE2;");
+            buttonMese->setStyleSheet("background-color: #5DADE2;");
+            buttonSettimana->setStyleSheet("background-color: #4885af;");
+            buttonGiorno->setStyleSheet("background-color: #5DADE2;");
+        }
+    }
+}
+
+void SchermataSensore::setGraficoGiorno(){
+    if (chartLayout->count() > 0) {
+        QWidget *oldChart = chartLayout->itemAt(0)->widget();
+        if (oldChart) {
+            chartLayout->removeWidget(oldChart);
+            oldChart->deleteLater();
+            Chart grafico;
+            chartLayout->addWidget(grafico.getChart(*sensore, "giorno"));
+            buttonAnno->setStyleSheet("background-color: #5DADE2;");
+            buttonMese->setStyleSheet("background-color: #5DADE2;");
+            buttonSettimana->setStyleSheet("background-color: #5DADE2;");
+            buttonGiorno->setStyleSheet("background-color: #4885af;");
+        }
+    }
 }

@@ -22,6 +22,10 @@ private slots:
     void simula();
     void eliminaSensore();
     void modificaSensore();
+    void setGraficoAnno();
+    void setGraficoMese();
+    void setGraficoSettimana();
+    void setGraficoGiorno();
 signals:
     void chiudiSchermataSensoreSignal();
     void eliminaSensoreSignal(Sensore *sensore);
@@ -38,6 +42,11 @@ private:
     QLabel* labelValore;
     QLabel *labelIcona;
     QVBoxLayout *chartLayout;
+
+    QPushButton *buttonAnno;
+    QPushButton *buttonMese;
+    QPushButton *buttonSettimana;
+    QPushButton *buttonGiorno;
 };
 
 #endif // SCHERMATASENSORE_H

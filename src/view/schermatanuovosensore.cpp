@@ -32,6 +32,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
     buttonIndietro->setIcon(iconIndietro);
     buttonIndietro->setIconSize(QSize(24, 24));
+    buttonIndietro->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     centerLayout->addWidget(buttonIndietro);
 
     // Tipo sensore (generale)
@@ -312,16 +313,25 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
                     "QLabel {"
                     "    color: white;"
                     "    font-size: 24px;"
+                    "}"
+                    "QPushButton {"
+                    "    background-color: #5DADE2;"
+                    "    color: white;"
+                    "    font-size: 16px;"
+                    "    border-radius: 10px;"
+                    "    padding: 10px 20px;"
+                    "    text-align: center;"
+                    "    transition: all 0.3s;"
+                    "}"
+                    "QPushButton:hover {"
+                    "    background-color: #4885af;"
+                    "}"
+                    "QPushButton:pressed {"
+                    "    background-color: #335e7c;"
+                    "    color: #B2EBF2;"
                     "}";
 
     centerWidget->setStyleSheet(style);
-
-    nuovoSensore->setStyleSheet("    background-color: white;"
-                                "    color: black;"
-                                "    font-size: 24px;"
-                                "    border-radius: 10px;"
-                                "    margin: 10px;"
-                                "    padding: 5px;");
 
     connect(buttonIndietro, &QPushButton::clicked, this, &SchermataNuovoSensore::chiudiSchermataNuovoSensore);
 

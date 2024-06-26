@@ -56,23 +56,26 @@ SideBar::SideBar(QWidget* parent)
     mainLayout->addWidget(salvaConNome);
     mainLayout->addWidget(carica);
 
+    nuovosensore->setStyleSheet("margin-top: 30px;");
+
     this->setStyleSheet(
         "QPushButton {"
-        "    background-color: #009688;"
+        "    background-color: #5DADE2;"
         "    color: white;"
-        "    font-size: 16px;"
+        "    font-size: 20px;"
         "    border-radius: 10px;"
-        "    padding: 10px 20px;"
+        "    padding: 10px 10px;"
         "    text-align: center;"
         "    transition: all 0.3s;"
         "    min-width: 100px;"
-        "    min-height: 40px;"
+        "    min-height: 35px;"
+        "    margin-top: 10px"
         "}"
         "QPushButton:hover {"
-        "    background-color: #00796B;"
+        "    background-color: #4885af;"
         "}"
         "QPushButton:pressed {"
-        "    background-color: #004D40;"
+        "    background-color: #335e7c;"
         "    color: #B2EBF2;"
         "}"
         );

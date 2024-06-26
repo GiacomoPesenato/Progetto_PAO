@@ -32,7 +32,6 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
     QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
     buttonIndietro->setIcon(iconIndietro);
     buttonIndietro->setIconSize(QSize(24, 24));
-    buttonIndietro->setFixedSize(100, 60);
     buttonIndietro->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     centerLayout->addWidget(buttonIndietro);
 
@@ -47,7 +46,7 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
     inputTipo1->addItem("Lampadina");
     inputTipo1->addItem("Pannelli fotovoltaici");
     inputTipo1->addItem("Elettrodomestico");
-    inputTipo1->setEditable(false);
+    inputTipo1->setDisabled(true);
     inputTipo1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     centerLayout->addWidget(inputTipo1);
 
@@ -80,7 +79,7 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
     inputTipo2->addItem("Lavatrice");
     inputTipo2->addItem("Forno");
     inputTipo2->setVisible(false);
-    inputTipo2->setEditable(false);
+    inputTipo2->setDisabled(true);
     inputTipo2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     centerLayout->addWidget(inputTipo2);
 
@@ -193,19 +192,19 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
                     "    font-size: 24px;"
                     "}"
                     "QPushButton {"
-                    "    background-color: #009688;"
+                    "    background-color: #5DADE2;"
                     "    color: white;"
-                    "    font-size: 24px;"
+                    "    font-size: 16px;"
                     "    border-radius: 10px;"
                     "    padding: 10px 20px;"
                     "    text-align: center;"
                     "    transition: all 0.3s;"
                     "}"
                     "QPushButton:hover {"
-                    "    background-color: #00796B;"
+                    "    background-color: #4885af;"
                     "}"
                     "QPushButton:pressed {"
-                    "    background-color: #004D40;"
+                    "    background-color: #335e7c;"
                     "    color: #B2EBF2;"
                     "}";
 
