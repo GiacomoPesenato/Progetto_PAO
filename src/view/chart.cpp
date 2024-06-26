@@ -216,7 +216,7 @@ Valore Chart::mediaLampadina(int &counter, bool dimmer){
     int somma = 0, maxVal = -1;
     Valore value = valori[counter];
     for (int i = 0; i < 24; i++){
-        if (dimmer != 0){ //se è dimmerabile sommo tutti i valori
+        if (dimmer){ //se è dimmerabile sommo tutti i valori
             somma += valori[counter+i].getValore();
             //cout << valori[counter+i].getValore() << endl;
         }else{
@@ -228,7 +228,7 @@ Valore Chart::mediaLampadina(int &counter, bool dimmer){
             }
         }
     }
-    if (dimmer != 0){
+    if (dimmer){
         value.setValore(somma/24);
     }else{
         //cout << "somma: " << somma << endl;
