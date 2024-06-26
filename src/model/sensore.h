@@ -31,15 +31,16 @@ public:
     void setId(const unsigned int &id);
 
     QString getNome() const;
-    void setNome(QString &nome);
+    void setNome(const QString &nome);
 
     QString getUnitaMisura() const;
-    void setUnitaMisura(QString &unitaMisura);
+    void setUnitaMisura(const QString &unitaMisura);
 
     QString getIcona() const;
     void setIcona(QString &icona);
 
     QString getGruppo() const;
+    void setGruppo(const QString &gruppo);
 
     QVector<Valore> getValori() const;
     void setValori(QVector<Valore> &valori);

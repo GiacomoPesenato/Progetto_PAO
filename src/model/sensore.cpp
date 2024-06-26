@@ -73,7 +73,7 @@ void Sensore::setValore(const double &valore){
 QString Sensore::getNome() const{
     return nome;
 }
-void Sensore::setNome(QString &nome){
+void Sensore::setNome(const QString &nome){
     this->nome = nome;
 }
 
@@ -84,8 +84,11 @@ QString Sensore::getUnitaMisura() const{
 QString Sensore::getGruppo() const{
     return gruppo;
 }
+void Sensore::setGruppo(const QString &gruppo){
+    this->gruppo = gruppo;
+}
 
-void Sensore::setUnitaMisura(QString &unitaMisura){
+void Sensore::setUnitaMisura(const QString &unitaMisura){
     this->unitaMisura = unitaMisura;
 }
 

@@ -17,6 +17,7 @@ class SchermataNuovoSensore : public QWidget
 public:
     explicit SchermataNuovoSensore(QWidget *parent = nullptr);
     static QWidget* createWidget(QWidget *parent = nullptr); // Metodo statico per creare il widget
+    void clearInput();
 public slots:
     void chiudiSchermataNuovoSensore();
 signals:
@@ -24,6 +25,32 @@ signals:
     void chiudiSchermataNuovoSensoreSignal();
 private:
     QVBoxLayout* mainLayout;
+
+    //input
+    QComboBox *inputTipo1;
+    QLineEdit *inputNome;
+    QLineEdit *inputGruppo;
+    QComboBox *inputTipo2;
+    QComboBox *inputClasseEnergetica;
+    QDoubleSpinBox *inputTemperaturaTarget;
+    QDoubleSpinBox *inputUmiditaTarget;
+    QSpinBox *inputPotenzaMassima;
+    QCheckBox *inputDimmerabile;
+    QSpinBox *inputNumeroPannelli;
+    QSpinBox *inputPotenzaPannello;
+
+    //label
+    QLabel *labelTipo1;
+    QLabel *labelNome;
+    QLabel *labelGruppo;
+    QLabel *labelTipo2;
+    QLabel *labelClasseEnergetica;
+    QLabel *labelTemperaturaTarget;
+    QLabel *labelUmiditaTarget;
+    QLabel *labelPotenzaMassima;
+    QLabel *labelDimmerabile;
+    QLabel *labelNumeroPannelli;
+    QLabel *labelPotenzaPannello;
 };
 
 #endif // SCHERMATANUOVOSENSORE_H

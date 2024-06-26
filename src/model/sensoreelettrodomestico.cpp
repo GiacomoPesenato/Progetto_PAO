@@ -3,7 +3,7 @@
 #include <QtWidgets>
 #include <iostream>
 
-SensoreElettrodomestico::SensoreElettrodomestico() : SensoreElettricita(), classeEnergetica("0") {}
+SensoreElettrodomestico::SensoreElettrodomestico() : SensoreElettricita(), classeEnergetica("0"), tipoElettrodomestico("") {}
 
 SensoreElettrodomestico::SensoreElettrodomestico(const unsigned int id,
                                                  const QString &nome,
@@ -12,8 +12,9 @@ SensoreElettrodomestico::SensoreElettrodomestico(const unsigned int id,
                                                  const QString gruppo,
                                                  QString classeEnergetica,
                                                  double potenzaMax,
-                                                 double valore)
-    : SensoreElettricita(id, nome, unitaMisura, icona, gruppo, potenzaMax, valore), classeEnergetica(classeEnergetica) {}
+                                                 double valore,
+                                                 QString tipoElettrodomestico)
+    : SensoreElettricita(id, nome, unitaMisura, icona, gruppo, potenzaMax, valore), classeEnergetica(classeEnergetica), tipoElettrodomestico(tipoElettrodomestico) {}
 
 QString SensoreElettrodomestico::getClasseEnergetica() const {
     return classeEnergetica;
@@ -21,6 +22,14 @@ QString SensoreElettrodomestico::getClasseEnergetica() const {
 
 void SensoreElettrodomestico::setClasseEnergetica(const QString &value) {
     classeEnergetica = value;
+}
+
+QString SensoreElettrodomestico::getTipoElettrodomestico() const {
+    return tipoElettrodomestico;
+}
+
+void SensoreElettrodomestico::setTipoElettrodomestico(const QString &value){
+    tipoElettrodomestico = value;
 }
 
 Sensore *SensoreElettrodomestico::clone() const {
@@ -72,7 +81,7 @@ void SensoreElettrodomestico::accept(sensoreVisitor& visitor) const {
 
 int smain(int argc, char *argv[])
 {
-    SensoreElettrodomestico s = SensoreElettrodomestico(0,"Sensore1", "Kw/h", "prova","cucina","A",100,rand()%100);
+    SensoreElettrodomestico s = SensoreElettrodomestico(0,"Sensore1", "Kw/h", "prova","cucina","A",100,rand()%100,"");
     s.generaDati();
     QString abc = "settimana";
     QApplication a(argc, argv);

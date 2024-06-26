@@ -16,6 +16,7 @@
 #include "schermatasensori.h"
 #include "schermatasensore.h"
 #include "schermatanuovosensore.h"
+#include "schermatamodificasensore.h"
 
 class MainWindow: public QMainWindow
 {
@@ -30,6 +31,8 @@ public:
     void closeSchermataNuovoSensore();
     void aggiornaSensori();
     void vuoiSalvare();
+    void chiudiSchermataModificaSensore(Sensore* sensore);
+    void salvaModificheSensore(Sensore* sensore);
 private slots:
     void showSensoreDetails(Sensore *widget);
     void aggiungiNuovoSensore(Sensore *sensore);
@@ -52,6 +55,7 @@ private:
     SchermataSensori* schermatasensori;
     SchermataNuovoSensore* schermatanuovosensore;
     SchermataSensore* schermatasensore;
+    SchermataModificaSensore* schermatamodificasensore;
     void switchWidgets(QLayout *layout, QWidget *currentWidget, QWidget *newWidget);
 };
 

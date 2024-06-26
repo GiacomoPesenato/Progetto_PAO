@@ -80,7 +80,8 @@ SensoreElettrodomestico* Reader::leggiSensoreElettrodomestico(const QJsonObject&
         object.value("gruppo").toString(),
         object.value("classeEnergetica").toString(),
         object.value("potenzaMax").toDouble(),
-        object.value("valore").toDouble()
+        object.value("valore").toDouble(),
+        object.value("tipoElettrodomestico").toString()
     );
 }
 

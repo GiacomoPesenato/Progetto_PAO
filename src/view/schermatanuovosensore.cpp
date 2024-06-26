@@ -357,7 +357,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
             } else if(inputTipo2->currentText() == "Forno"){
                 icona = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/forno.png";
             }
-            SensoreElettrodomestico *sensoreelettrodomestico = new SensoreElettrodomestico(0, inputNome->text(), "W", icona, inputGruppo->text(), inputClasseEnergetica->currentText(), inputPotenzaMassima->value(), 100);
+            SensoreElettrodomestico *sensoreelettrodomestico = new SensoreElettrodomestico(0, inputNome->text(), "W", icona, inputGruppo->text(), inputClasseEnergetica->currentText(), inputPotenzaMassima->value(), 100, inputTipo2->currentText());
             emit nuovoSensoreCreato(sensoreelettrodomestico);
         }
         if(inputTipo1->currentText() == "Temperatura"){

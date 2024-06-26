@@ -105,6 +105,12 @@ MainWindow::MainWindow(QWidget* parent)
     connect(schermatanuovosensore, &SchermataNuovoSensore::nuovoSensoreCreato, this, &MainWindow::aggiungiNuovoSensore);
     connect(schermatanuovosensore, &SchermataNuovoSensore::chiudiSchermataNuovoSensoreSignal, this, &MainWindow::closeSchermataNuovoSensore);
     connect(schermatasensore, &SchermataSensore::eliminaSensoreSignal, this, &MainWindow::eliminaSensore);
+    connect(schermatasensore, &SchermataSensore::modificaSensoreSignal, this, &MainWindow::modificaSensore);
+
+    schermatamodificasensore = new SchermataModificaSensore();
+
+    connect(schermatamodificasensore, &SchermataModificaSensore::chiudiSchermataModificaSensoreSignal, this, &MainWindow::chiudiSchermataModificaSensore);
+    connect(schermatamodificasensore, &SchermataModificaSensore::modificaSensoreSignal, this, &MainWindow::salvaModificheSensore);
 }
 
 void MainWindow::openNuovoSensore() {
@@ -195,6 +201,18 @@ void MainWindow::vuoiSalvare(){
     isSaved = true;
 }
 
-void MainWindow::modificaSensore(Sensore *widget){
+void MainWindow::modificaSensore(Sensore *sensore){
+    schermatamodificasensore->setSensore(sensore);
+    switchWidgets(rightLayout, schermatasensore, schermatamodificasensore);
+}
 
+void MainWindow::chiudiSchermataModificaSensore(Sensore* sensore){
+    schermatasensore->setSensore(sensore);
+    switchWidgets(rightLayout, schermatamodificasensore, schermatasensore);
+}
+void MainWindow::salvaModificheSensore(Sensore* sensore){
+    schermatasensore->setSensore(sensore);
+    schermatasensori->clearSensori();
+    schermatasensori->insertSensori(sensori);
+    switchWidgets(rightLayout, schermatamodificasensore, schermatasensore);
 }

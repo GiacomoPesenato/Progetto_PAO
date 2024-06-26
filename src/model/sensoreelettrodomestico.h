@@ -8,7 +8,7 @@ class SensoreElettrodomestico : public SensoreElettricita
 {
 private:
     QString classeEnergetica;
-
+    QString tipoElettrodomestico;
 public:
     SensoreElettrodomestico();
     SensoreElettrodomestico(const unsigned int id,
@@ -18,10 +18,14 @@ public:
                             const QString gruppo,
                             QString classeEnergetica,
                             double potenzaMax,
-                            double valore);
+                            double valore,
+                            QString tipoElettrodomestico);
 
     QString getClasseEnergetica() const;
     void setClasseEnergetica(const QString &value);
+
+    QString getTipoElettrodomestico() const;
+    void setTipoElettrodomestico(const QString &value);
 
     virtual Sensore *clone() const override;
     Valore getRandom(const QDateTime &dataOra) override;
