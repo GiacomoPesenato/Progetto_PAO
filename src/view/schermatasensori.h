@@ -24,9 +24,13 @@ signals:
     void widgetSensoreClicked(Sensore *sensore);
 private slots:
     void handleWidgetSensoreClicked(WidgetSensore *widget);
+    void ricerca(const QString &value);
 private:
+    std::vector<Sensore*> sensori;
+    int flgRicerca = 0;
+    QVBoxLayout *mainLayout;
+    QGridLayout *sensorLayout;
     QMap<QString, QGroupBox*> groupWidgets;
-    QGridLayout *mainLayout;
 };
 
 #endif // SCHERMATASENSORI_H

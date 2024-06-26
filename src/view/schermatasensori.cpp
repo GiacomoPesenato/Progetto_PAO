@@ -6,22 +6,62 @@
 SchermataSensori::SchermataSensori(const std::vector<Sensore*>& sensori, QWidget *parent)
     : QWidget(parent)
 {
-    mainLayout = new QGridLayout;
+    mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
 
-    //inserisce i sensori nel layout
+    // Layout superiore
+    QHBoxLayout *searchLayout = new QHBoxLayout;
+    QLabel *labelRicerca = new QLabel("Cerca:");
+    labelRicerca->setAlignment(Qt::AlignCenter);
+    searchLayout->addWidget(labelRicerca);
+
+    QLineEdit *inputRicerca = new QLineEdit(this);
+    inputRicerca->setPlaceholderText("");
+    searchLayout->addWidget(inputRicerca);
+
+    connect(inputRicerca, &QLineEdit::textChanged, this, &SchermataSensori::ricerca);
+
+    // Aggiungi il layout di ricerca al layout principale
+    mainLayout->addLayout(searchLayout);
+
+    // Layout per i sensori
+    sensorLayout = new QGridLayout;
+    mainLayout->addLayout(sensorLayout);
+
+    // Stile
+    QString style = "QLineEdit{"
+                    "    background-color: white;"
+                    "    color: black;"
+                    "    font-size: 24px;"
+                    "    border-radius: 10px;"
+                    "    margin: 10px;"
+                    "    padding: 5px;"
+                    "}"
+                    "QLabel {"
+                    "    color: white;"
+                    "    font-size: 24px;"
+                    "}";
+
+    this->setStyleSheet(style);
+
+    // Inserisci i sensori nel layout
     insertSensori(sensori);
 }
 
-void SchermataSensori::insertSensori(const std::vector<Sensore*>& sensori){
+void SchermataSensori::insertSensori(const std::vector<Sensore*>& sensori) {
+    if (flgRicerca == 0) {
+        this->sensori = sensori;
+    } else {
+        flgRicerca = 0;
+    }
     for (Sensore* sensore : sensori) {
         QString gruppoSensore = sensore->getGruppo();
 
-        //crea il gruppo del sensore se non esiste
+        // Crea il gruppo del sensore se non esiste
         if (!groupWidgets.contains(gruppoSensore)) {
             int elementi = groupWidgets.count();
             int nrow = elementi / 2;
-            int ncol = (elementi) % 2;
+            int ncol = elementi % 2;
 
             QGroupBox *groupBox = new QGroupBox(gruppoSensore);
             QGridLayout *groupLayout = new QGridLayout(groupBox);
@@ -31,17 +71,17 @@ void SchermataSensori::insertSensori(const std::vector<Sensore*>& sensori){
             groupBox->setStyleSheet(groupStyle);
 
             groupWidgets[gruppoSensore] = groupBox;
-            mainLayout->addWidget(groupBox, nrow, ncol);
+            sensorLayout->addWidget(groupBox, nrow, ncol);
         }
 
-        //crea e definisce il widget del sensore
+        // Crea e definisce il widget del sensore
         WidgetSensore *widgetSensore = new WidgetSensore(sensore);
         widgetSensore->setFixedSize(150, 150);
 
-        //inserisce il sensore all'interno del relativo gruppo di appartenenza
+        // Inserisce il sensore all'interno del relativo gruppo di appartenenza
         int numeroElementi = groupWidgets[gruppoSensore]->layout()->count();
-        int row = numeroElementi/2;
-        int column = numeroElementi%2;
+        int row = numeroElementi / 2;
+        int column = numeroElementi % 2;
         QGridLayout *groupLayout = qobject_cast<QGridLayout*>(groupWidgets[gruppoSensore]->layout());
         if (groupLayout) {
             groupLayout->addWidget(widgetSensore, row, column, Qt::AlignTop | Qt::AlignLeft);
@@ -73,4 +113,22 @@ void SchermataSensori::handleWidgetSensoreClicked(WidgetSensore *widget){
     std::string nomeStd = nome.toStdString(); // Converti QString in std::string
     std::cout << "Il nome del sensore è: " << nomeStd << std::endl;
     emit widgetSensoreClicked(sensore);
+}
+
+void SchermataSensori::ricerca(const QString &value){
+    std::vector<Sensore*> sensoriFiltrati;
+    std::cout << sensori.size() << std::endl;
+    for (Sensore* sensore : sensori) {
+        if (sensore) {
+            QString gruppo = sensore->getGruppo();
+            QString nome = sensore->getNome();
+
+            if (gruppo.contains(value, Qt::CaseInsensitive) || nome.contains(value, Qt::CaseInsensitive)) {
+                sensoriFiltrati.push_back(sensore);
+            }
+        }
+    }
+    flgRicerca = 1;
+    clearSensori();
+    insertSensori(sensoriFiltrati);
 }
