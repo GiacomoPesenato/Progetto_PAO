@@ -10,9 +10,9 @@
 
 namespace Converter {
 
-QJsonObject Json::daOggetto(const Sensore& sensor) {
+QJsonObject Json::daOggetto(const Sensore& sensore) {
     JsonVisitor json_visitor;
-    sensor.accetta(json_visitor);
+    sensore.accetta(json_visitor);
     return json_visitor.getOggetto();
 }
 

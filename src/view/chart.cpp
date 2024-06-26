@@ -45,20 +45,20 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
     if(tipo == "anno"){
         chartAnno(currentMonth, max, min);
         asseY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        chart->setTitle("Visione Annuale");
+        chart->setTitle("Ultimo Anno");
     } else if (tipo == "mese"){
         int giorniMese = valori[0].getDataOra().date().daysInMonth();
         chartMese(max, min, giorniMese, lampadina, dimmer);
         asseY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        chart->setTitle("Visione Mensile");
+        chart->setTitle("Ultimo Mese");
     } else if (tipo == "settimana"){
         chartSettimana(max, min, lampadina, dimmer);
         asseY->setRange(min*MARGIN_BOTTOM, max*MARGIN_TOP);
-        chart->setTitle("Visione Settimanale");
+        chart->setTitle("Ultima settimana");
     } else if (tipo == "giorno"){
         chartGiorno(max);
         asseY->setRange(0, max*MARGIN_TOP);
-        chart->setTitle("Visione Giornaliera");
+        chart->setTitle("Ultimo Giorno");
     }
 
     asseY->setTickCount(5);
