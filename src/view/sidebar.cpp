@@ -107,6 +107,7 @@ void SideBar::caricaJsonFile(Repository::JsonRepository*& repository)
         delete repository;
         repository = new Repository::JsonRepository(Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
         repository->load();
+        popupTemporaneo("Caricamento","Caricamento avvenuto correttamente");
     }
 }
 
@@ -117,8 +118,8 @@ void SideBar::salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::Js
     } else {
         // Sovrascrizione della std::map di repository, che poi archivia nel Json
         repository->overwrite(sensori);
-        cout << "Salvataggio in corso..." << endl;
         repository->store();
+        popupTemporaneo("Salvataggio","Salvataggio avvenuto correttamente");
     }
 }
 
@@ -143,6 +144,38 @@ void SideBar::salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Reposit
         // Sovrascrizione della std::map di repository, che poi archivia nel Json
         repository->overwrite(sensori);
         repository->store();
+        popupTemporaneo("Salvataggio","Salvataggio avvenuto correttamente");
     }
+}
+
+void SideBar::popupTemporaneo(QString titolo, QString contenuto) {
+    QDialog *popup = new QDialog(this);
+    popup->setWindowTitle(titolo);
+    popup->setFixedSize(450, 200);
+    popup->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+    popup->setAttribute(Qt::WA_DeleteOnClose);
+    popup->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+    QLabel *label = new QLabel(contenuto, popup);
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    label->setWordWrap(true);
+    label->setAlignment(Qt::AlignCenter);
+    popup->setStyleSheet("background-color: #2C3E50; font: 20px; color: white; border: none; outline: none;");
+
+    label->setGeometry(popup->rect());
+
+    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(popup);
+    popup->setGraphicsEffect(opacityEffect);
+    opacityEffect->setOpacity(100.0);
+
+    QPropertyAnimation *animation = new QPropertyAnimation(opacityEffect, "opacity");
+    animation->setDuration(3000);
+    animation->setStartValue(1.0);
+    animation->setEndValue(0.0);
+
+
+    connect(animation, &QPropertyAnimation::finished, popup, &QDialog::close);
+    popup->show();
+    animation->start();
 }
 

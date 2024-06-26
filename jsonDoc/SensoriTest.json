@@ -28,5 +28,65 @@
         "type": "SensoreAria",
         "unitaMisura": "IQA",
         "valore": 83
+    },
+    {
+        "gruppo": "bvcxdfgvcxdfv",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 3,
+        "nome": " cb xvdfvc",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 83
+    },
+    {
+        "gruppo": "x<dfnbcx",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 4,
+        "nome": "asdfghjk",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 83
+    },
+    {
+        "gruppo": "x<dfnbcx",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 5,
+        "nome": "trfgtrfgdfgdg",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 86
+    },
+    {
+        "gruppo": "dssffsf",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 6,
+        "nome": "sadzxdf",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 83
+    },
+    {
+        "gruppo": "xcvvcx",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 7,
+        "nome": "xcvc",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 83
+    },
+    {
+        "gruppo": "szxcxzszcxzx",
+        "icona": "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png",
+        "id": 8,
+        "nome": "<zxcxz<sxz",
+        "sogliaMassima": 180,
+        "type": "SensoreAria",
+        "unitaMisura": "IQA",
+        "valore": 83
     }
 ]

@@ -30,8 +30,6 @@ public:
     void closeSchermataNuovoSensore();
     void aggiornaSensori();
     void vuoiSalvare();
-    void popupTemporaneo(QString titolo, QString testo);
-
 private slots:
     void showSensoreDetails(Sensore *widget);
     void aggiungiNuovoSensore(Sensore *sensore);

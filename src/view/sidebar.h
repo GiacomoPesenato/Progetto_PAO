@@ -24,6 +24,7 @@ public:
     void caricaJsonFile(Repository::JsonRepository*& repository);
     void salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository);
     void salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Repository::JsonRepository*& repository);
+    void popupTemporaneo(QString titolo, QString testo);
 public slots:
     void openNuovoSensore();
     void openSalva();
