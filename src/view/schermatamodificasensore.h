@@ -18,7 +18,7 @@ public:
     explicit SchermataModificaSensore(QWidget *parent = nullptr);
     static QWidget* createWidget(QWidget *parent = nullptr); // Metodo statico per creare il widget
     void setSensore(Sensore* sensore);
-    void clearInput();
+    void pulisciInput();
 public slots:
     void chiudiSchermataModificaSensore();
 signals:

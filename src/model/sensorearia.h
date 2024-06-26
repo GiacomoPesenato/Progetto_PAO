@@ -21,10 +21,10 @@ public:
     int getSogliaMassima() const;
     void setSogliaMassima(const int &value);
 
-    ~SensoreAria() = default;
+    ~SensoreAria() override = default;
     Valore getRandom(const QDateTime &dataOra) override;
     virtual Sensore *clone() const override;
-    virtual void accept(sensoreVisitor& visitor) const override;
+    virtual void accetta(sensoreVisitor& visitor) const override;
 };
 
 

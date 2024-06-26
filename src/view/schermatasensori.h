@@ -18,12 +18,12 @@ class SchermataSensori: public QWidget
     Q_OBJECT
 public:
     explicit SchermataSensori(const std::vector<Sensore*>& sensori, QWidget* parent = nullptr);
-    void insertSensori(const std::vector<Sensore*>& sensori);
-    void clearSensori();
+    void inserimentoSensori(const std::vector<Sensore*>& sensori);
+    void pulisciSensori();
 signals:
-    void widgetSensoreClicked(Sensore *sensore);
+    void sensoreSelezionatoSignal(Sensore *sensore);
 private slots:
-    void handleWidgetSensoreClicked(WidgetSensore *widget);
+    void sensoreSelezionato(WidgetSensore *widget);
     void ricerca(const QString &value);
 private:
     std::vector<Sensore*> sensori;

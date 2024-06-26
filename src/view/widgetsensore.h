@@ -22,7 +22,7 @@ private:
     QGridLayout *mainLayout;
     void mousePressEvent(QMouseEvent *event) override;
 signals:
-    void selected(WidgetSensore *widget);
+    void selezionatoSignal(WidgetSensore *widget);
 };
 
 #endif // WIDGETSENSORE_H

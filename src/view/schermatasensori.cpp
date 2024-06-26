@@ -45,10 +45,10 @@ SchermataSensori::SchermataSensori(const std::vector<Sensore*>& sensori, QWidget
     this->setStyleSheet(style);
 
     // Inserisci i sensori nel layout
-    insertSensori(sensori);
+    inserimentoSensori(sensori);
 }
 
-void SchermataSensori::insertSensori(const std::vector<Sensore*>& sensori) {
+void SchermataSensori::inserimentoSensori(const std::vector<Sensore*>& sensori) {
     if (flgRicerca == 0) {
         this->sensori = sensori;
     } else {
@@ -87,11 +87,11 @@ void SchermataSensori::insertSensori(const std::vector<Sensore*>& sensori) {
             groupLayout->addWidget(widgetSensore, row, column, Qt::AlignTop | Qt::AlignLeft);
         }
 
-        connect(widgetSensore, &WidgetSensore::selected, this, &SchermataSensori::handleWidgetSensoreClicked);
+        connect(widgetSensore, &WidgetSensore::selezionatoSignal, this, &SchermataSensori::sensoreSelezionato);
     }
 }
 
-void SchermataSensori::clearSensori() {
+void SchermataSensori::pulisciSensori() {
     for (auto& groupBox : groupWidgets) {
         QLayout* layout = groupBox->layout();
         while (QLayoutItem* item = layout->takeAt(0)) {
@@ -107,12 +107,12 @@ void SchermataSensori::clearSensori() {
     groupWidgets.clear(); // Svuota il QMap
 }
 
-void SchermataSensori::handleWidgetSensoreClicked(WidgetSensore *widget){
+void SchermataSensori::sensoreSelezionato(WidgetSensore *widget){
     Sensore *sensore = widget->getSensore();
     QString nome = sensore->getNome();
     std::string nomeStd = nome.toStdString(); // Converti QString in std::string
     std::cout << "Il nome del sensore è: " << nomeStd << std::endl;
-    emit widgetSensoreClicked(sensore);
+    emit sensoreSelezionatoSignal(sensore);
 }
 
 void SchermataSensori::ricerca(const QString &value){
@@ -129,6 +129,6 @@ void SchermataSensori::ricerca(const QString &value){
         }
     }
     flgRicerca = 1;
-    clearSensori();
-    insertSensori(sensoriFiltrati);
+    pulisciSensori();
+    inserimentoSensori(sensoriFiltrati);
 }

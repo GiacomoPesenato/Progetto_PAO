@@ -69,13 +69,12 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(minVal, maxVal);
     double randomValue = dis(gen);
-    cout << "Usato questo getRandom " << randomValue << endl;
 
     return Valore(randomValue, dataOra);
 }
 
-void SensoreElettrodomestico::accept(sensoreVisitor& visitor) const {
-    visitor.visit(*this);
+void SensoreElettrodomestico::accetta(sensoreVisitor& visitor) const {
+    visitor.visita(*this);
 }
 
 

@@ -99,7 +99,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 
     schermatasensore = new SchermataSensore();
-    connect(schermatasensori, &SchermataSensori::widgetSensoreClicked, this, &MainWindow::showSensoreDetails);
+    connect(schermatasensori, &SchermataSensori::sensoreSelezionatoSignal, this, &MainWindow::showSensoreDetails);
 
     connect(schermatasensore, &SchermataSensore::chiudiSchermataSensoreSignal, this, &MainWindow::closeSchermataSensore);
     connect(schermatanuovosensore, &SchermataNuovoSensore::nuovoSensoreCreato, this, &MainWindow::aggiungiNuovoSensore);
@@ -114,7 +114,7 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 void MainWindow::openNuovoSensore() {
-    switchWidgets(rightLayout, schermatasensori, schermatanuovosensore);
+    spostaWidget(rightLayout, schermatasensori, schermatanuovosensore);
 }
 
 void MainWindow::openSalva(){
@@ -127,10 +127,10 @@ void MainWindow::openSalvaConNome() {
 }
 
 void MainWindow::openCarica(){
-    if(!isSaved){
+    if(!flgSalvato){
         vuoiSalvare();
     }
-    if(isSaved){
+    if(flgSalvato){
         sidebar->caricaJsonFile(repository);
         if(repository != nullptr) aggiornaSensori();
     }
@@ -138,11 +138,11 @@ void MainWindow::openCarica(){
 
 void MainWindow::aggiornaSensori() {
     sensori.clear();
-    schermatasensori->clearSensori();
+    schermatasensori->pulisciSensori();
     for (const auto& pair : repository->getRepository()) {
         aggiungiNuovoSensore(pair.second);
     }
-    isSaved = true; // richiamo aggiornaSensori() solo quando carico quindi sono per forza aggiornati
+    flgSalvato = true; // richiamo aggiornaSensori() solo quando carico quindi sono per forza aggiornati
 
 }
 
@@ -151,15 +151,15 @@ void MainWindow::openSchermataSensore(Sensore* sensore) {
 }
 
 void MainWindow::closeSchermataSensore() {
-    switchWidgets(rightLayout, schermatasensore, schermatasensori);
+    spostaWidget(rightLayout, schermatasensore, schermatasensori);
 }
 
 void MainWindow::closeSchermataNuovoSensore() {
-    switchWidgets(rightLayout, schermatanuovosensore, schermatasensori);
+    spostaWidget(rightLayout, schermatanuovosensore, schermatasensori);
     std::cout << "chiudi" << std::endl;
 }
 
-void MainWindow::switchWidgets(QLayout *layout, QWidget *currentWidget, QWidget *newWidget) {
+void MainWindow::spostaWidget(QLayout *layout, QWidget *currentWidget, QWidget *newWidget) {
     if (layout->indexOf(currentWidget) != -1) {
         layout->replaceWidget(currentWidget, newWidget);
         currentWidget->hide();
@@ -169,29 +169,29 @@ void MainWindow::switchWidgets(QLayout *layout, QWidget *currentWidget, QWidget 
 
 void MainWindow::showSensoreDetails(Sensore *sensore) {
     schermatasensore->setSensore(sensore);
-    switchWidgets(rightLayout, schermatasensori, schermatasensore);
+    spostaWidget(rightLayout, schermatasensori, schermatasensore);
 }
 
 void MainWindow::aggiungiNuovoSensore(Sensore *sensore) {
     sensore->setId(sensori.size());
     sensori.push_back(sensore);
-    schermatasensori->clearSensori();
-    schermatasensori->insertSensori(sensori);
-    switchWidgets(rightLayout, schermatanuovosensore, schermatasensori);
-    isSaved = false;
+    schermatasensori->pulisciSensori();
+    schermatasensori->inserimentoSensori(sensori);
+    spostaWidget(rightLayout, schermatanuovosensore, schermatasensori);
+    flgSalvato = false;
 }
 
 void MainWindow::eliminaSensore(Sensore *sensore){
     for (std::vector<Sensore*>::iterator it = sensori.begin(); it != sensori.end(); it++)
         if (*it == sensore) {
+            delete sensore;
             sensori.erase(it);
-            sensore->~Sensore();
             break;
         };
-    schermatasensori->clearSensori();
-    schermatasensori->insertSensori(sensori);
-    switchWidgets(rightLayout, schermatasensore, schermatasensori);
-    isSaved = false;
+    schermatasensori->pulisciSensori();
+    schermatasensori->inserimentoSensori(sensori);
+    spostaWidget(rightLayout, schermatasensore, schermatasensori);
+    flgSalvato = false;
 }
 
 void MainWindow::vuoiSalvare(){
@@ -200,22 +200,22 @@ void MainWindow::vuoiSalvare(){
                                                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
     if (resBtn == QMessageBox::Yes || resBtn == QMessageBox::No ) {
         emit sidebar->openSalvaSignal();
-        isSaved = true;
+        flgSalvato = true;
     }
 }
 
 void MainWindow::modificaSensore(Sensore *sensore){
     schermatamodificasensore->setSensore(sensore);
-    switchWidgets(rightLayout, schermatasensore, schermatamodificasensore);
+    spostaWidget(rightLayout, schermatasensore, schermatamodificasensore);
 }
 
 void MainWindow::chiudiSchermataModificaSensore(Sensore* sensore){
     schermatasensore->setSensore(sensore);
-    switchWidgets(rightLayout, schermatamodificasensore, schermatasensore);
+    spostaWidget(rightLayout, schermatamodificasensore, schermatasensore);
 }
 void MainWindow::salvaModificheSensore(Sensore* sensore){
     schermatasensore->setSensore(sensore);
-    schermatasensori->clearSensori();
-    schermatasensori->insertSensori(sensori);
-    switchWidgets(rightLayout, schermatamodificasensore, schermatasensore);
+    schermatasensori->pulisciSensori();
+    schermatasensori->inserimentoSensori(sensori);
+    spostaWidget(rightLayout, schermatamodificasensore, schermatasensore);
 }

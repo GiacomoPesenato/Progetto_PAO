@@ -22,7 +22,7 @@ public:
     double getPotenzaMax() const;
     void setPotenzaMax(const double &value);
 
-    ~SensoreElettricita() = default;
+    ~SensoreElettricita() override = default;
 };
 
 #endif // SENSOREELETTRICITA_H

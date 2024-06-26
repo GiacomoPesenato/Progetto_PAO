@@ -93,8 +93,8 @@ Valore SensoreTemperatura::getRandom(const QDateTime &dataOra) {
     return Valore(valoreRandom, dataOra);
 }
 
-void SensoreTemperatura::accept(sensoreVisitor& visitor) const {
-    visitor.visit(*this);
+void SensoreTemperatura::accetta(sensoreVisitor& visitor) const {
+    visitor.visita(*this);
 }
 
 int jhgmain(int argc, char *argv[]) {

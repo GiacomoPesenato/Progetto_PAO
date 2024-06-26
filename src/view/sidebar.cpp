@@ -120,8 +120,8 @@ void SideBar::caricaJsonFile(Repository::JsonRepository*& repository)
 
     if (!fileName.isEmpty()) {
         delete repository;
-        repository = new Repository::JsonRepository(Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
-        repository->load();
+        repository = new Repository::JsonRepository(Repository::JsonRepository::dalPercorso(fileName.toStdString())); // Static factory method
+        repository->carica();
         popupTemporaneo("Caricamento","Caricamento avvenuto correttamente");
     }
 }
@@ -132,8 +132,8 @@ void SideBar::salvaJsonFile(const std::vector<Sensore*>& sensori, Repository::Js
         salvaJsonFileConNome(sensori, repository);
     } else {
         // Sovrascrizione della std::map di repository, che poi archivia nel Json
-        repository->overwrite(sensori);
-        repository->store();
+        repository->sovrascrivi(sensori);
+        repository->salva();
         popupTemporaneo("Salvataggio","Salvataggio avvenuto correttamente");
     }
 }
@@ -152,13 +152,13 @@ void SideBar::salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Reposit
             fileName += ".json";
         }
         if(repository==nullptr){
-            repository = new Repository::JsonRepository(Repository::JsonRepository::fromPath(fileName.toStdString())); // Static factory method
+            repository = new Repository::JsonRepository(Repository::JsonRepository::dalPercorso(fileName.toStdString())); // Static factory method
         }else{
-            repository->setPath(fileName.toStdString());
+            repository->setPercorso(fileName.toStdString());
         }
         // Sovrascrizione della std::map di repository, che poi archivia nel Json
-        repository->overwrite(sensori);
-        repository->store();
+        repository->sovrascrivi(sensori);
+        repository->salva();
         popupTemporaneo("Salvataggio","Salvataggio avvenuto correttamente");
     }
 }

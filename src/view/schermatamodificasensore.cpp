@@ -260,7 +260,7 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
             sensoreelettrodomestico->setPotenzaMax(inputPotenzaMassima->value());
             emit modificaSensoreSignal(sensoreelettrodomestico);
         }
-        clearInput();
+        pulisciInput();
     });
 }
 
@@ -319,7 +319,7 @@ void SchermataModificaSensore::setSensore(Sensore* sensore){
     }
 }
 
-void SchermataModificaSensore::clearInput(){
+void SchermataModificaSensore::pulisciInput(){
     //tutti i label vengono resi invisibili
     labelTipo2->setVisible(false);
     labelClasseEnergetica->setVisible(false);
@@ -355,7 +355,7 @@ void SchermataModificaSensore::clearInput(){
 }
 
 void SchermataModificaSensore::chiudiSchermataModificaSensore() {
-    clearInput();
+    pulisciInput();
     emit chiudiSchermataModificaSensoreSignal(sensore);
 }
 

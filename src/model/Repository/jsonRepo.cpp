@@ -12,11 +12,11 @@ namespace Repository {
 JsonRepository::JsonRepository(DataMapper::JsonFile data_mapper)
     : data_mapper(data_mapper)
 {
-    load();
+    carica();
 }
 
-JsonRepository JsonRepository::fromPath(std::string path) {    // Static factory method
-    DataMapper::JsonFile data_mapper = DataMapper::JsonFile::fromPath(path);
+JsonRepository JsonRepository::dalPercorso(std::string path) {    // Static factory method
+    DataMapper::JsonFile data_mapper = DataMapper::JsonFile::dalPercorso(path);
     JsonRepository repository(data_mapper);
     return repository;
 }
@@ -29,31 +29,31 @@ const std::map<unsigned int, Sensore*>& JsonRepository::getRepository() const {
     return repository;
 }
 
-const std::string& JsonRepository::getPath() const {
-    return data_mapper.getPath();
+const std::string& JsonRepository::getPercorso() const {
+    return data_mapper.getPercorso();
 }
 
-void JsonRepository::setPath(std::string path) {
-    data_mapper.setPath(path);
+void JsonRepository::setPercorso(std::string path) {
+    data_mapper.setPercorso(path);
 }
 
-void JsonRepository::create(Sensore* sensor) {
+void JsonRepository::inserisciSensore(Sensore* sensor) {
     repository[sensor->getId()] = sensor;
 }
 
-Sensore* JsonRepository::read(const unsigned int identifier) const {
+Sensore* JsonRepository::leggiSensore(const unsigned int identifier) const {
     auto it = repository.find(identifier);
     if (it == repository.end()) {
-        throw std::out_of_range("Trying to read an undefined id.");
+        throw std::out_of_range("ID 'out of range'");
     }
     return it->second;
 }
 
-void JsonRepository::update(Sensore* sensor) {
-    create(sensor);
+void JsonRepository::aggiornaRepository(Sensore* sensor) {
+    inserisciSensore(sensor);
 }
 
-void JsonRepository::remove(const unsigned int identifier) {
+void JsonRepository::rimuoviSensoreRepository(const unsigned int identifier) {
     auto it = repository.find(identifier);
     if (it != repository.end()) {
         delete it->second;
@@ -61,7 +61,7 @@ void JsonRepository::remove(const unsigned int identifier) {
     }
 }
 
-std::vector<Sensore*> JsonRepository::readAll() const {
+std::vector<Sensore*> JsonRepository::leggiSensoriRepository() const {
     std::vector<Sensore*> sensors;
     for (const auto& entry : repository) {
         sensors.push_back(entry.second);
@@ -69,7 +69,7 @@ std::vector<Sensore*> JsonRepository::readAll() const {
     return sensors;
 }
 
-void JsonRepository::overwrite(const std::vector<Sensore*> newSensors) {
+void JsonRepository::sovrascrivi(const std::vector<Sensore*> newSensors) {
     repository.clear();
 
     // Itera attraverso il vettore di sensori della MainWindow e inserisce i loro cloni nella mappa
@@ -79,12 +79,12 @@ void JsonRepository::overwrite(const std::vector<Sensore*> newSensors) {
     }
 }
 
-void JsonRepository::store() {
-    data_mapper.store(readAll());
+void JsonRepository::salva() {
+    data_mapper.scriviJson(leggiSensoriRepository());
 }
 
-void JsonRepository::load() {
-    std::vector<Sensore*> new_sensors(data_mapper.load());
+void JsonRepository::carica() {
+    std::vector<Sensore*> new_sensors(data_mapper.caricaSensoriJson());
 
     for(Sensore* sensor : new_sensors){
         repository[sensor->getId()] = sensor;

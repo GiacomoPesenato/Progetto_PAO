@@ -27,7 +27,7 @@ public:
     const std::map<unsigned int, Sensore*>& getCache() const;
     Reader& clear();
 
-    Sensore* read(const QJsonObject& object) override;
+    Sensore* leggiSensore(const QJsonObject& object) override;
 };
 
 }

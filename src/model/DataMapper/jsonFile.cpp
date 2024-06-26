@@ -13,36 +13,36 @@
 
 namespace DataMapper {
 
-JsonFile::JsonFile(const std::string& path) : path(path) {}
+JsonFile::JsonFile(const std::string& path) : percorso(path) {}
 
-JsonFile JsonFile::fromPath(const std::string& path) {
+JsonFile JsonFile::dalPercorso(const std::string& path) {
     JsonFile data_mapper(path);
     return data_mapper;
 }
 
-const std::string& JsonFile::getPath() const {
-    return path;
+const std::string& JsonFile::getPercorso() const {
+    return percorso;
 }
 
-void JsonFile::setPath(const std::string& path) {
-    this->path = path;
+void JsonFile::setPercorso(const std::string& path) {
+    this->percorso = path;
 }
 
-void JsonFile::store(const std::vector<Sensore*>& sensors) {
+void JsonFile::scriviJson(const std::vector<Sensore*>& sensors) {
     QJsonArray json_sensors;
     for (const Sensore* sensor : sensors) {
-        json_sensors.push_back(Converter::Json::fromObject(*sensor));
+        json_sensors.push_back(Converter::Json::daOggetto(*sensor));
     }
     QJsonDocument document(json_sensors);
-    QFile json_file(path.c_str());
+    QFile json_file(percorso.c_str());
     json_file.open(QFile::WriteOnly);
     json_file.write(document.toJson());
     json_file.close();
 }
 
-std::vector<Sensore*> JsonFile::load() {
+std::vector<Sensore*> JsonFile::caricaSensoriJson() {
     std::vector<Sensore*> sensors;
-    QFile json_file(path.c_str());
+    QFile json_file(percorso.c_str());
     json_file.open(QFile::ReadOnly);
     QByteArray data = json_file.readAll();
     json_file.close();
@@ -51,7 +51,7 @@ std::vector<Sensore*> JsonFile::load() {
 
     for (const QJsonValue& value : json_sensors) {
         QJsonObject json_object = value.toObject();
-        sensors.push_back(&(Converter::Json::toObject(json_object)));
+        sensors.push_back(&(Converter::Json::aOggetto(json_object)));
     }
     return sensors;
 }

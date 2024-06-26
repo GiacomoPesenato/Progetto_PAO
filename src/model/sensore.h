@@ -6,8 +6,6 @@
 #include "valore.h"
 #include <QVector>
 
-using namespace std;
-
 class Sensore
 {
 private:
@@ -51,7 +49,7 @@ public:
     virtual Sensore *clone() const = 0;
     virtual Valore getRandom(const QDateTime &dataOra);
     virtual void generaDati();
-    virtual void accept(sensoreVisitor& visitor) const = 0;
+    virtual void accetta(sensoreVisitor& visitor) const = 0;
 
 };
 #endif // SENSORE_H

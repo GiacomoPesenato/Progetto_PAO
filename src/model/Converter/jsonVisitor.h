@@ -14,17 +14,17 @@ namespace Converter {
 
 class JsonVisitor: public sensoreVisitor {
 private:
-    QJsonObject object;
+    QJsonObject oggetto;
 
 public:
-    QJsonObject getObject() const;
+    QJsonObject getOggetto() const;
 
-    void visit(const SensoreAria& aria);
-    void visit(const SensoreElettrodomestico& elettrodomestico);
-    void visit(const SensoreLampadina& lampadina);
-    void visit(const SensorePannelli& pannelli);
-    void visit(const SensoreTemperatura& temperatura);
-    void visit(const SensoreUmidita& umidita);
+    void visita(const SensoreAria& aria);
+    void visita(const SensoreElettrodomestico& elettrodomestico);
+    void visita(const SensoreLampadina& lampadina);
+    void visita(const SensorePannelli& pannelli);
+    void visita(const SensoreTemperatura& temperatura);
+    void visita(const SensoreUmidita& umidita);
 };
 
 }

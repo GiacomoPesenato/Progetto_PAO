@@ -75,8 +75,8 @@ void SensoreLampadina::generaDati() {
     }
 }
 
-void SensoreLampadina::accept(sensoreVisitor& visitor) const {
-    visitor.visit(*this);
+void SensoreLampadina::accetta(sensoreVisitor& visitor) const {
+    visitor.visita(*this);
 }
 
 

@@ -23,8 +23,8 @@ public:
     Valore getRandom(const QDateTime &dataOra) override;
 
     virtual Sensore *clone() const override;
-    ~SensoreUmidita() = default;
-    virtual void accept(sensoreVisitor& visitor) const override;
+    ~SensoreUmidita() override = default;
+    virtual void accetta(sensoreVisitor& visitor) const override;
 };
 
 #endif // SENSOREUMIDITA_H

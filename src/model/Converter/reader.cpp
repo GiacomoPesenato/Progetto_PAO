@@ -23,7 +23,7 @@ Reader& Reader::clear() {
     return *this;
 }
 
-Sensore* Reader::read(const QJsonObject& object) {
+Sensore* Reader::leggiSensore(const QJsonObject& object) {
     QJsonValue type = object.value("type");
     if (type.isUndefined()) {
         throw std::invalid_argument("Manca il 'type'");

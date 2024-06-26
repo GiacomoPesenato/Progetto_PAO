@@ -379,7 +379,7 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     });
 }
 
-QWidget* SchermataNuovoSensore::createWidget(QWidget *parent) {
+QWidget* SchermataNuovoSensore::creaWidget(QWidget *parent) {
     return new SchermataNuovoSensore(parent);
 }
 

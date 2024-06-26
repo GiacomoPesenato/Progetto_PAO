@@ -61,8 +61,8 @@ void SensoreAria::setSogliaMassima(const int &value) {
     sogliaMassima = value;
 }
 
-void SensoreAria::accept(sensoreVisitor& visitor) const {
-    visitor.visit(*this);
+void SensoreAria::accetta(sensoreVisitor& visitor) const {
+    visitor.visita(*this);
 }
 
 

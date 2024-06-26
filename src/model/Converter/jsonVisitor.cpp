@@ -5,11 +5,11 @@
 
 namespace Converter {
 
-QJsonObject JsonVisitor::getObject() const {
-    return object;
+QJsonObject JsonVisitor::getOggetto() const {
+    return oggetto;
 }
 
-void JsonVisitor::visit(const SensoreAria& aria){
+void JsonVisitor::visita(const SensoreAria& aria){
     QJsonObject ariaObject;
 
     ariaObject.insert("type", QJsonValue::fromVariant("SensoreAria"));
@@ -21,11 +21,11 @@ void JsonVisitor::visit(const SensoreAria& aria){
     ariaObject.insert("sogliaMassima", QJsonValue::fromVariant(aria.getSogliaMassima()));
     ariaObject.insert("valore", QJsonValue::fromVariant(aria.getValore()));
 
-    object = ariaObject;
+    oggetto = ariaObject;
 
 }
 
-void JsonVisitor::visit(const SensoreElettrodomestico& elettrodomestico){
+void JsonVisitor::visita(const SensoreElettrodomestico& elettrodomestico){
     QJsonObject elettrodomesticoObject;
 
     elettrodomesticoObject.insert("type", QJsonValue::fromVariant("SensoreElettrodomestico"));
@@ -38,10 +38,10 @@ void JsonVisitor::visit(const SensoreElettrodomestico& elettrodomestico){
     elettrodomesticoObject.insert("potenzaMax", QJsonValue::fromVariant(elettrodomestico.getPotenzaMax()));
     elettrodomesticoObject.insert("valore", QJsonValue::fromVariant(elettrodomestico.getValore()));
 
-    object = elettrodomesticoObject;
+    oggetto = elettrodomesticoObject;
 }
 
-void JsonVisitor::visit(const SensoreLampadina& lampadina){
+void JsonVisitor::visita(const SensoreLampadina& lampadina){
     QJsonObject lampadinaObject;
 
     lampadinaObject.insert("type", QJsonValue::fromVariant("SensoreLampadina"));
@@ -54,10 +54,10 @@ void JsonVisitor::visit(const SensoreLampadina& lampadina){
     lampadinaObject.insert("potenzaMax", QJsonValue::fromVariant(lampadina.getPotenzaMax()));
     lampadinaObject.insert("valore", QJsonValue::fromVariant(lampadina.getValore()));
 
-    object = lampadinaObject;
+    oggetto = lampadinaObject;
 }
 
-void JsonVisitor::visit(const SensorePannelli& pannelli){
+void JsonVisitor::visita(const SensorePannelli& pannelli){
     QJsonObject pannelliObject;
 
     pannelliObject.insert("type", QJsonValue::fromVariant("SensorePannelli"));
@@ -71,10 +71,10 @@ void JsonVisitor::visit(const SensorePannelli& pannelli){
     pannelliObject.insert("potenzaMax", QJsonValue::fromVariant(pannelli.getPotenzaMax()));
     pannelliObject.insert("valore", QJsonValue::fromVariant(pannelli.getValore()));
 
-    object = pannelliObject;
+    oggetto = pannelliObject;
 }
 
-void JsonVisitor::visit(const SensoreTemperatura& temperatura){
+void JsonVisitor::visita(const SensoreTemperatura& temperatura){
     QJsonObject temperaturaObject;
 
     temperaturaObject.insert("type", QJsonValue::fromVariant("SensoreTemperatura"));
@@ -88,11 +88,11 @@ void JsonVisitor::visit(const SensoreTemperatura& temperatura){
     temperaturaObject.insert("tempMax", QJsonValue::fromVariant(temperatura.getTempMax()));
     temperaturaObject.insert("valore", QJsonValue::fromVariant(temperatura.getValore()));
 
-    object = temperaturaObject;
+    oggetto = temperaturaObject;
 }
 
 
-void JsonVisitor::visit(const SensoreUmidita& umidita){
+void JsonVisitor::visita(const SensoreUmidita& umidita){
     QJsonObject umiditaObject;
 
     umiditaObject.insert("type", QJsonValue::fromVariant("SensoreUmidita"));
@@ -104,6 +104,6 @@ void JsonVisitor::visit(const SensoreUmidita& umidita){
     umiditaObject.insert("valoreTarget", QJsonValue::fromVariant(umidita.getValoreTarget()));
     umiditaObject.insert("valore", QJsonValue::fromVariant(umidita.getValore()));
 
-    object = umiditaObject;
+    oggetto = umiditaObject;
 }
 }

@@ -1,5 +1,5 @@
-#ifndef SENSOR_REPOSITORY_JSON_REPOSITORY_H
-#define SENSOR_REPOSITORY_JSON_REPOSITORY_H
+#ifndef SENSORE_REPO_JSON_REPOSITORY_H
+#define SENSORE_REPO_JSON_REPOSITORY_H
 
 #include <string>
 #include <map>
@@ -17,19 +17,19 @@ class JsonRepository : public sensoreRepo {
   public:
     JsonRepository(DataMapper::JsonFile data_mapper);
     
-    static JsonRepository fromPath(const std::string path); // Static factory method
+    static JsonRepository dalPercorso(const std::string percorso);
     const DataMapper::JsonFile& getDataMapper() const;
     const std::map<unsigned int, Sensore*>& getRepository() const;
-    const std::string& getPath() const;
-    void setPath(std::string path);
-    void create(Sensore* sensor) override;
-    Sensore* read(const unsigned int identifier) const override;
-    void update(Sensore* sensor) override;
-    void remove(const unsigned int identifier) override;
-    std::vector<Sensore*> readAll() const override;
-    void overwrite(const std::vector<Sensore*> newSensors) override;
-    void store();
-    void load();
+    const std::string& getPercorso() const;
+    void setPercorso(std::string percorso);
+    void inserisciSensore(Sensore* sensore) override;
+    Sensore* leggiSensore(const unsigned int id) const override;
+    void aggiornaRepository(Sensore* sensor) override;
+    void rimuoviSensoreRepository(const unsigned int id) override;
+    std::vector<Sensore*> leggiSensoriRepository() const override;
+    void sovrascrivi(const std::vector<Sensore*> nuoviSensori) override;
+    void salva();
+    void carica();
 
     ~JsonRepository() override;
 };

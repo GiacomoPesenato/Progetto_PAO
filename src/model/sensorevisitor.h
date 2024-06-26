@@ -10,12 +10,12 @@ class SensoreUmidita;
 
 class sensoreVisitor{
 public:
-    virtual void visit(const SensoreAria& aria) = 0;
-    virtual void visit(const SensoreElettrodomestico& elettrodomestico) = 0;
-    virtual void visit(const SensoreLampadina& lampadina) = 0;
-    virtual void visit(const SensorePannelli& pannelli) = 0;
-    virtual void visit(const SensoreTemperatura& temperatura) = 0;
-    virtual void visit(const SensoreUmidita& umidita) = 0;
+    virtual void visita(const SensoreAria& aria) = 0;
+    virtual void visita(const SensoreElettrodomestico& elettrodomestico) = 0;
+    virtual void visita(const SensoreLampadina& lampadina) = 0;
+    virtual void visita(const SensorePannelli& pannelli) = 0;
+    virtual void visita(const SensoreTemperatura& temperatura) = 0;
+    virtual void visita(const SensoreUmidita& umidita) = 0;
 
     virtual ~sensoreVisitor() = default;
 };

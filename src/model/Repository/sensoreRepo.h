@@ -1,5 +1,5 @@
-#ifndef SENSOR_REPOSITORY_H
-#define SENSOR_REPOSITORY_H
+#ifndef SENSORE_REPO_H
+#define SENSORE_REPO_H
 
 #include <vector>
 
@@ -9,12 +9,12 @@ namespace Repository {
 
 class sensoreRepo {
 public:
-    virtual void create(Sensore* sensor) = 0;
-    virtual Sensore* read(const unsigned int identifier) const = 0;
-    virtual void update(Sensore* sensor) = 0;
-    virtual void remove(const unsigned int identifier) = 0;
-    virtual std::vector<Sensore*> readAll() const = 0;
-    virtual void overwrite(const std::vector<Sensore*> newSensors) = 0;
+    virtual void inserisciSensore(Sensore* sensor) = 0;
+    virtual Sensore* leggiSensore(const unsigned int identifier) const = 0;
+    virtual void aggiornaRepository(Sensore* sensor) = 0;
+    virtual void rimuoviSensoreRepository(const unsigned int identifier) = 0;
+    virtual std::vector<Sensore*> leggiSensoriRepository() const = 0;
+    virtual void sovrascrivi(const std::vector<Sensore*> newSensors) = 0;
 
     virtual ~sensoreRepo() = default;
 };

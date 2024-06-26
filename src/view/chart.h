@@ -19,18 +19,18 @@ private:
     QChart *chart;
     QChartView *chartView;
     QLineSeries *series;
-    QCategoryAxis *axisX;
-    QValueAxis *axisY;
+    QCategoryAxis *asseX;
+    QValueAxis *asseY;
     QVector<Valore> valori;
     QVector<QString> mesi;
     QString tipo;
 
-    void chartAnno(int currentMonth, int &max, int &min);
+    void chartAnno(int meseCorrente, int &max, int &min);
     void chartMese(int &max, int &min, int giorniMese, bool lampadina, bool dimmer);
     void chartSettimana(int &max, int &min, bool lampadina, bool dimmer);
     void chartGiorno(int &max);
 
-    Valore mediaLampadina(int &counter, bool dimmer);
+    Valore mediaLampadina(int &contatore, bool dimmer);
 
 public:
     Chart(QObject *parent = nullptr);

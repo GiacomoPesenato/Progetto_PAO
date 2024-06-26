@@ -26,7 +26,8 @@ public:
     void setDimmer(bool value);
 
     virtual Sensore *clone() const override;
-    virtual void accept(sensoreVisitor& visitor) const override;
+    virtual void accetta(sensoreVisitor& visitor) const override;
+    ~SensoreLampadina() override = default;
 };
 
 #endif // SENSORELAMPADINA_H

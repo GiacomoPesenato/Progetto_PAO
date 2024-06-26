@@ -39,7 +39,7 @@ WidgetSensore::WidgetSensore(Sensore *sensore, QWidget *parent)
 
 void WidgetSensore::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
-        emit selected(this);
+        emit selezionatoSignal(this);
     }
     QWidget::mousePressEvent(event);
 }

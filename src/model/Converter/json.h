@@ -8,8 +8,8 @@ namespace Converter {
 
 class Json {
   public:
-    static QJsonObject fromObject(const Sensore& sensor);
-    static Sensore& toObject(const QJsonObject& json);
+    static QJsonObject daOggetto(const Sensore& sensor);
+    static Sensore& aOggetto(const QJsonObject& json);
 };
 
 }

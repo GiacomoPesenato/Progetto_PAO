@@ -1,5 +1,5 @@
-#ifndef SENSOR_CONVERTER_S_READER_H
-#define SENSOR_CONVERTER_S_READER_H
+#ifndef SENSORE_LETTURA_H
+#define SENSORE_LETTURA_H
 
 #include <QJsonObject>
 
@@ -10,7 +10,7 @@ namespace Converter {
 class sensoreLettura {
   public:
     virtual ~sensoreLettura() = default;
-    virtual Sensore* read(const QJsonObject& object) = 0;
+    virtual Sensore* leggiSensore(const QJsonObject& oggetto) = 0;
 };
 
 }

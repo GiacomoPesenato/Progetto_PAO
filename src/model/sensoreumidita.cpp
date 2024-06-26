@@ -42,8 +42,8 @@ Sensore *SensoreUmidita::clone() const
 }
 
 Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
-    random_device rd;
-    mt19937 gen(rd());
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     double minRange = valoreTarget*0.7;
     double maxRange = valoreTarget*1.3;
@@ -51,14 +51,14 @@ Valore SensoreUmidita::getRandom(const QDateTime &dataOra) {
     if (minRange < 0) minRange = 0;
     if (maxRange > 100) maxRange = 100;
 
-    uniform_real_distribution<> dis(minRange, maxRange);
+    std::uniform_real_distribution<> dis(minRange, maxRange);
     double valoreRandom = dis(gen);
 
     return Valore(valoreRandom,dataOra);
 }
 
-void SensoreUmidita::accept(sensoreVisitor& visitor) const {
-    visitor.visit(*this);
+void SensoreUmidita::accetta(sensoreVisitor& visitor) const {
+    visitor.visita(*this);
 }
 
 int umimain(int argc, char *argv[]) {

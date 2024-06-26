@@ -41,7 +41,7 @@ private slots:
 private:
     std::vector<Sensore*> sensori;
     Repository::JsonRepository* repository = nullptr;
-    bool isSaved = true;
+    bool flgSalvato = true;
 
     QWidget* centralWidget;
     QHBoxLayout* mainLayout;
@@ -56,7 +56,7 @@ private:
     SchermataNuovoSensore* schermatanuovosensore;
     SchermataSensore* schermatasensore;
     SchermataModificaSensore* schermatamodificasensore;
-    void switchWidgets(QLayout *layout, QWidget *currentWidget, QWidget *newWidget);
+    void spostaWidget(QLayout *layout, QWidget *currentWidget, QWidget *newWidget);
 };
 
 #endif // MAINWINDOW_H
