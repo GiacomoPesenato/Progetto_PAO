@@ -1,6 +1,6 @@
 [
     {
-        "classeEnergetica": "A",
+        "classeEnergetica": "E",
         "gruppo": "cucina",
         "icona": ":/frigo.png",
         "id": 0,
@@ -8,7 +8,7 @@
         "potenzaMax": 250,
         "tipo": "SensoreElettrodomestico",
         "unitaMisura": "W",
-        "valore": 43.05
+        "valore": 131.45
     },
     {
         "classeEnergetica": "C",
@@ -30,7 +30,7 @@
         "tempMin": 10,
         "tipo": "SensoreTemperatura",
         "unitaMisura": "°",
-        "valore": 36,
+        "valore": 22.28,
         "valoreTarget": 22
     },
     {
@@ -161,6 +161,6 @@
         "potenzaPannello": 510,
         "tipo": "SensorePannelli",
         "unitaMisura": "W",
-        "valore": 1057
+        "valore": 3566.62
     }
 ]
