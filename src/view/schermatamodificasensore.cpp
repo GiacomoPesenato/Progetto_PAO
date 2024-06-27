@@ -29,7 +29,7 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
 
     //Button indietro
     QPushButton *buttonIndietro = new QPushButton;
-    QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
+    QIcon iconIndietro(":/indietro.png");
     buttonIndietro->setIcon(iconIndietro);
     buttonIndietro->setIconSize(QSize(24, 24));
     buttonIndietro->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);

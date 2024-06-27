@@ -4,16 +4,6 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
 {
-    /*sensori.push_back(new SensoreAria(1, "Aria1", "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", "camera", 180, 170));
-    sensori.push_back(new SensoreAria(2, "Aria2", "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", "cucina", 180, 170));
-    sensori.push_back(new SensoreAria(3, "Aria3", "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", "cucina", 180, 170));
-    sensori.push_back(new SensoreAria(4, "Aria4", "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", "bagno", 180, 170));
-    sensori.push_back(new SensoreAria(5, "Aria5", "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", "camera", 180, 170));
-    sensori.push_back(new SensoreTemperatura(6, "Temp1", "°", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/termometro.png", "camera", 22, 18, 28, 23));
-    sensori.push_back(new SensoreTemperatura(7, "Temperatura1", "°", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/termometro.png", "camera", 21, 10, 40, 20));
-    sensori.push_back(new SensoreElettricita(8, "Consumo", "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/elettrecita.png", "generale", 3000, 1425));
-    sensori.push_back(new SensoreElettrodomestico(9, "TV", "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/tv.png", "salotto", "A", 450, 89));*/
-
     setWindowTitle("Domotica");
 
     mainLayout = new QHBoxLayout;

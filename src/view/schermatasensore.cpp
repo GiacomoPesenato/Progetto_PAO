@@ -29,7 +29,7 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     mainLayout->addWidget(topLeftWidget, 0, Qt::AlignTop);
 
     QPushButton *buttonIndietro = new QPushButton;
-    QIcon iconIndietro("C:/Users/samsung/Desktop/PAO grafica/untitled/img/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
+    QIcon iconIndietro(":/indietro.png"); // Sostituisci con il percorso dell'immagine della freccia
     buttonIndietro->setIcon(iconIndietro);
     buttonIndietro->setIconSize(QSize(24, 24));
 
@@ -63,7 +63,7 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     int idSensore = 0;
     QString nomeSensore = "";
     QString gruppoSensore = "";
-    QString iconaSensore = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png";
+    QString iconaSensore = "";
     QString unitaMisuraSensore = "";
     double valoreSensore = 0.0;
 
@@ -91,16 +91,6 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     buttonMese = new QPushButton("Mese");
     buttonSettimana = new QPushButton("Settimana");
     buttonGiorno = new QPushButton("Giorno");
-
-    //widgetInfoSecondarieSensore->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-    /*labelTemperaturaTarget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    labelUmiditaTarget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    labelPotenzaMassima->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    labelDimmerabile->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    labelNumeroPannelli->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    labelPotenzaPannello->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    labelClasseEnergetica->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);*/
 
     layoutIconaSensore->addWidget(buttonIndietro, 0, Qt::AlignTop | Qt::AlignLeft);
     layoutIconaSensore->addWidget(labelIcona, 0, Qt::AlignTop | Qt::AlignLeft);

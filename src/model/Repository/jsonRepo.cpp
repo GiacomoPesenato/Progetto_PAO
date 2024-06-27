@@ -62,11 +62,11 @@ void JsonRepository::rimuoviSensoreRepository(const unsigned int identifier) {
 }
 
 std::vector<Sensore*> JsonRepository::leggiSensoriRepository() const {
-    std::vector<Sensore*> sensors;
+    std::vector<Sensore*> sensori;
     for (const auto& entry : repository) {
-        sensors.push_back(entry.second);
+        sensori.push_back(entry.second);
     }
-    return sensors;
+    return sensori;
 }
 
 void JsonRepository::sovrascrivi(const std::vector<Sensore*> newSensors) {

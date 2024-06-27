@@ -147,6 +147,7 @@ void SideBar::salvaJsonFileConNome(const std::vector<Sensore*>& sensori, Reposit
     dialog.setDirectory(defaultFolder);
 
     QString fileName = dialog.getSaveFileName(this, "Salva file JSON", defaultFolder, "JSON Files (*.json)");
+    std::cout << fileName.toStdString() << std::endl;
 
     if (!fileName.isEmpty()) {
         // Aggiungi l'estensione .json se non è già presente

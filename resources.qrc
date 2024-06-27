@@ -1,6 +1,15 @@
-<!DOCTYPE RCC>
-<RCC version="1.0">
-<qresource>
-    <file>resources/icon.png</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file alias="aria.png">resources/img/aria.png</file>
+        <file alias="forno.png">resources/img/forno.png</file>
+        <file alias="frigo.png">resources/img/frigo.png</file>
+        <file alias="goccia.png">resources/img/goccia.png</file>
+        <file alias="indietro.png">resources/img/indietro.png</file>
+        <file alias="lampadina.png">resources/img/lampadina.png</file>
+        <file alias="lavatrice.png">resources/img/lavatrice.png</file>
+        <file alias="logo.png">resources/img/logo.png</file>
+        <file alias="pannello.png">resources/img/pannello.png</file>
+        <file alias="termometro.png">resources/img/termometro.png</file>
+        <file alias="tv.png">resources/img/tv.png</file>
+    </qresource>
 </RCC>

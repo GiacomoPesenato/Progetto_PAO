@@ -2,18 +2,18 @@
     {
         "classeEnergetica": "A",
         "gruppo": "cucina",
-        "icona": "../Progetto_PAO/resources/img/frigo.png",
+        "icona": ":/frigo.png",
         "id": 0,
         "nome": "frigo",
         "potenzaMax": 250,
         "tipo": "SensoreElettrodomestico",
         "unitaMisura": "W",
-        "valore": 100
+        "valore": 43.05
     },
     {
         "classeEnergetica": "C",
         "gruppo": "cucina",
-        "icona": "../Progetto_PAO/resources/img/forno.png",
+        "icona": ":/forno.png",
         "id": 1,
         "nome": "forno",
         "potenzaMax": 1500,
@@ -23,7 +23,7 @@
     },
     {
         "gruppo": "cucina",
-        "icona": "../Progetto_PAO/resources/img/termometro.png",
+        "icona": ":/termometro.png",
         "id": 2,
         "nome": "termometro",
         "tempMax": 40,
@@ -36,7 +36,7 @@
     {
         "classeEnergetica": "A",
         "gruppo": "salotto",
-        "icona": "../Progetto_PAO/resources/img/tv.png",
+        "icona": ":/tv.png",
         "id": 3,
         "nome": "tv",
         "potenzaMax": 400,
@@ -46,7 +46,7 @@
     },
     {
         "gruppo": "salotto",
-        "icona": "../Progetto_PAO/resources/img/aria.png",
+        "icona": ":/aria.png",
         "id": 4,
         "nome": "purificatore",
         "sogliaMassima": 180,
@@ -56,7 +56,7 @@
     },
     {
         "gruppo": "salotto",
-        "icona": "../Progetto_PAO/resources/img/goccia.png",
+        "icona": ":/goccia.png",
         "id": 5,
         "nome": "umidità",
         "tipo": "SensoreUmidita",
@@ -67,7 +67,7 @@
     {
         "dimmer": false,
         "gruppo": "cucina",
-        "icona": "../Progetto_PAO/resources/img/lampadina.png",
+        "icona": ":/lampadina.png",
         "id": 6,
         "nome": "luce",
         "potenzaMax": 20,
@@ -78,7 +78,7 @@
     {
         "dimmer": true,
         "gruppo": "salotto",
-        "icona": "../Progetto_PAO/resources/img/lampadina.png",
+        "icona": ":/lampadina.png",
         "id": 7,
         "nome": "luce",
         "potenzaMax": 10,
@@ -88,7 +88,7 @@
     },
     {
         "gruppo": "camera",
-        "icona": "../Progetto_PAO/resources/img/aria.png",
+        "icona": ":/aria.png",
         "id": 8,
         "nome": "purificatore",
         "sogliaMassima": 180,
@@ -98,7 +98,7 @@
     },
     {
         "gruppo": "camera",
-        "icona": "../Progetto_PAO/resources/img/termometro.png",
+        "icona": ":/termometro.png",
         "id": 9,
         "nome": "termometro",
         "tempMax": 40,
@@ -111,7 +111,7 @@
     {
         "classeEnergetica": "B",
         "gruppo": "camera",
-        "icona": "../Progetto_PAO/resources/img/tv.png",
+        "icona": ":/tv.png",
         "id": 10,
         "nome": "tv",
         "potenzaMax": 350,
@@ -122,7 +122,7 @@
     {
         "dimmer": true,
         "gruppo": "camera",
-        "icona": "../Progetto_PAO/resources/img/lampadina.png",
+        "icona": ":/lampadina.png",
         "id": 11,
         "nome": "luce",
         "potenzaMax": 15,
@@ -132,7 +132,7 @@
     },
     {
         "gruppo": "bagno",
-        "icona": "../Progetto_PAO/resources/img/goccia.png",
+        "icona": ":/goccia.png",
         "id": 12,
         "nome": "umidità",
         "tipo": "SensoreUmidita",
@@ -143,7 +143,7 @@
     {
         "classeEnergetica": "D",
         "gruppo": "bagno",
-        "icona": "../Progetto_PAO/resources/img/lavatrice.png",
+        "icona": ":/lavatrice.png",
         "id": 13,
         "nome": "lavatrice",
         "potenzaMax": 2000,
@@ -153,7 +153,7 @@
     },
     {
         "gruppo": "generale",
-        "icona": "../Progetto_PAO/resources/img/pannello.png",
+        "icona": ":/pannello.png",
         "id": 14,
         "nPannelli": 10,
         "nome": "fotovoltaico",

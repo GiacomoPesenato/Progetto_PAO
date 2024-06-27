@@ -2,9 +2,7 @@ QT  += core gui widgets charts
 
 CONFIG += c++17
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+TARGET = domotica
 
 SOURCES += \
     src/view/chart.cpp \
@@ -60,21 +58,5 @@ HEADERS += \
     src/view/schermatanuovosensore.h \
     src/view/schermatamodificasensore.h
 
-
-TRANSLATIONS += \
-    domotica_it_IT.ts
-
-CONFIG += embed_translations
-
 RESOURCES += \
-    resources/img/logo.png \
-    resources/img/lampadina.png \
-    resources/img/aria.png \
-    resources/img/forno.png \
-    resources/img/frigo.png \
-    resources/img/goccia.png \
-    resources/img/indietro.png \
-    resources/img/lavatrice.png \
-    resources/img/pannello.png \
-    resources/img/termometro.png \
-    resources/img/tv.png
+    resources.qrc

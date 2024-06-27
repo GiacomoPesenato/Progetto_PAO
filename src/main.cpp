@@ -75,7 +75,7 @@ private:
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon("../Progetto_PAO/resources/img/logo.png"));
+    app.setWindowIcon(QIcon(":/logo.png"));
     MainWindow window;
     window.resize(1300, 700);
     window.show();
