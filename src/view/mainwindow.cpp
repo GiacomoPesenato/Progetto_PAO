@@ -206,6 +206,7 @@ void MainWindow::vuoiSalvare(){
 
 void MainWindow::modificaSensore(Sensore *sensore){
     schermatamodificasensore->setSensore(sensore);
+
     spostaWidget(rightLayout, schermatasensore, schermatamodificasensore);
 }
 
@@ -214,13 +215,9 @@ void MainWindow::chiudiSchermataModificaSensore(Sensore* sensore){
     spostaWidget(rightLayout, schermatamodificasensore, schermatasensore);
 }
 void MainWindow::salvaModificheSensore(Sensore* sensore){
-    std::cout << "1" << std::endl;
+    flgSalvato = false;
     schermatasensore->setSensore(sensore);
-    std::cout << "2" << std::endl;
     schermatasensori->pulisciSensori();
-    std::cout << "3" << std::endl;
     schermatasensori->inserimentoSensori(sensori);
-    std::cout << "4" << std::endl;
     spostaWidget(rightLayout, schermatamodificasensore, schermatasensore);
-    std::cout << "5" << std::endl;
 }

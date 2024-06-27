@@ -2,7 +2,7 @@ QT  += core gui widgets charts
 
 CONFIG += c++17
 
-TARGET = domotica
+TARGET = casa_domotica
 
 SOURCES += \
     src/view/chart.cpp \
