@@ -13,20 +13,21 @@ SchermataSensori::SchermataSensori(const std::vector<Sensore*>& sensori, QWidget
     QHBoxLayout *searchLayout = new QHBoxLayout;
     QLabel *labelRicerca = new QLabel("Cerca:");
     labelRicerca->setAlignment(Qt::AlignCenter);
-    searchLayout->addWidget(labelRicerca);
+    searchLayout->addWidget(labelRicerca, 0);
 
     QLineEdit *inputRicerca = new QLineEdit(this);
     inputRicerca->setPlaceholderText("");
-    searchLayout->addWidget(inputRicerca);
+    searchLayout->addWidget(inputRicerca, 0);
 
     connect(inputRicerca, &QLineEdit::textChanged, this, &SchermataSensori::ricerca);
 
     // Aggiungi il layout di ricerca al layout principale
-    mainLayout->addLayout(searchLayout);
+    mainLayout->addLayout(searchLayout, 0);
 
     // Layout per i sensori
     sensorLayout = new QGridLayout;
     mainLayout->addLayout(sensorLayout);
+    mainLayout->addStretch();
 
     // Stile
     QString style = "QLineEdit{"
@@ -76,7 +77,12 @@ void SchermataSensori::inserimentoSensori(const std::vector<Sensore*>& sensori) 
 
         // Crea e definisce il widget del sensore
         WidgetSensore *widgetSensore = new WidgetSensore(sensore);
-        widgetSensore->setFixedSize(150, 150);
+        //widgetSensore->setFixedSize(150, 150);
+        widgetSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+        // Imposta dimensioni minime e massime per uniformare le dimensioni dei widget
+        widgetSensore->setMinimumSize(150, 150);
+        widgetSensore->setMaximumSize(250, 250);
 
         // Inserisce il sensore all'interno del relativo gruppo di appartenenza
         int numeroElementi = groupWidgets[gruppoSensore]->layout()->count();

@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon("C:/Users/samsung/Desktop/PAO grafica/untitled/img/logo.png"));
     MainWindow window;
-    window.resize(1200, 600);
+    window.resize(1300, 700);
     window.show();
 
     return app.exec();

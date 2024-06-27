@@ -114,7 +114,13 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 void MainWindow::openNuovoSensore() {
-    spostaWidget(rightLayout, schermatasensori, schermatanuovosensore);
+    if(rightLayout->indexOf(schermatasensori) != -1){
+        spostaWidget(rightLayout, schermatasensori, schermatanuovosensore);
+    }else if(rightLayout->indexOf(schermatasensore) != -1){
+        spostaWidget(rightLayout, schermatasensore, schermatanuovosensore);
+    }else if(rightLayout->indexOf(schermatamodificasensore) != -1){
+        spostaWidget(rightLayout, schermatamodificasensore, schermatanuovosensore);
+    }
 }
 
 void MainWindow::openSalva(){
@@ -151,6 +157,8 @@ void MainWindow::openSchermataSensore(Sensore* sensore) {
 }
 
 void MainWindow::closeSchermataSensore() {
+    schermatasensori->pulisciSensori();
+    schermatasensori->inserimentoSensori(sensori);
     spostaWidget(rightLayout, schermatasensore, schermatasensori);
 }
 
@@ -216,8 +224,13 @@ void MainWindow::chiudiSchermataModificaSensore(Sensore* sensore){
     spostaWidget(rightLayout, schermatamodificasensore, schermatasensore);
 }
 void MainWindow::salvaModificheSensore(Sensore* sensore){
+    std::cout << "1" << std::endl;
     schermatasensore->setSensore(sensore);
+    std::cout << "2" << std::endl;
     schermatasensori->pulisciSensori();
+    std::cout << "3" << std::endl;
     schermatasensori->inserimentoSensori(sensori);
+    std::cout << "4" << std::endl;
     spostaWidget(rightLayout, schermatamodificasensore, schermatasensore);
+    std::cout << "5" << std::endl;
 }

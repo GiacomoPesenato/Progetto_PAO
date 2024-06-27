@@ -233,6 +233,8 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
         sensore->rimuoviDati();
 
         if (dynamic_cast<SensoreAria*>(sensore)) {
+            SensoreAria* sensorearia = dynamic_cast<SensoreAria*>(sensore);
+            emit modificaSensoreSignal(sensorearia);
         } else if (dynamic_cast<SensoreTemperatura*>(sensore)) {
             SensoreTemperatura* sensoretemperatura = dynamic_cast<SensoreTemperatura*>(sensore);
             sensoretemperatura->setValoreTarget(inputTemperaturaTarget->value());

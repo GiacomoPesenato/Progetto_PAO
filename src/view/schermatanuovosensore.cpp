@@ -36,10 +36,10 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(buttonIndietro);
 
     // Tipo sensore (generale)
-    QLabel *labelTipo1 = new QLabel("Tipo sensore:");
+    labelTipo1 = new QLabel("Tipo sensore:");
     labelTipo1->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelTipo1);
-    QComboBox *inputTipo1 = new QComboBox(this);
+    inputTipo1 = new QComboBox(this);
     inputTipo1->addItem("Qualità aria");
     inputTipo1->addItem("Temperatura");
     inputTipo1->addItem("Umidità");
@@ -50,29 +50,29 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(inputTipo1);
 
     // Nome sensore (generale)
-    QLabel *labelNome = new QLabel("Nome sensore:");
+    labelNome = new QLabel("Nome sensore:");
     labelNome->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelNome);
-    QLineEdit *inputNome = new QLineEdit(this);
+    inputNome = new QLineEdit(this);
     inputNome->setPlaceholderText("Es: luce tavolo");
     inputNome->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     centerLayout->addWidget(inputNome);
 
     // Gruppo sensore (generale)
-    QLabel *labelGruppo = new QLabel("Gruppo sensore:");
+    labelGruppo = new QLabel("Gruppo sensore:");
     labelGruppo->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelGruppo);
-    QLineEdit *inputGruppo = new QLineEdit();
+    inputGruppo = new QLineEdit();
     inputGruppo->setPlaceholderText("Es: cucina");
     inputGruppo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     centerLayout->addWidget(inputGruppo);
 
     // Tipo elettrodomestico (SensoreElettrodomestico)
-    QLabel *labelTipo2 = new QLabel("Tipo elettrodomestico:");
+    labelTipo2 = new QLabel("Tipo elettrodomestico:");
     labelTipo2->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelTipo2);
     labelTipo2->setVisible(false);
-    QComboBox *inputTipo2 = new QComboBox();
+    inputTipo2 = new QComboBox();
     inputTipo2->addItem("TV");
     inputTipo2->addItem("Frigorifero");
     inputTipo2->addItem("Lavatrice");
@@ -82,11 +82,11 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(inputTipo2);
 
     // Classe energetica (SensoreElettrodomestico)
-    QLabel *labelClasseEnergetica = new QLabel("Classe energetica:");
+    labelClasseEnergetica = new QLabel("Classe energetica:");
     labelClasseEnergetica->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelClasseEnergetica);
     labelClasseEnergetica->setVisible(false);
-    QComboBox *inputClasseEnergetica = new QComboBox();
+    inputClasseEnergetica = new QComboBox();
     inputClasseEnergetica->addItem("A");
     inputClasseEnergetica->addItem("B");
     inputClasseEnergetica->addItem("C");
@@ -97,11 +97,11 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(inputClasseEnergetica);
 
     // Target temperatura (SensoreTemperatura)
-    QLabel *labelTemperaturaTarget = new QLabel("Temperatura target:");
+    labelTemperaturaTarget = new QLabel("Temperatura target:");
     labelTemperaturaTarget->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelTemperaturaTarget);
     labelTemperaturaTarget->setVisible(false);
-    QDoubleSpinBox *inputTemperaturaTarget = new QDoubleSpinBox();
+    inputTemperaturaTarget = new QDoubleSpinBox();
     inputTemperaturaTarget->setRange(10.0, 40.0);
     inputTemperaturaTarget->setDecimals(1);
     inputTemperaturaTarget->setSuffix(" °");
@@ -109,11 +109,11 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(inputTemperaturaTarget);
 
     // Target umidità (SensoreUmidita)
-    QLabel *labelUmiditaTarget = new QLabel("Umidità target:");
+    labelUmiditaTarget = new QLabel("Umidità target:");
     labelUmiditaTarget->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelUmiditaTarget);
     labelUmiditaTarget->setVisible(false);
-    QDoubleSpinBox *inputUmiditaTarget = new QDoubleSpinBox();
+    inputUmiditaTarget = new QDoubleSpinBox();
     inputUmiditaTarget->setRange(0.0, 100.0);
     inputUmiditaTarget->setDecimals(1);
     inputUmiditaTarget->setSuffix(" %");
@@ -121,22 +121,22 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(inputUmiditaTarget);
 
     // Potenza massima (SensoreElettrodomestico, SensoreLampadina, SensorePannelli)
-    QLabel *labelPotenzaMassima = new QLabel("Potenza massima:");
+    labelPotenzaMassima = new QLabel("Potenza massima:");
     labelPotenzaMassima->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelPotenzaMassima);
     labelPotenzaMassima->setVisible(false);
-    QSpinBox *inputPotenzaMassima = new QSpinBox();
+    inputPotenzaMassima = new QSpinBox();
     inputPotenzaMassima->setRange(1, 10000);
     inputPotenzaMassima->setSuffix(" W");
     inputPotenzaMassima->setVisible(false);
     centerLayout->addWidget(inputPotenzaMassima);
 
     // Dimmerabile (SensoreLampadina)
-    QLabel *labelDimmerabile = new QLabel("Dimmerabile:");
+    labelDimmerabile = new QLabel("Dimmerabile:");
     labelDimmerabile->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelDimmerabile);
     labelDimmerabile->setVisible(false);
-    QCheckBox *inputDimmerabile = new QCheckBox();
+    inputDimmerabile = new QCheckBox();
     inputDimmerabile->setVisible(false);
     QHBoxLayout *checkBoxLayout = new QHBoxLayout();
     checkBoxLayout->addStretch();
@@ -145,21 +145,21 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addLayout(checkBoxLayout);
 
     // Numero pannelli (SensorePannelli)
-    QLabel *labelNumeroPannelli = new QLabel("Numero pannelli:");
+    labelNumeroPannelli = new QLabel("Numero pannelli:");
     labelNumeroPannelli->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelNumeroPannelli);
     labelNumeroPannelli->setVisible(false);
-    QSpinBox *inputNumeroPannelli = new QSpinBox();
+    inputNumeroPannelli = new QSpinBox();
     inputNumeroPannelli->setRange(1, 100);
     inputNumeroPannelli->setVisible(false);
     centerLayout->addWidget(inputNumeroPannelli);
 
     // Potenza pannello (SensorePannelli)
-    QLabel *labelPotenzaPannello = new QLabel("Potenza singolo pannello:");
+    labelPotenzaPannello = new QLabel("Potenza singolo pannello:");
     labelPotenzaPannello->setAlignment(Qt::AlignCenter);
     centerLayout->addWidget(labelPotenzaPannello);
     labelPotenzaPannello->setVisible(false);
-    QSpinBox *inputPotenzaPannello = new QSpinBox();
+    inputPotenzaPannello = new QSpinBox();
     inputPotenzaPannello->setRange(1, 1000);
     inputPotenzaPannello->setSuffix(" W");
     inputPotenzaPannello->setVisible(false);
@@ -392,7 +392,43 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
             SensoreLampadina *sensorelampadina = new SensoreLampadina(0, inputNome->text(), "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/lampadina.png", inputGruppo->text(), inputDimmerabile->isChecked(), inputPotenzaMassima->value(), inputPotenzaMassima->value());
             emit nuovoSensoreCreato(sensorelampadina);
         }
+        pulisciInput();
     });
+}
+
+void SchermataNuovoSensore::pulisciInput(){
+    //tutti i label vengono resi invisibili
+    labelTipo2->setVisible(false);
+    labelClasseEnergetica->setVisible(false);
+    labelTemperaturaTarget->setVisible(false);
+    labelUmiditaTarget->setVisible(false);
+    labelPotenzaMassima->setVisible(false);
+    labelDimmerabile->setVisible(false);
+    labelNumeroPannelli->setVisible(false);
+    labelPotenzaPannello->setVisible(false);
+
+    //tutti gli input vengono puliti
+    inputTipo1->setCurrentIndex(0);
+    inputNome->clear();
+    inputGruppo->clear();
+    inputTipo2->setCurrentIndex(0);
+    inputClasseEnergetica->setCurrentIndex(0);
+    inputTemperaturaTarget->setValue(0.0);
+    inputUmiditaTarget->setValue(0.0);
+    inputPotenzaMassima->setValue(0);
+    inputDimmerabile->setChecked(false);
+    inputNumeroPannelli->setValue(0);
+    inputPotenzaPannello->setValue(0);
+
+    //tutti gli input vengono resi invisibili
+    inputTipo2->setVisible(false);
+    inputClasseEnergetica->setVisible(false);
+    inputTemperaturaTarget->setVisible(false);
+    inputUmiditaTarget->setVisible(false);
+    inputPotenzaMassima->setVisible(false);
+    inputDimmerabile->setVisible(false);
+    inputNumeroPannelli->setVisible(false);
+    inputPotenzaPannello->setVisible(false);
 }
 
 QWidget* SchermataNuovoSensore::creaWidget(QWidget *parent) {
@@ -400,5 +436,6 @@ QWidget* SchermataNuovoSensore::creaWidget(QWidget *parent) {
 }
 
 void SchermataNuovoSensore::chiudiSchermataNuovoSensore() {
+    pulisciInput();
     emit chiudiSchermataNuovoSensoreSignal();
 }

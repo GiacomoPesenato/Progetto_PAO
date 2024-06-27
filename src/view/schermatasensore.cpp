@@ -7,7 +7,12 @@
 
 
 #include "schermatasensore.h"
+#include "../model/sensorearia.h"
+#include "../model/sensoreelettrodomestico.h"
 #include "../model/sensorelampadina.h"
+#include "../model/sensorepannelli.h"
+#include "../model/sensoretemperatura.h"
+#include "../model/sensoreumidita.h"
 #include "chart.h"
 
 SchermataSensore::SchermataSensore(QWidget *parent)
@@ -36,6 +41,10 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QVBoxLayout *layoutInfoSensore = new QVBoxLayout(widgetInfoSensore);
     widgetInfoSensore->setLayout(layoutInfoSensore);
 
+    QWidget *widgetInfoSecondarieSensore = new QWidget;
+    QVBoxLayout *layoutInfoSecondarieSensore = new QVBoxLayout(widgetInfoSecondarieSensore);
+    widgetInfoSecondarieSensore->setLayout(layoutInfoSecondarieSensore);
+
     QWidget *widgetFunzioniSensore = new QWidget;
     QVBoxLayout *layoutFunzioniSensore = new QVBoxLayout(widgetFunzioniSensore);
     widgetFunzioniSensore->setLayout(layoutFunzioniSensore);
@@ -47,6 +56,7 @@ SchermataSensore::SchermataSensore(QWidget *parent)
 
     topLeftLayout->addWidget(widgetIconaSensore);
     topLeftLayout->addWidget(widgetInfoSensore);
+    topLeftLayout->addWidget(widgetInfoSecondarieSensore);
     topLeftLayout->addStretch();
     topLeftLayout->addWidget(widgetFunzioniSensore);
 
@@ -57,19 +67,21 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     QString unitaMisuraSensore = "";
     double valoreSensore = 0.0;
 
-    labelId = new QLabel("ID: "+QString::number(idSensore));
-    labelNome = new QLabel("NOME: "+nomeSensore);
-    labelGruppo = new QLabel("GRUPPO: "+gruppoSensore);
-    labelValore = new QLabel("VALORE: "+QString::number(valoreSensore)+unitaMisuraSensore);
+    labelId = new QLabel("Id: "+QString::number(idSensore));
+    labelNome = new QLabel("Nome: "+nomeSensore);
+    labelGruppo = new QLabel("Gruppo: "+gruppoSensore);
+    labelValore = new QLabel("Valore: "+QString::number(valoreSensore)+unitaMisuraSensore);
+    labelTemperaturaTarget = new QLabel("Target: ");
+    labelUmiditaTarget = new QLabel("Target: ");
+    labelPotenzaMassima = new QLabel("Potenza Massima: ");
+    labelDimmerabile = new QLabel("Dimmerabile: ");
+    labelNumeroPannelli = new QLabel("Numero Pannelli: ");
+    labelPotenzaPannello = new QLabel("Potenza Pannello: ");
+    labelClasseEnergetica = new QLabel("Classe Energetica: ");
 
     QPixmap icona(iconaSensore);
     labelIcona = new QLabel;
     labelIcona->setPixmap(icona.scaled(70, 70, Qt::KeepAspectRatio));
-
-    labelId->setStyleSheet("color: white; font-size: 16px;");
-    labelNome->setStyleSheet("color: white; font-size: 16px;");
-    labelGruppo->setStyleSheet("color: white; font-size: 16px;");
-    labelValore->setStyleSheet("color: white; font-size: 16px;");
 
     QPushButton *buttonSimula = new QPushButton("Simula");
     QPushButton *buttonModifica = new QPushButton("Modifica");
@@ -80,12 +92,32 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     buttonSettimana = new QPushButton("Settimana");
     buttonGiorno = new QPushButton("Giorno");
 
-    layoutIconaSensore->addWidget(buttonIndietro, Qt::AlignTop | Qt::AlignLeft);
-    layoutIconaSensore->addWidget(labelIcona, Qt::AlignTop | Qt::AlignLeft);
-    layoutInfoSensore->addWidget(labelId, Qt::AlignTop | Qt::AlignLeft);
-    layoutInfoSensore->addWidget(labelNome, Qt::AlignTop | Qt::AlignLeft);
-    layoutInfoSensore->addWidget(labelGruppo, Qt::AlignTop | Qt::AlignLeft);
-    layoutInfoSensore->addWidget(labelValore, Qt::AlignTop | Qt::AlignLeft);
+    //widgetInfoSecondarieSensore->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    /*labelTemperaturaTarget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    labelUmiditaTarget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    labelPotenzaMassima->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    labelDimmerabile->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    labelNumeroPannelli->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    labelPotenzaPannello->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    labelClasseEnergetica->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);*/
+
+    layoutIconaSensore->addWidget(buttonIndietro, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutIconaSensore->addWidget(labelIcona, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutIconaSensore->addStretch();
+    layoutInfoSensore->addWidget(labelId, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSensore->addWidget(labelNome, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSensore->addWidget(labelGruppo, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSensore->addWidget(labelValore, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSensore->addStretch();
+    layoutInfoSecondarieSensore->addWidget(labelTemperaturaTarget, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addWidget(labelUmiditaTarget, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addWidget(labelPotenzaMassima, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addWidget(labelDimmerabile, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addWidget(labelNumeroPannelli, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addWidget(labelPotenzaPannello, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addWidget(labelClasseEnergetica, 0, Qt::AlignTop | Qt::AlignLeft);
+    layoutInfoSecondarieSensore->addStretch();
     layoutFunzioniSensore->addWidget(buttonSimula, Qt::AlignTop | Qt::AlignRight);
     layoutFunzioniSensore->addWidget(buttonModifica, Qt::AlignTop | Qt::AlignRight);
     layoutFunzioniSensore->addWidget(buttonElimina, Qt::AlignTop | Qt::AlignRight);
@@ -114,6 +146,10 @@ SchermataSensore::SchermataSensore(QWidget *parent)
     mainLayout->addWidget(chartWidget, 1); // Espande per occupare lo spazio rimanente
 
     this->setStyleSheet(
+        "QLabel {"
+        "   color: white;"
+        "   font-size: 16px;"
+        "}"
         "QPushButton {"
         "    background-color: #5DADE2;"
         "    color: white;"
@@ -134,10 +170,54 @@ SchermataSensore::SchermataSensore(QWidget *parent)
 
 void SchermataSensore::setSensore(Sensore *sensore) {
     this->sensore = sensore;
-    labelId->setText("ID: " + QString::number(sensore->getId()));
-    labelNome->setText("Nome Sensore: " + sensore->getNome());
-    labelGruppo->setText("GRUPPO: " + sensore->getGruppo());
-    labelValore->setText("Valore Sensore: " + QString::number(sensore->getValore()) + " " + sensore->getUnitaMisura());
+    //informazioni sensore
+    labelId->setText("Id: " + QString::number(sensore->getId()));
+    labelNome->setText("Nome: " + sensore->getNome());
+    labelGruppo->setText("Gruppo: " + sensore->getGruppo());
+    labelValore->setText("Valore: " + QString::number(sensore->getValore()) + " " + sensore->getUnitaMisura());
+    //informazioni secondarie sensore
+    labelTemperaturaTarget->setVisible(false);
+    labelUmiditaTarget->setVisible(false);
+    labelPotenzaMassima->setVisible(false);
+    labelDimmerabile->setVisible(false);
+    labelNumeroPannelli->setVisible(false);
+    labelPotenzaPannello->setVisible(false);
+    labelClasseEnergetica->setVisible(false);
+    if (dynamic_cast<SensoreAria*>(sensore)) {
+    } else if (dynamic_cast<SensoreTemperatura*>(sensore)) {
+        SensoreTemperatura* sensoretemperatura = dynamic_cast<SensoreTemperatura*>(sensore);
+        labelTemperaturaTarget->setText("Target: " + QString::number(sensoretemperatura->getValoreTarget()));
+        labelTemperaturaTarget->setVisible(true);
+    } else if (dynamic_cast<SensoreUmidita*>(sensore)) {
+        SensoreUmidita* sensoreumidita = dynamic_cast<SensoreUmidita*>(sensore);
+        labelUmiditaTarget->setText("Target: " + QString::number(sensoreumidita->getValoreTarget()));
+        labelUmiditaTarget->setVisible(true);
+    } else if (dynamic_cast<SensoreLampadina*>(sensore)) {
+        SensoreLampadina* sensorelampadina = dynamic_cast<SensoreLampadina*>(sensore);
+        labelPotenzaMassima->setText("Potenza Massima: " + QString::number(sensorelampadina->getPotenzaMax()) + " W");
+        labelPotenzaMassima->setVisible(true);
+        if(sensorelampadina->getDimmer()){
+            labelDimmerabile->setText("Dimmerabile: Sì");
+        }else{
+            labelDimmerabile->setText("Dimmerabile: No");
+        }
+        labelDimmerabile->setVisible(true);
+    } else if (dynamic_cast<SensorePannelli*>(sensore)) {
+        SensorePannelli* sensorepannelli = dynamic_cast<SensorePannelli*>(sensore);
+        labelPotenzaMassima->setText("Potenza Massima: " + QString::number(sensorepannelli->getPotenzaMax()) + " W");
+        labelPotenzaMassima->setVisible(true);
+        labelNumeroPannelli->setText("Numero Pannelli: " + QString::number(sensorepannelli->getNPannelli()));
+        labelNumeroPannelli->setVisible(true);
+        labelPotenzaPannello->setText("Potenza Pannello: " + QString::number(sensorepannelli->getPotenzaPannello()) + " W");
+        labelPotenzaPannello->setVisible(true);
+    } else if (dynamic_cast<SensoreElettrodomestico*>(sensore)) {
+        SensoreElettrodomestico* sensoreelettrodomestico = dynamic_cast<SensoreElettrodomestico*>(sensore);
+        labelPotenzaMassima->setText("Potenza Massima: " + QString::number(sensoreelettrodomestico->getPotenzaMax()) + " W");
+        labelPotenzaMassima->setVisible(true);
+        labelClasseEnergetica->setText("Classe Energetica: " + sensoreelettrodomestico->getClasseEnergetica());
+        labelClasseEnergetica->setVisible(true);
+    }
+
     QPixmap icona(sensore->getIcona());
     labelIcona->setPixmap(icona.scaled(70, 70, Qt::KeepAspectRatio));
     if (chartLayout->count() > 0) {
@@ -185,6 +265,8 @@ void SchermataSensore::simula() {
     sensore->rimuoviDati();
     sensore->generaDati();
     Chart nuovoGrafico;
+    labelValore->setText("Valore: " + QString::number(sensore->getValore()) + " " + sensore->getUnitaMisura());
+    Chart grafico;
 
     if (chartLayout->count() > 0) {
         QWidget *vecchioGrafico = chartLayout->itemAt(0)->widget();

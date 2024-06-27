@@ -41,6 +41,14 @@ private:
     QLabel* labelGruppo;
     QLabel* labelValore;
     QLabel *labelIcona;
+    QLabel *labelTemperaturaTarget;
+    QLabel *labelUmiditaTarget;
+    QLabel *labelPotenzaMassima;
+    QLabel *labelDimmerabile;
+    QLabel *labelNumeroPannelli;
+    QLabel *labelPotenzaPannello;
+    QLabel *labelClasseEnergetica;
+
     QVBoxLayout *chartLayout;
 
     QPushButton *buttonAnno;
