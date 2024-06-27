@@ -57,34 +57,31 @@ void SchermataSensori::inserimentoSensori(const std::vector<Sensore*>& sensori) 
     }
     for (Sensore* sensore : sensori) {
         QString gruppoSensore = sensore->getGruppo();
-
-        // Crea il gruppo del sensore se non esiste
         if (!groupWidgets.contains(gruppoSensore)) {
             int elementi = groupWidgets.count();
             int nrow = elementi / 2;
             int ncol = elementi % 2;
-
             QGroupBox *groupBox = new QGroupBox(gruppoSensore);
             QGridLayout *groupLayout = new QGridLayout(groupBox);
             groupBox->setLayout(groupLayout);
 
-            QString groupStyle = "QGroupBox { border: 20px solid rgba(255, 255, 255, 0) } QGroupBox::title { font-size: 15px; color: rgb(255, 255, 255); }";
+            QString groupStyle = "QGroupBox { "
+                                 "  border: 20px solid rgba(255, 255, 255, 0) "
+                                 "}"
+                                 "QGroupBox::title { "
+                                 "  subcontrol-origin: margin;"
+                                 "  font-size: 18px;"
+                                 "  color: rgb(255, 255, 255);"
+                                 "  font-weight: bold;"
+                                 "}";
             groupBox->setStyleSheet(groupStyle);
 
             groupWidgets[gruppoSensore] = groupBox;
             sensorLayout->addWidget(groupBox, nrow, ncol);
         }
-
-        // Crea e definisce il widget del sensore
         WidgetSensore *widgetSensore = new WidgetSensore(sensore);
-        //widgetSensore->setFixedSize(150, 150);
         widgetSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-        // Imposta dimensioni minime e massime per uniformare le dimensioni dei widget
-        /*widgetSensore->setMinimumSize(150, 150);
-        widgetSensore->setMaximumSize(250, 250);*/
-
-        // Inserisce il sensore all'interno del relativo gruppo di appartenenza
         int numeroElementi = groupWidgets[gruppoSensore]->layout()->count();
         int row = numeroElementi / 2;
         int column = numeroElementi % 2;
@@ -98,15 +95,12 @@ void SchermataSensori::inserimentoSensori(const std::vector<Sensore*>& sensori) 
         int elementi = groupWidgets.count();
         int nrow = elementi / 2;
         int ncol = elementi % 2;
-
         QGroupBox *groupBox = new QGroupBox();
         QGridLayout *groupLayout = new QGridLayout(groupBox);
         groupBox->setLayout(groupLayout);
-
         QString groupStyle = "QGroupBox { border: 20px solid rgba(255, 255, 255, 0) } QGroupBox::title { font-size: 15px; color: rgb(255, 255, 255); }";
         groupBox->setStyleSheet(groupStyle);
         sensorLayout->addWidget(groupBox, nrow, ncol);
-
         QLabel *space = new QLabel;
         space->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         groupLayout->addWidget(space, 0, 0);
@@ -125,22 +119,20 @@ void SchermataSensori::pulisciSensori() {
         }
     }
     for (auto it = groupWidgets.begin(); it != groupWidgets.end(); ++it) {
-        delete it.value(); // Elimina il QGroupBox
+        delete it.value();
     }
-    groupWidgets.clear(); // Svuota il QMap
+    groupWidgets.clear();
 }
 
 void SchermataSensori::sensoreSelezionato(WidgetSensore *widget){
     Sensore *sensore = widget->getSensore();
     QString nome = sensore->getNome();
     std::string nomeStd = nome.toStdString(); // Converti QString in std::string
-    std::cout << "Il nome del sensore è: " << nomeStd << std::endl;
     emit sensoreSelezionatoSignal(sensore);
 }
 
 void SchermataSensori::ricerca(const QString &value){
     std::vector<Sensore*> sensoriFiltrati;
-    std::cout << sensori.size() << std::endl;
     for (Sensore* sensore : sensori) {
         if (sensore) {
             QString gruppo = sensore->getGruppo();

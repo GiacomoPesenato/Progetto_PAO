@@ -67,4 +67,14 @@ TRANSLATIONS += \
 CONFIG += embed_translations
 
 RESOURCES += \
-    resources.qrc
+    resources/img/logo.png \
+    resources/img/lampadina.png \
+    resources/img/aria.png \
+    resources/img/forno.png \
+    resources/img/frigo.png \
+    resources/img/goccia.png \
+    resources/img/indietro.png \
+    resources/img/lavatrice.png \
+    resources/img/pannello.png \
+    resources/img/termometro.png \
+    resources/img/tv.png

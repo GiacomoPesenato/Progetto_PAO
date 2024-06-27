@@ -310,7 +310,16 @@ void SchermataModificaSensore::setSensore(Sensore* sensore){
         inputTipo1->setCurrentIndex(5);
         labelTipo2->setVisible(true);
         inputTipo2->setVisible(true);
-        int index = inputTipo2->findText(sensoreelettrodomestico->getTipoElettrodomestico(), Qt::MatchFixedString);
+        int index = 0;
+        if(sensoreelettrodomestico->getTipoElettrodomestico() == "TV"){
+            index = 0;
+        }else if(sensoreelettrodomestico->getTipoElettrodomestico() == "Frigorifero"){
+            index = 1;
+        }else if(sensoreelettrodomestico->getTipoElettrodomestico() == "Lavatrice"){
+            index = 2;
+        }else if(sensoreelettrodomestico->getTipoElettrodomestico() == "Forno"){
+            index = 3;
+        }
         inputTipo2->setCurrentIndex(index);
         labelClasseEnergetica->setVisible(true);
         inputClasseEnergetica->setVisible(true);

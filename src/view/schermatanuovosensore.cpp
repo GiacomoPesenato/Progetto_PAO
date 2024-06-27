@@ -357,41 +357,41 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
 
         if(inputTipo1->currentText() == "Qualità aria"){
             std::uniform_int_distribution<std::mt19937::result_type> dist(30,180);
-            SensoreAria *sensorearia = new SensoreAria(0, inputNome->text(), "IQA", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/aria.png", inputGruppo->text(), 180, dist(rng));
+            SensoreAria *sensorearia = new SensoreAria(0, inputNome->text(), "IQA", "../Progetto_PAO/resources/img/aria.png", inputGruppo->text(), 180, dist(rng));
             emit nuovoSensoreCreato(sensorearia);
         }
         if(inputTipo1->currentText() == "Elettrodomestico"){
             QString icona = "";
             if(inputTipo2->currentText() == "TV"){
-                icona = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/tv.png";
+                icona = "../Progetto_PAO/resources/img/tv.png";
             } else if(inputTipo2->currentText() == "Frigorifero"){
-                icona = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/frigo.png";
+                icona = "../Progetto_PAO/resources/img/frigo.png";
             } else if(inputTipo2->currentText() == "Lavatrice"){
-                icona = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/lavatrice.png";
+                icona = "../Progetto_PAO/resources/img/lavatrice.png";
             } else if(inputTipo2->currentText() == "Forno"){
-                icona = "C:/Users/samsung/Desktop/PAO grafica/untitled/img/forno.png";
+                icona = "../Progetto_PAO/resources/img/forno.png";
             }
             SensoreElettrodomestico *sensoreelettrodomestico = new SensoreElettrodomestico(0, inputNome->text(), "W", icona, inputGruppo->text(), inputClasseEnergetica->currentText(), inputPotenzaMassima->value(), 100, inputTipo2->currentText());
             emit nuovoSensoreCreato(sensoreelettrodomestico);
         }
         if(inputTipo1->currentText() == "Temperatura"){
             std::uniform_int_distribution<std::mt19937::result_type> dist(10,40);
-            SensoreTemperatura *sensoretemperatura = new SensoreTemperatura(0, inputNome->text(), "°", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/termometro.png", inputGruppo->text(), inputTemperaturaTarget->value(), 10, 40, dist(rng));
+            SensoreTemperatura *sensoretemperatura = new SensoreTemperatura(0, inputNome->text(), "°", "../Progetto_PAO/resources/img/termometro.png", inputGruppo->text(), inputTemperaturaTarget->value(), 10, 40, dist(rng));
             emit nuovoSensoreCreato(sensoretemperatura);
         }
         if(inputTipo1->currentText() == "Umidità"){
             std::uniform_int_distribution<std::mt19937::result_type> dist(inputUmiditaTarget->value()-10, inputUmiditaTarget->value()+10);
-            SensoreUmidita *sensoreumidita = new SensoreUmidita(0, inputNome->text(), "%", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/goccia.png", inputGruppo->text(), inputUmiditaTarget->value(), dist(rng));
+            SensoreUmidita *sensoreumidita = new SensoreUmidita(0, inputNome->text(), "%", "../Progetto_PAO/resources/img/goccia.png", inputGruppo->text(), inputUmiditaTarget->value(), dist(rng));
             emit nuovoSensoreCreato(sensoreumidita);
         }
         if(inputTipo1->currentText() == "Pannelli fotovoltaici"){
             std::uniform_int_distribution<std::mt19937::result_type> dist(0,inputNumeroPannelli->value()*inputPotenzaPannello->value());
-            SensorePannelli *sensorepannelli = new SensorePannelli(0, inputNome->text(), "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/pannello.png", inputGruppo->text(), inputNumeroPannelli->value(), inputPotenzaPannello->value(), inputNumeroPannelli->value()*inputPotenzaPannello->value(), dist(rng));
+            SensorePannelli *sensorepannelli = new SensorePannelli(0, inputNome->text(), "W", "../Progetto_PAO/resources/img/pannello.png", inputGruppo->text(), inputNumeroPannelli->value(), inputPotenzaPannello->value(), inputNumeroPannelli->value()*inputPotenzaPannello->value(), dist(rng));
             emit nuovoSensoreCreato(sensorepannelli);
         }
         if(inputTipo1->currentText() == "Lampadina"){
             //default lampadina potenza massima, altrimenti dovrei controllare se dimmerabile o meno, visto che è una simulazione setto io  al max
-            SensoreLampadina *sensorelampadina = new SensoreLampadina(0, inputNome->text(), "W", "C:/Users/samsung/Desktop/PAO grafica/untitled/img/lampadina.png", inputGruppo->text(), inputDimmerabile->isChecked(), inputPotenzaMassima->value(), inputPotenzaMassima->value());
+            SensoreLampadina *sensorelampadina = new SensoreLampadina(0, inputNome->text(), "W", "../Progetto_PAO/resources/img/lampadina.png", inputGruppo->text(), inputDimmerabile->isChecked(), inputPotenzaMassima->value(), inputPotenzaMassima->value());
             emit nuovoSensoreCreato(sensorelampadina);
         }
         pulisciInput();
