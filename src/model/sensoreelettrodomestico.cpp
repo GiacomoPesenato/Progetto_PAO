@@ -1,7 +1,5 @@
 #include "sensoreelettrodomestico.h"
-#include "../view/chart.h"
 #include <QtWidgets>
-#include <iostream>
 
 SensoreElettrodomestico::SensoreElettrodomestico() : SensoreElettricita(), classeEnergetica("0"), tipoElettrodomestico("") {}
 
