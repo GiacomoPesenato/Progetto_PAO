@@ -81,8 +81,8 @@ void SchermataSensori::inserimentoSensori(const std::vector<Sensore*>& sensori) 
         widgetSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         // Imposta dimensioni minime e massime per uniformare le dimensioni dei widget
-        widgetSensore->setMinimumSize(150, 150);
-        widgetSensore->setMaximumSize(250, 250);
+        /*widgetSensore->setMinimumSize(150, 150);
+        widgetSensore->setMaximumSize(250, 250);*/
 
         // Inserisce il sensore all'interno del relativo gruppo di appartenenza
         int numeroElementi = groupWidgets[gruppoSensore]->layout()->count();
@@ -90,10 +90,27 @@ void SchermataSensori::inserimentoSensori(const std::vector<Sensore*>& sensori) 
         int column = numeroElementi % 2;
         QGridLayout *groupLayout = qobject_cast<QGridLayout*>(groupWidgets[gruppoSensore]->layout());
         if (groupLayout) {
-            groupLayout->addWidget(widgetSensore, row, column, Qt::AlignTop | Qt::AlignLeft);
+            groupLayout->addWidget(widgetSensore, row, column);
         }
-
         connect(widgetSensore, &WidgetSensore::selezionatoSignal, this, &SchermataSensori::sensoreSelezionato);
+    }
+    if(groupWidgets.size()<=1){
+        int elementi = groupWidgets.count();
+        int nrow = elementi / 2;
+        int ncol = elementi % 2;
+
+        QGroupBox *groupBox = new QGroupBox();
+        QGridLayout *groupLayout = new QGridLayout(groupBox);
+        groupBox->setLayout(groupLayout);
+
+        QString groupStyle = "QGroupBox { border: 20px solid rgba(255, 255, 255, 0) } QGroupBox::title { font-size: 15px; color: rgb(255, 255, 255); }";
+        groupBox->setStyleSheet(groupStyle);
+        sensorLayout->addWidget(groupBox, nrow, ncol);
+
+        QLabel *space = new QLabel;
+        space->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        groupLayout->addWidget(space, 0, 0);
+
     }
 }
 

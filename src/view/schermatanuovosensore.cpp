@@ -170,6 +170,8 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     centerLayout->addWidget(nuovoSensore);
     nuovoSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
+    centerLayout->addStretch();
+
     // Ad ogni cambiamento di tipo di sensore aggiorna la visibilità dei campi
     connect(inputTipo1, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](){
         std::cout << "Tipo selezionato: " << inputTipo1->currentText().toStdString() << std::endl;

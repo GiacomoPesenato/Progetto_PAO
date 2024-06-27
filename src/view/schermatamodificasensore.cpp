@@ -172,6 +172,8 @@ SchermataModificaSensore::SchermataModificaSensore(QWidget *parent)
     centerLayout->addWidget(modificaSensore);
     modificaSensore->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
+    centerLayout->addStretch();
+
     // Stile
     QString style = "QComboBox, QLineEdit, QDoubleSpinBox, QSpinBox {"
                     "    background-color: white;"
