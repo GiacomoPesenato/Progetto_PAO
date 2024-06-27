@@ -114,11 +114,13 @@ void MainWindow::openNuovoSensore() {
 }
 
 void MainWindow::openSalva(){
+    flgSalvato = true;
     sidebar->salvaJsonFile(sensori, repository);
 
 }
 
 void MainWindow::openSalvaConNome() {
+    flgSalvato = true;
     sidebar->salvaJsonFileConNome(sensori, repository);
 }
 
