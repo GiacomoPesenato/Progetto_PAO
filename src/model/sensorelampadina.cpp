@@ -78,18 +78,3 @@ void SensoreLampadina::generaDati() {
 void SensoreLampadina::accetta(sensoreVisitor& visitor) const {
     visitor.visita(*this);
 }
-
-
-int gfmain(int argc, char *argv[]) {
-    SensoreLampadina lampadina = SensoreLampadina(1, "lampadina", "W", "resources/lampadina.png", "casa", false, 10, 10);
-    lampadina.generaDati();
-    QString abc = "settimana";
-    QApplication a(argc, argv);
-    QMainWindow window;
-    Chart palle;
-    window.setCentralWidget(palle.getChart(lampadina, abc));
-    window.resize(1000,1000);
-    window.show();
-    return a.exec();
-    return 0;
-}

@@ -62,15 +62,3 @@ void SensoreUmidita::accetta(sensoreVisitor& visitor) const {
     visitor.visita(*this);
 }
 
-int umimain(int argc, char *argv[]) {
-    SensoreUmidita umido = SensoreUmidita(1, "Umidità", "%", "umidita.png", "Clima", 80, 0);
-    umido.generaDati();
-    QString abc = "mese";
-    QApplication a(argc, argv);
-    QMainWindow window;
-    Chart palle;
-    window.setCentralWidget(palle.getChart(umido, abc));
-    window.resize(1000,1000);
-    window.show();
-    return a.exec();
-}

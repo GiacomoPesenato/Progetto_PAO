@@ -1,7 +1,6 @@
 #include "sensorepannelli.h"
 #include "../view/chart.h"
 #include <QtWidgets>
-#include <iostream>
 SensorePannelli::SensorePannelli():SensoreElettricita(), nPannelli(65535), potenzaPannello(0) {}
 
 SensorePannelli::SensorePannelli(const unsigned int id,
@@ -77,17 +76,4 @@ Valore SensorePannelli::getRandom(const QDateTime &data) {
 
 void SensorePannelli::accetta(sensoreVisitor& visitor) const {
     visitor.visita(*this);
-}
-
-int sqmain(int argc, char *argv[]) {
-    SensorePannelli pannelli = SensorePannelli(1, "pannelli", "Watt", "icona", "elettricita", 100, 60, 100*60, rand() % 100);
-    pannelli.generaDati();
-    QString abc = "anno";
-    QApplication a(argc, argv);
-    QMainWindow window;
-    Chart palle;
-    window.setCentralWidget(palle.getChart(pannelli, abc));
-    window.resize(1000,1000);
-    window.show();
-    return a.exec();
 }

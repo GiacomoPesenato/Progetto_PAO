@@ -64,18 +64,3 @@ void SensoreAria::setSogliaMassima(const int &value) {
 void SensoreAria::accetta(sensoreVisitor& visitor) const {
     visitor.visita(*this);
 }
-
-
-int hmain(int argc, char *argv[])
-{
-    SensoreAria s = SensoreAria(0,"Sensore1", "IQA", "prova","cucina",180,50);
-    s.generaDati();
-    QString abc = "anno";
-    QApplication a(argc, argv);
-    QMainWindow window;
-    Chart palle;
-    window.setCentralWidget(palle.getChart(s, abc));
-    window.resize(1000,1000);
-    window.show();
-    return a.exec();
-}

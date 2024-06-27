@@ -36,7 +36,7 @@ QChartView* Chart::getChart(const Sensore &s, QString tipo) {
         "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
     };
 
-    std::cout << "Tipo: " << tipo.toStdString() << std::endl;
+    //std::cout << "Tipo: " << tipo.toStdString() << std::endl;
 
     if (const SensoreLampadina *lamp = dynamic_cast<const SensoreLampadina*>(&s)) {
         lampadina = true;
@@ -150,7 +150,7 @@ void Chart::chartMese(int &max, int &min, int giorniMese, bool lampadina, bool d
             // cout<<counter<<endl;
         }else{
             valore = valori[contatore+i];
-            std::cout << valore.getValore() <<" "<<valore.getDataOra().date().day()<< std::endl;
+            //std::cout << valore.getValore() <<" "<<valore.getDataOra().date().day()<< std::endl;
         }
         QPointF point(i+OFFSET, valore.getValore());
         series->append(point);

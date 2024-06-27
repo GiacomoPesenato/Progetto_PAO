@@ -76,18 +76,3 @@ Valore SensoreElettrodomestico::getRandom(const QDateTime &dataOra) {
 void SensoreElettrodomestico::accetta(sensoreVisitor& visitor) const {
     visitor.visita(*this);
 }
-
-
-int smain(int argc, char *argv[])
-{
-    SensoreElettrodomestico s = SensoreElettrodomestico(0,"Sensore1", "Kw/h", "prova","cucina","A",100,rand()%100,"");
-    s.generaDati();
-    QString abc = "settimana";
-    QApplication a(argc, argv);
-    QMainWindow window;
-    Chart palle;
-    window.setCentralWidget(palle.getChart(s, abc));
-    window.resize(1000,1000);
-    window.show();
-    return a.exec();
-}
