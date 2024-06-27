@@ -144,10 +144,6 @@ void MainWindow::aggiornaSensori() {
 
 }
 
-void MainWindow::openSchermataSensore(Sensore* sensore) {
-    // schermatasensore = new SchermataSensore(sensore);
-}
-
 void MainWindow::closeSchermataSensore() {
     schermatasensori->pulisciSensori();
     schermatasensori->inserimentoSensori(sensori);
