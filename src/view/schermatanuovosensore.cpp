@@ -92,6 +92,8 @@ SchermataNuovoSensore::SchermataNuovoSensore(QWidget *parent)
     inputClasseEnergetica->addItem("C");
     inputClasseEnergetica->addItem("D");
     inputClasseEnergetica->addItem("E");
+    inputClasseEnergetica->addItem("F");
+    inputClasseEnergetica->addItem("G");
     inputClasseEnergetica->setVisible(false);
     inputClasseEnergetica->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     centerLayout->addWidget(inputClasseEnergetica);
